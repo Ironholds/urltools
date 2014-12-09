@@ -35,9 +35,9 @@
 #'       them to NULs, which R can't handle, at which point your URLdecode call breaks.
 #'       \code{url_decode} simply ignores them.}
 #'}
-#'       
-#'hey only work properly for partial URLs, however, and are non-vectorised.
-#'Non-latin characters and reserved characters are encoded, with the exception of
+#'
+#'@return a character vector containing the encoded (or decoded) versions of "urls".
+#'
 #'@examples
 #'
 #'url_decode("https://en.wikipedia.org/wiki/File:Vice_City_Public_Radio_%28logo%29.jpg")
@@ -80,6 +80,10 @@ url_encode <- function(urls) {
 #'the URL's scheme, domain, port, path, query string and fragment identifier. See the
 #'\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for definitions. If an element
 #'cannot be identified, it is replaced with an empty string.
+#'
+#'@examples
+#'parse_url("https://en.wikipedia.org/wiki/Article")
+#'
 #'@export
 url_parse <- function(urls, normalise = TRUE) {
     .Call('urltools_url_parse', PACKAGE = 'urltools', urls, normalise)
@@ -93,10 +97,19 @@ url_parse <- function(urls, normalise = TRUE) {
 #'APIs. Extracting these is a pain unless you have a very consistent API, since you're essentially
 #'doing partial string-matching with a potentially arbitrary number of characters to include.
 #'
+#'\code{url_param} accepts a vector of URLs, and the name of the parameter (without an equals sign)
+#'and returns the value associated with that parameter. In the case that the parameter
+#'is represented multiple times within the URL, the first instance will be used.
+#'
 #'@param urls a vector of URLs.
 #'
 #'@param parameter the name of the parameter to search for. Case sensitive (so preprocessing
 #'with \code{\link{tolower}} may be useful).
+#'
+#'@return a character vector containing the value retrieved from each URL.
+#'
+#'@examples
+#'url_param(urls = "https://google.org/w/api.php?action=sitematrix&format=xml&smstate=all", parameter = "format")
 #'
 #'@export
 url_param <- function(urls, parameter) {

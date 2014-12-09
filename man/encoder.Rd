@@ -11,6 +11,9 @@ url_encode(urls)
 \arguments{
 \item{urls}{a vector of URLs to decode or encode.}
 }
+\value{
+a character vector containing the encoded (or decoded) versions of "urls".
+}
 \description{
 encodes or decodes a URI/URL
 }
@@ -43,9 +46,6 @@ that the urltools implementation solves::
       them to NULs, which R can't handle, at which point your URLdecode call breaks.
       \code{url_decode} simply ignores them.}
 }
-
-hey only work properly for partial URLs, however, and are non-vectorised.
-Non-latin characters and reserved characters are encoded, with the exception of
 }
 \examples{
 url_decode("https://en.wikipedia.org/wiki/File:Vice_City_Public_Radio_\%28logo\%29.jpg")

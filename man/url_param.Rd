@@ -11,6 +11,9 @@ url_param(urls, parameter)
 \item{parameter}{the name of the parameter to search for. Case sensitive (so preprocessing
 with \code{\link{tolower}} may be useful).}
 }
+\value{
+a character vector containing the value retrieved from each URL.
+}
 \description{
 \code{url_param} takes a vector of URLs and extracts the value associated with
 a specified parameter
@@ -19,5 +22,12 @@ a specified parameter
 People tend to put useful data in URL parameters, particularly around
 APIs. Extracting these is a pain unless you have a very consistent API, since you're essentially
 doing partial string-matching with a potentially arbitrary number of characters to include.
+
+\code{url_param} accepts a vector of URLs, and the name of the parameter (without an equals sign)
+and returns the value associated with that parameter. In the case that the parameter
+is represented multiple times within the URL, the first instance will be used.
+}
+\examples{
+url_param(urls = "https://google.org/w/api.php?action=sitematrix&format=xml&smstate=all", parameter = "format")
 }
 

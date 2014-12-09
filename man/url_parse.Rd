@@ -29,4 +29,7 @@ implementation is entirely in R, uses regular expressions, and is not vectorised
 perfectly suitable for the intended purpose (decomposition in the context of automated
 HTTP requests from R), but not for large-scale analysis.
 }
+\examples{
+parse_url("https://en.wikipedia.org/wiki/Article")
+}
 
