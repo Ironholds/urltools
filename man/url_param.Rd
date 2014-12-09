@@ -28,6 +28,6 @@ and returns the value associated with that parameter. In the case that the param
 is represented multiple times within the URL, the first instance will be used.
 }
 \examples{
-url_param(urls = "https://google.org/w/api.php?action=sitematrix&format=xml&smstate=all", parameter = "format")
+url_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
 }
 

@@ -162,7 +162,7 @@ std::list < std::vector < std::string > > url_parse(std::vector < std::string > 
 //'@return a character vector containing the value retrieved from each URL.
 //'
 //'@examples
-//'url_param(urls = "https://google.org/w/api.php?action=sitematrix&format=xml&smstate=all", parameter = "format")
+//'url_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
 //'
 //'@export
 // [[Rcpp::export]]
