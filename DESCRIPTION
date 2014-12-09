@@ -5,11 +5,12 @@ Version: 0.5
 Date: 2014-12-07
 Author: Oliver Keyes
 Maintainer: Oliver Keyes <okeyes@wikimedia.org>
-Description: A toolkit for handling URLs that so far includes functions for URL encoding and decoding,
-    parsing, and parameter extraction. All functions are designed to be both fast and
-    entirely vectorised. It is intended to be useful for people dealing with
-    web-related datasets, such as server-side logs, although may be useful for other
-    situations involving large sets of URLs.
+Description: A toolkit for handling URLs that so far includes functions for URL
+    encoding and decoding, parsing, and parameter extraction. All functions are
+    designed to be both fast and entirely vectorised. It is intended to be
+    useful for people dealing with web-related datasets, such as server-side
+    logs, although may be useful for other situations involving large sets of
+    URLs.
 License: MIT + file LICENSE
 LinkingTo: Rcpp
 Imports:
