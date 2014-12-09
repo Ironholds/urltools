@@ -31,7 +31,7 @@ that the urltools implementation solves::
       computationally costly with large datasets. url_encode and url_decode are
       implemented in C++ and entirely vectorised, allowing for a substantial
       performance improvement.}
-\item{No scheme regonition: }{encoding the slashes in, say, http://, is a good way
+\item{No scheme recognition: }{encoding the slashes in, say, http://, is a good way
       of making sure your URL no longer works. Because of this, the only thing
       you can encode in URLencode (unless you refuse to encode reserved characters)
       is a partial URL, lacking the initial scheme, which requires additional operations

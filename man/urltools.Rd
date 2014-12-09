@@ -5,9 +5,9 @@
 \alias{urltools-package}
 \title{Tools for handling URLs}
 \description{
-This package provides functions for URL encoding and decoding, parsing, and parameter extraction.
-             The implementations are both fast and entirely vectorised It is intended to be useful for people
-             making requests who need a fast, reliable encoding methods, and analysts dealing with data such
-             as server-side logs.
+This package provides functions for URL encoding and decoding,
+parsing, and parameter extraction, designed to be both fast and
+entirely vectorised. It is intended to be useful for people dealing with
+web-related datasets, such as server-side logs.
 }
 

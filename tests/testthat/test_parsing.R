@@ -24,7 +24,8 @@ test_that("Check parsing can handle missing elements", {
 
 test_that("parameter value extraction works", {
   
-  data <- unlist(url_parse("https://www.google.com/foo.php?api_params=turnip#ending"))
-  expect_that(url_param(data[5], "api_params"), equals("turnip"))
+  data <- url_param("https://en.wikipedia.org/w/api.php?action=sitematrix&format=xml&smstate=all&smsiteprop=url|dbname|code|sitename&smlimit=2000","format")
+  expect_that(data, equals("xml"))
   
 })
+

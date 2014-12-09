@@ -7,13 +7,15 @@ Date: 2014-12-07
 Author: Oliver Keyes
 Maintainer: Oliver Keyes <okeyes@wikimedia.org>
 Description: This package provides functions for URL encoding and decoding,
-    parsing, and parameter extraction. The implementations are both fast and
-    entirely vectorised It is intended to be useful for people making requests
-    who need a fast, reliable encoding methods, and analysts dealing with data
-    such as server-side logs.
+    parsing, and parameter extraction, designed to be both fast and
+    entirely vectorised. It is intended to be useful for people dealing with
+    web-related datasets, such as server-side logs.
 License: MIT + file LICENSE
 LinkingTo: Rcpp
 Imports:
     Rcpp
 Suggests:
-    testthat
+    testthat,
+    knitr
+BugReports: https://github.com/Ironholds/urltools/issues
+VignetteBuilder: knitr

@@ -106,15 +106,17 @@ std::string parsing::extract_parameter(std::string url, std::string parameter){
     return output;
   } else {
     
-    //Find the end of the parameter. If it can't be found, it's the end of the string,
+    //Substring, find the end of the parameter. If it can't be found, it's the end of the string,
     //so just return the entire thing.
+    url = url.substr(param + parameter.size() + 1);
     size_t param_end = url.find("&");
-    if(param == std::string::npos){
-      output = url.substr(param + parameter.size());
+    if(param_end == std::string::npos){
+      output = url;
     } else {
-      output = url.substr((param + parameter.size()+1),param_end);
+      output = url.substr(0, param_end);
     }
   }
   
+
   return output;
 }

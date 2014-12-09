@@ -51,7 +51,7 @@ class encoding{
       std::string result;
       
       //For each character...
-      for (std::string::size_type i = 0; i < (int) URL.size(); ++i){
+      for (std::string::size_type i = 0; i <  URL.size(); ++i){
         
         //If it's a +, space
         if (URL[i] == '+'){
