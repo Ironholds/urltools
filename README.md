@@ -17,7 +17,7 @@ It contains drop-in replacements for R's URLdecode and URLencode functions, alon
 with new functionality such as a URL parser and parameter value extractor. In all
 cases, the functions are designed to be content-safe (not breaking on unexpected values)
 and fully vectorised, resulting in a dramatic speed improvement over existing implementations -
-crucial for large datasets. For more information, see the urltools vignette.
+crucial for large datasets. For more information, see the [urltools vignette](https://github.com/Ironholds/urltools/blob/master/vignettes/urltools.Rmd).
 
 ###Installation
     library(devtools)

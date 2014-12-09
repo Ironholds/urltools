@@ -1,13 +1,7 @@
----
-title: "Introduction to urltools"
-author: "Oliver Keyes"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Introduction to urltools}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\usepackage[utf8]{inputenc}
----
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{urltools}
+-->
 
 URLs are treated, by base R, as nothing more than components of a data retrieval process: they exist
 to create connections to retrieve datasets. This is an essential feature for the language to have,
@@ -37,14 +31,13 @@ URLdecode("test%gIL")
 ```
 
 URLencode, on the other hand, encodes slashes on its most strict setting - without
-paying attention to where those slashes *are*: if we run <code>URLencode("https://en.wikipedia.org", reserved = TRUE)
-</code>, for example, we get:
+paying attention to where those slashes *are*: if we attempt to URLencode an entire URL, we get:
 
 ```{r, eval=FALSE}
 URLencode("https://en.wikipedia.org/wiki/Article", reserved = TRUE)
 #[1] "https%3a%2f%2fen.wikipedia.org%2fwiki%2fArticle"
 ```
-That's an unusable URL.
+That's a completely unusable URL.
 
 urltools replaces both functions with <code>url\_decode</code> and <code>url\_encode</code> respectively:
 ```{r, eval=FALSE}
