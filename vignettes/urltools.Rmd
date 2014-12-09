@@ -38,7 +38,7 @@ paying attention to where those slashes *are*: if we attempt to URLencode an ent
 URLencode("https://en.wikipedia.org/wiki/Article", reserved = TRUE)
 #[1] "https%3a%2f%2fen.wikipedia.org%2fwiki%2fArticle"
 ```
-That's a completely unusable URL.
+That's a completely unusable URL.^[or ewRL, if you will.]
 
 urltools replaces both functions with <code>url\_decode</code> and <code>url\_encode</code> respectively:
 ```{r, eval=FALSE}
