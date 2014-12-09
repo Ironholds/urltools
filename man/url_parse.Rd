@@ -30,6 +30,6 @@ perfectly suitable for the intended purpose (decomposition in the context of aut
 HTTP requests from R), but not for large-scale analysis.
 }
 \examples{
-parse_url("https://en.wikipedia.org/wiki/Article")
+url_parse("https://en.wikipedia.org/wiki/Article")
 }
 

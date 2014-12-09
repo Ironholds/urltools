@@ -123,7 +123,7 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
 //'cannot be identified, it is replaced with an empty string.
 //'
 //'@examples
-//'parse_url("https://en.wikipedia.org/wiki/Article")
+//'url_parse("https://en.wikipedia.org/wiki/Article")
 //'
 //'@export
 // [[Rcpp::export]]

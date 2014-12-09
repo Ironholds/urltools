@@ -61,7 +61,7 @@ The solution is <code>url_parse</code>, which takes a URL and breaks it out into
 again, fully vectorised, and can happily be run over hundreds of thousands of URLs, rapidly processing them.
 
 ```{r, eval=FALSE}
-parse_url("https://en.wikipedia.org/wiki/Article")
+url_parse("https://en.wikipedia.org/wiki/Article")
 #[[1]]
 #[1] "https"            "en.wikipedia.org" ""                 "wiki/article"     ""                 ""                
 ```

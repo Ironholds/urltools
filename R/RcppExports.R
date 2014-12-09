@@ -82,7 +82,7 @@ url_encode <- function(urls) {
 #'cannot be identified, it is replaced with an empty string.
 #'
 #'@examples
-#'parse_url("https://en.wikipedia.org/wiki/Article")
+#'url_parse("https://en.wikipedia.org/wiki/Article")
 #'
 #'@export
 url_parse <- function(urls, normalise = TRUE) {
