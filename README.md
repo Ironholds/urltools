@@ -20,6 +20,9 @@ and fully vectorised, resulting in a dramatic speed improvement over existing im
 crucial for large datasets. For more information, see the [urltools vignette](https://github.com/Ironholds/urltools/blob/master/vignettes/urltools.Rmd).
 
 ###Installation
+
+The latest released version can be obtained [from CRAN](http://cran.r-project.org/web/packages/urltools/). To get the development version:
+
     library(devtools)
     install_github("ironholds/urltools")
 
