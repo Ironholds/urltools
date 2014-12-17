@@ -98,11 +98,13 @@ std::string parsing::extract_parameter(std::string url, std::string parameter){
   
   //Output object
   std::string output;
-  
+  output = "";
+
   //Find the parameter. If you can't, return an empty string
   size_t param = url.find(parameter);
   if(param == std::string::npos){
-    output = "";
+    return output;
+  } else if(param + parameter.size() == url.size()) {
     return output;
   } else {
     
@@ -116,7 +118,6 @@ std::string parsing::extract_parameter(std::string url, std::string parameter){
       output = url.substr(0, param_end);
     }
   }
-  
 
   return output;
 }
