@@ -67,11 +67,11 @@ url_parse("https://en.wikipedia.org/wiki/Article")
 ```
 
 One of the fields, as mentioned, is the query string - commonly used as a component of web form requests
-or API calls. Along with <code>url\_parse</code>, we also have <code>url\_param</code>, which extracts the value
+or API calls. Along with <code>url\_parse</code>, we also have <code>url\_extract\_param</code>, which extracts the value
 a particular query parameter holds:
 
 ```{r, eval=FALSE}
-url_param(urls = "https://en.wikipedia.org/w/api.php?action=sitematrix&format=xml&smstate=all", parameter = "smstate")
+url_extract_param(urls = "https://en.wikipedia.org/w/api.php?action=sitematrix&format=xml&smstate=all", parameter = "smstate")
 #[1] "all"
 ```
 

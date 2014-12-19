@@ -2,7 +2,8 @@
 
 export(url_decode)
 export(url_encode)
-export(url_param)
+export(url_extract_param)
 export(url_parse)
+export(url_replace_param)
 importFrom(Rcpp,sourceCpp)
 useDynLib(urltools)

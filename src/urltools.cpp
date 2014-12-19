@@ -143,14 +143,14 @@ std::list < std::vector < std::string > > url_parse(std::vector < std::string > 
 }
 
 //'@title extract the value of an API parameter
-//'@description \code{url_param} takes a vector of URLs and extracts the value associated with
+//'@description \code{url_extract_param} takes a vector of URLs and extracts the value associated with
 //'a specified parameter
 //'
 //'@details People tend to put useful data in URL parameters, particularly around
 //'APIs. Extracting these is a pain unless you have a very consistent API, since you're essentially
 //'doing partial string-matching with a potentially arbitrary number of characters to include.
 //'
-//'\code{url_param} accepts a vector of URLs, and the name of the parameter (without an equals sign)
+//'\code{url_extract_param} accepts a vector of URLs, and the name of the parameter (without an equals sign)
 //'and returns the value associated with that parameter. In the case that the parameter
 //'is represented multiple times within the URL, the first instance will be used.
 //'
@@ -161,12 +161,60 @@ std::list < std::vector < std::string > > url_parse(std::vector < std::string > 
 //'
 //'@return a character vector containing the value retrieved from each URL.
 //'
+//'@seealso \code{\link{url_replace_param}} for replacing, rather than extracting, values.
 //'@examples
-//'url_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
+//'url_extract_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
 //'
 //'@export
 // [[Rcpp::export]]
-std::vector < std::string > url_param(std::vector < std::string > urls, std::string parameter){
+std::vector < std::string > url_extract_param(std::vector < std::string > urls, std::string parameter){
+  
+  //Measure size, create output object
+  int input_size = urls.size();
+  std::vector < std::string > output;
+  
+  //Decode each string in turn.
+  for (int i = 0; i < input_size; ++i){
+    output.push_back(parsing::extract_parameter(urls[i], parameter));
+  }
+  
+  //Return
+  return output;
+}
+
+
+//'@title replace the value of an API parameter
+//'@description \code{url_replace_param} takes a vector of URLs and replaces the value
+//'associated with a particular URL parameter, with one of your choosing.
+//'
+//'@details As well as component extraction, people can also find it useful to have access
+//'to component replacement - for example, mass-modifying a set of URLs used for API queries
+//'to output JSON rather than XML.
+//'
+//'\code{url_replace_param} accepts a vector of URLs, the name of a parameter, and a replacement value.
+//'It then loops through the URLs replacing the existing value held by that parameter with the new one.
+//'
+//'In the case that a parameter is present multiple times in a URL, only the first instance will be amended.
+//'In the case that a parameter is not present at all, no change to the URL will be made.
+//'
+//'@param urls a vector of URLs.
+//'
+//'@param parameter the name of the parameter to search for. Case sensitive (so preprocessing
+//'with \code{\link{tolower}} may be useful).
+//'
+//'@param new_value the value you want to replace the current value of \code{parameter}.
+//'
+//'@return a character vector containing the amended URLs. In the situation where the parameter is
+//'not present within the URL, the original URL will be returned.
+//'
+//'@seealso \code{\link{url_extract_param}} for extracting, rather than replacing, values.
+//'
+//'@examples
+//'url_replace_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format", new_value = "json")
+//'
+//'@export
+// [[Rcpp::export]]
+std::vector < std::string > url_replace_param(std::vector < std::string > urls, std::string parameter, std::string new_value){
   
   //Measure size, create output object
   int input_size = urls.size();
@@ -175,7 +223,7 @@ std::vector < std::string > url_param(std::vector < std::string > urls, std::str
   
   //Decode each string in turn.
   for (int i = 0; i < input_size; ++i){
-    output.push_back(parsing::extract_parameter(urls[i], parameter));
+    output.push_back(parsing::replace_parameter(urls[i], parameter, new_value));
   }
   
   //Return
