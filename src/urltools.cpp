@@ -171,11 +171,11 @@ std::vector < std::string > url_extract_param(std::vector < std::string > urls, 
   
   //Measure size, create output object
   int input_size = urls.size();
-  std::vector < std::string > output;
+  std::vector < std::string > output(input_size);
   
   //Decode each string in turn.
   for (int i = 0; i < input_size; ++i){
-    output.push_back(parsing::extract_parameter(urls[i], parameter));
+    output[i] = parsing::extract_parameter(urls[i], parameter);
   }
   
   //Return
@@ -218,12 +218,11 @@ std::vector < std::string > url_replace_param(std::vector < std::string > urls, 
   
   //Measure size, create output object
   int input_size = urls.size();
-  std::string holding;
-  std::vector < std::string > output;
+  std::vector < std::string > output(input_size);
   
   //Decode each string in turn.
   for (int i = 0; i < input_size; ++i){
-    output.push_back(parsing::replace_parameter(urls[i], parameter, new_value));
+    output[i] = parsing::replace_parameter(urls[i], parameter, new_value);
   }
   
   //Return

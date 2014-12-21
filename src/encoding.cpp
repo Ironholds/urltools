@@ -2,7 +2,7 @@
 #include "encoding.h"
 using namespace Rcpp;
 
-std::string internal_url_decode(std::string URL){
+std::string encoding::internal_url_decode(std::string URL){
   
   //Create output object
   std::string result;
@@ -14,8 +14,8 @@ std::string internal_url_decode(std::string URL){
     if (URL[i] == '+'){
       result += ' ';
     } else if (URL[i] == '%' && URL.size() > i+2){//Escaped? Convert from hex and includes
-      char holding_1 = from_hex(URL[i+1]);
-      char holding_2 = from_hex(URL[i+2]);
+      char holding_1 = encoding::from_hex(URL[i+1]);
+      char holding_2 = encoding::from_hex(URL[i+2]);
       char holding = (holding_1 << 4) | holding_2;
       result += holding;
       i += 2;
@@ -28,7 +28,7 @@ std::string internal_url_decode(std::string URL){
     return result;
 }
 
-std::string urlencode(std::string & url){
+std::string encoding::urlencode(std::string & url){
 
   //Note the unreserved characters, create an output string
   std::string unreserved_characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._~-";
