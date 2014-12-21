@@ -7,3 +7,6 @@ allows you to take the value a parameter has associated with it, and replace it 
 BUG FIXES
 *url_param (now url_extract_param) previously failed with an obfuscated error if the requested
 parameter terminated the URL. This has now been fixed.
+
+DEVELOPMENT
+*unit tests expanded

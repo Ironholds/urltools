@@ -26,6 +26,8 @@ test_that("parameter value extraction works", {
   
   original_url <- "https://en.wikipedia.org/w/api.php?action=sitematrix&format=xml&smstate=all&smsiteprop=url|dbname|code|sitename&smlimit=2000"
   expect_that(url_extract_param(original_url,"format"), equals("xml"))
+  expect_that(url_extract_param(original_url,"action"), equals("sitematrix"))
+  expect_that(url_extract_param(original_url,"2000"), equals(""))
   
 })
 
