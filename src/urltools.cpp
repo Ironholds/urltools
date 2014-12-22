@@ -77,8 +77,6 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
   int input_size = urls.size();
   std::vector < std::string > output(input_size);
   size_t indices;
-  std::string holding_1;
-  std::string holding_2;
   
   //For each string..
   for (int i = 0; i < input_size; ++i){
@@ -86,14 +84,10 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
     //Extract the protocol. If you can't find it, just encode the entire thing.
     indices = urls[i].find("://");
     if(indices == std::string::npos){
-      output[i] = encoding::urlencode(urls[i]);
+      output[i] = encoding::internal_url_encode(urls[i]);
     } else {
       //Otherwise, split out the protocol and encode !protocol.
-      holding_1 = urls[i];
-      holding_2 = urls[i].substr(0,indices+3);
-      holding_1 = holding_1.substr(indices+3);
-      holding_1 = encoding::urlencode(holding_1);
-      output[i] = holding_2 += holding_1;
+      output[i] = urls[i].substr(0,indices+3) + encoding::internal_url_encode(urls[i].substr(indices+3));
     }
   }
   

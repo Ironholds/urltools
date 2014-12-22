@@ -50,7 +50,7 @@ class encoding{
 
     static std::string internal_url_decode(std::string URL);
     
-    static std::string urlencode(std::string & url);
+    static std::string internal_url_encode(std::string url);
 
 };
 

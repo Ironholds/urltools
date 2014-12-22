@@ -28,7 +28,7 @@ std::string encoding::internal_url_decode(std::string URL){
     return result;
 }
 
-std::string encoding::urlencode(std::string & url){
+std::string encoding::internal_url_encode(std::string url){
 
   //Note the unreserved characters, create an output string
   std::string unreserved_characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._~-";
