@@ -157,7 +157,7 @@ std::list < std::vector < std::string > > url_parse(std::vector < std::string > 
 //'
 //'@seealso \code{\link{replace_parameter}} for replacing, rather than extracting, values.
 //'@examples
-//'url_extract_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
+//'extract_parameter(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
 //'
 //'@export
 // [[Rcpp::export]]
@@ -204,7 +204,8 @@ std::vector < std::string > extract_parameter(std::vector < std::string > urls, 
 //'@seealso \code{\link{extract_parameter}} for extracting, rather than replacing, values.
 //'
 //'@examples
-//'url_replace_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format", new_value = "json")
+//'replace_parameter(urls = "http://google.org/api.php?smstate=all",
+//'                  parameter = "smstate", new_value = "some")
 //'
 //'@export
 // [[Rcpp::export]]

@@ -28,7 +28,7 @@ and returns the value associated with that parameter. In the case that the param
 is represented multiple times within the URL, the first instance will be used.
 }
 \examples{
-url_extract_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
+extract_parameter(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
 }
 \seealso{
 \code{\link{replace_parameter}} for replacing, rather than extracting, values.

@@ -6,7 +6,7 @@
 #' web-related datasets, such as server-side logs.
 #' 
 #' @seealso \link{url_decode}, \link{url_encode}, \link{extract_parameter}, \link{replace_parameter},
-#' \link{parse_url}, \link{extract_host}
+#' \link{url_parse}, \link{extract_host}
 #' @useDynLib urltools
 #' @importFrom Rcpp sourceCpp
 #' @docType package

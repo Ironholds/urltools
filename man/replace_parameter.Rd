@@ -33,7 +33,8 @@ In the case that a parameter is present multiple times in a URL, only the first 
 In the case that a parameter is not present at all, no change to the URL will be made.
 }
 \examples{
-url_replace_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format", new_value = "json")
+replace_parameter(urls = "http://google.org/api.php?smstate=all",
+                 parameter = "smstate", new_value = "some")
 }
 \seealso{
 \code{\link{extract_parameter}} for extracting, rather than replacing, values.

@@ -110,7 +110,7 @@ url_parse <- function(urls, normalise = TRUE) {
 #'
 #'@seealso \code{\link{replace_parameter}} for replacing, rather than extracting, values.
 #'@examples
-#'url_extract_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
+#'extract_parameter(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
 #'
 #'@export
 extract_parameter <- function(urls, parameter) {
@@ -144,7 +144,8 @@ extract_parameter <- function(urls, parameter) {
 #'@seealso \code{\link{extract_parameter}} for extracting, rather than replacing, values.
 #'
 #'@examples
-#'url_replace_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format", new_value = "json")
+#'replace_parameter(urls = "http://google.org/api.php?smstate=all",
+#'                  parameter = "smstate", new_value = "some")
 #'
 #'@export
 replace_parameter <- function(urls, parameter, new_value) {
