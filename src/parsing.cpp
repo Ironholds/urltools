@@ -72,8 +72,7 @@ std::vector < std::string > parsing::parse_url(std::string url, bool normalise){
 std::string parsing::extract_parameter(std::string url, std::string parameter){
   
   //Output object
-  std::string output;
-  output = "";
+  std::string output = "";
 
   //Find the parameter. If you can't, return an empty string
   size_t param = url.find(parameter);
@@ -100,9 +99,8 @@ std::string parsing::extract_parameter(std::string url, std::string parameter){
 std::string parsing::replace_parameter(std::string url, std::string parameter, std::string new_value){
   
   //Output object
-  std::string output;
+  std::string output = "";
   std::string holding;
-  output = "";
   
   size_t param_loc = url.find(parameter);
   if(param_loc == std::string::npos){
@@ -124,5 +122,25 @@ std::string parsing::replace_parameter(std::string url, std::string parameter, s
     }
 
   }
+  return output;
+}
+
+std::string parsing::extract_host(std::string url){
+  
+  //Output object
+  std::string output = "";
+  std::string holding;
+  
+  size_t scheme_loc = url.find("//");
+  size_t path_loc;
+  
+  if(scheme_loc != std::string::npos){
+    output = url.substr(scheme_loc+2);
+    path_loc = output.find("/",scheme_loc+2);
+    if(path_loc != std::string::npos){
+      output = output.substr(0,path_loc);
+    }
+  }
+  
   return output;
 }

@@ -25,9 +25,9 @@ test_that("Check parsing can handle missing elements", {
 test_that("parameter value extraction works", {
   
   original_url <- "https://en.wikipedia.org/w/api.php?action=sitematrix&format=xml&smstate=all&smsiteprop=url|dbname|code|sitename&smlimit=2000"
-  expect_that(url_extract_param(original_url,"format"), equals("xml"))
-  expect_that(url_extract_param(original_url,"action"), equals("sitematrix"))
-  expect_that(url_extract_param(original_url,"2000"), equals(""))
+  expect_that(extract_parameter(original_url,"format"), equals("xml"))
+  expect_that(extract_parameter(original_url,"action"), equals("sitematrix"))
+  expect_that(extract_parameter(original_url,"2000"), equals(""))
   
 })
 
@@ -35,5 +35,5 @@ test_that("parameter value replacement works", {
   
   original_url <- "https://en.wikipedia.org/w/api.php?action=sitematrix&format=xml&smstate=all&smsiteprop=url|dbname|code|sitename&smlimit=2000"
   expected_url <- "https://en.wikipedia.org/w/api.php?action=sitematrix&format=json&smstate=all&smsiteprop=url|dbname|code|sitename&smlimit=2000"
-  expect_that(url_replace_param(original_url,"format","json"), equals(expected_url))
+  expect_that(replace_parameter(original_url,"format","json"), equals(expected_url))
 })

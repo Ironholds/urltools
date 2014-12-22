@@ -1,12 +1,14 @@
 Version 0.6 (WIP)
 -------------------------------------------------------------------------
 NEW FEATURES
-*url_replace_param introduced, to augment url_extract_param (previously simply url_param). This
+*replace_parameter introduced, to augment extract_parameter (previously simply url_param). This
 allows you to take the value a parameter has associated with it, and replace it with one of your choosing.
+*extract_host allows you to grab the hostname of a site, ignoring other components.
 
 BUG FIXES
-*url_param (now url_extract_param) previously failed with an obfuscated error if the requested
+*extract_parameter (now url_extract_param) previously failed with an obfuscated error if the requested
 parameter terminated the URL. This has now been fixed.
 
 DEVELOPMENT
 *unit tests expanded
+*Internal tweaks to improve the speed of url_decode and url_encode.

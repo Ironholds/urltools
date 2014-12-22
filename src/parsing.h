@@ -25,10 +25,13 @@ class parsing{
       //Return
       return output;
     }
+    
   public:
     static std::vector < std::string > parse_url(std::string url, bool normalise);
     static std::string extract_parameter(std::string url, std::string parameter);
     static std::string replace_parameter(std::string url, std::string parameter, std::string new_value);
+    static std::string extract_host(std::string url);
+
 
 };
 #endif

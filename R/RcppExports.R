@@ -90,14 +90,14 @@ url_parse <- function(urls, normalise = TRUE) {
 }
 
 #'@title extract the value of an API parameter
-#'@description \code{url_extract_param} takes a vector of URLs and extracts the value associated with
+#'@description \code{extract_parameter} takes a vector of URLs and extracts the value associated with
 #'a specified parameter
 #'
 #'@details People tend to put useful data in URL parameters, particularly around
 #'APIs. Extracting these is a pain unless you have a very consistent API, since you're essentially
 #'doing partial string-matching with a potentially arbitrary number of characters to include.
 #'
-#'\code{url_extract_param} accepts a vector of URLs, and the name of the parameter (without an equals sign)
+#'\code{extract_parameter} accepts a vector of URLs, and the name of the parameter (without an equals sign)
 #'and returns the value associated with that parameter. In the case that the parameter
 #'is represented multiple times within the URL, the first instance will be used.
 #'
@@ -108,24 +108,24 @@ url_parse <- function(urls, normalise = TRUE) {
 #'
 #'@return a character vector containing the value retrieved from each URL.
 #'
-#'@seealso \code{\link{url_replace_param}} for replacing, rather than extracting, values.
+#'@seealso \code{\link{replace_parameter}} for replacing, rather than extracting, values.
 #'@examples
 #'url_extract_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format")
 #'
 #'@export
-url_extract_param <- function(urls, parameter) {
-    .Call('urltools_url_extract_param', PACKAGE = 'urltools', urls, parameter)
+extract_parameter <- function(urls, parameter) {
+    .Call('urltools_extract_parameter', PACKAGE = 'urltools', urls, parameter)
 }
 
 #'@title replace the value of an API parameter
-#'@description \code{url_replace_param} takes a vector of URLs and replaces the value
+#'@description \code{replace_parameter} takes a vector of URLs and replaces the value
 #'associated with a particular URL parameter, with one of your choosing.
 #'
 #'@details As well as component extraction, people can also find it useful to have access
 #'to component replacement - for example, mass-modifying a set of URLs used for API queries
 #'to output JSON rather than XML.
 #'
-#'\code{url_replace_param} accepts a vector of URLs, the name of a parameter, and a replacement value.
+#'\code{replace_parameter} accepts a vector of URLs, the name of a parameter, and a replacement value.
 #'It then loops through the URLs replacing the existing value held by that parameter with the new one.
 #'
 #'In the case that a parameter is present multiple times in a URL, only the first instance will be amended.
@@ -141,13 +141,26 @@ url_extract_param <- function(urls, parameter) {
 #'@return a character vector containing the amended URLs. In the situation where the parameter is
 #'not present within the URL, the original URL will be returned.
 #'
-#'@seealso \code{\link{url_extract_param}} for extracting, rather than replacing, values.
+#'@seealso \code{\link{extract_parameter}} for extracting, rather than replacing, values.
 #'
 #'@examples
 #'url_replace_param(urls = "http://google.org/w/api.php?format=xml&smstate=all", parameter = "format", new_value = "json")
 #'
 #'@export
-url_replace_param <- function(urls, parameter, new_value) {
-    .Call('urltools_url_replace_param', PACKAGE = 'urltools', urls, parameter, new_value)
+replace_parameter <- function(urls, parameter, new_value) {
+    .Call('urltools_replace_parameter', PACKAGE = 'urltools', urls, parameter, new_value)
+}
+
+#'@title extract a URL's hostname and provide it
+#'@description similar to \code{\link{url_parse}} or \code{\link{extract_parameter}}, but
+#'for hostnames only.
+#'
+#'@param urls a vector of URLs
+#'
+#'@return a vector of hostnames. In the event that a hostname cannot be identified, an
+#'empty string will be returned.
+#'@export
+extract_host <- function(urls) {
+    .Call('urltools_extract_host', PACKAGE = 'urltools', urls)
 }
 
