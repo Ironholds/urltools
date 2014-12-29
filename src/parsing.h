@@ -8,23 +8,7 @@ class parsing{
   private:
   
     //Lowercase a string
-    static std::string str_tolower(std::string x){
-      
-      //Create output object
-      std::string output;
-      int string_size = x.size();
-      
-      //Loop
-      for(int i = 0; i < string_size; i++){
-        
-        //For each character, lowercase and append
-        output += tolower(x[i]);
-        
-      }
-      
-      //Return
-      return output;
-    }
+    static std::string str_tolower(std::string x);
     
   public:
     static std::vector < std::string > parse_url(std::string url, bool normalise);

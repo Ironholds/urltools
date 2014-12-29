@@ -2,6 +2,18 @@
 #include "parsing.h"
 using namespace Rcpp;
 
+//Lower case a string
+std::string parsing::str_tolower(std::string x){
+  
+  int string_size = x.size();
+  for(int i = 0; i < string_size; i++){
+    x[i] = tolower(x[i]);
+    
+  }
+  //Return
+  return x;
+}
+
 //URL parser
 std::vector < std::string > parsing::parse_url(std::string url, bool normalise){
   

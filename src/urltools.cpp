@@ -126,7 +126,7 @@ std::list < std::vector < std::string > > url_parse(std::vector < std::string > 
   //Measure size, create output object
   int input_size = urls.size();
   std::list < std::vector < std::string > > output;
-  
+
   //Decode each string in turn.
   for (int i = 0; i < input_size; ++i){
     output.push_back(parsing::parse_url(urls[i], normalise));
