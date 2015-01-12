@@ -6,8 +6,6 @@ using namespace Rcpp;
 class parsing{
   
   private:
-  
-    //Lowercase a string
     static std::string str_tolower(std::string x);
     
   public:

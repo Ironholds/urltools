@@ -1,4 +1,12 @@
-Version 0.6 (WIP)
+Version 0.7 (WIP)
+-------------------------------------------------------------------------
+NEW FEATURES
+
+BUG FIXES
+
+DEVELOPMENT
+
+Version 0.6
 -------------------------------------------------------------------------
 NEW FEATURES
 *replace_parameter introduced, to augment extract_parameter (previously simply url_param). This
