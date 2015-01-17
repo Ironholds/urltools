@@ -118,7 +118,7 @@ std::string parsing::replace_parameter(std::string url, std::string parameter, s
   if(param_loc == std::string::npos){
     output = url;
   } else {
-    int loc = (param_loc+parameter.size()+1);
+    unsigned int loc = (param_loc+parameter.size()+1);
     holding = url.substr(0,loc);
     
     if(loc >= url.size()){

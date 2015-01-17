@@ -4,51 +4,51 @@ using namespace Rcpp;
 #ifndef __ENCODING_INCLUDED__
 #define __ENCODING_INCLUDED__
 
-//Encoding handlers
+/**
+ * A class for applying percent-encoding to
+ * arbitrary strings - optimised for URLs, obviously.
+ */
 class encoding{
   
   private:
+  
+    /**
+     * A function for taking a hexadecimal element and converting
+     * it to the equivalent non-hex value. Used in internal_url_decode
+     * 
+     * @param x a character array representing the hexed value.
+     * 
+     * @see to_hex for the reverse operation.
+     * 
+     * @return a string containing the un-hexed value of x.
+     */
+    static char from_hex (char x);
     
-    static char from_hex (char x){
-      if(x <= '9' && x >= '0'){
-        x -= '0';
-      } else if(x <= 'f' && x >= 'a'){
-        x -= ('a' - 10);
-      } else if(x <= 'F' && x >= 'A'){
-        x -= ('A' - 10);
-      } else {
-        x = 0;
-      }
-      return x;
-    };
-    
-    static std::string to_hex(char x){
-      
-      //Holding objects and output
-      char digit_1 = (x&0xF0)>>4;
-      char digit_2 = (x&0x0F);
-      std::string output;
-      
-      //Convert
-      if( 0 <= digit_1 && digit_1 <= 9){
-        digit_1 += 48;
-      } else if(10 <= digit_1 && digit_1 <=15){
-        digit_1 += 97-10;
-      }
-      if(0 <= digit_2 && digit_2 <= 9){
-        digit_2 += 48;
-      } else if(10 <= digit_2 && digit_2 <= 15){
-        digit_2 += 97-10;
-      }
-      
-      output.append(&digit_1, 1);
-      output.append(&digit_2, 1);
-      return output;
-    }
+    /**
+     * A function for taking a character value and converting
+     * it to the equivalent hexadecimal value. Used in internal_url_encode.
+     * 
+     * @param x a character array representing the unhexed value.
+     * 
+     * @see from_hex for the reverse operation.
+     * 
+     * @return a string containing the now-hexed value of x.
+     */
+    static std::string to_hex(char x);
 
   public:
-
-    static std::string internal_url_decode(std::string URL);
+  
+    /**
+     * A function for decoding URLs. calls from_hex, and is
+     * in turn called by url_decode in urltools.cpp.
+     * 
+     * @param url a string representing a percent-encoded URL.
+     * 
+     * @see internal_url_encode for the reverse operation.
+     * 
+     * @return a string containing the decoded URL.
+     */
+    static std::string internal_url_decode(std::string url);
     
     static std::string internal_url_encode(std::string url);
 
