@@ -3,8 +3,10 @@ Version 0.7 (WIP)
 NEW FEATURES
 
 BUG FIXES
+*Fixed issues with an unterminated string in the encoding/decoding process, pointed out by Brian Ripley.
 
 DEVELOPMENT
+*Internal C++ documentation added and the encoders and parsers refactored.
 
 Version 0.6
 -------------------------------------------------------------------------

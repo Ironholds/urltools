@@ -50,6 +50,16 @@ class encoding{
      */
     static std::string internal_url_decode(std::string url);
     
+    /**
+     * A function for encoding URLs. calls to_hex, and is
+     * in turn called by url_encode in urltools.cpp.
+     * 
+     * @param url a string representing a URL.
+     * 
+     * @see internal_url_decode for the reverse operation.
+     * 
+     * @return a string containing the percent-encoded version of "url".
+     */
     static std::string internal_url_encode(std::string url);
 
 };
