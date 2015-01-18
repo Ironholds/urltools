@@ -51,48 +51,33 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
-// extract_parameter
-std::vector < std::string > extract_parameter(std::vector < std::string > urls, std::string parameter);
-RcppExport SEXP urltools_extract_parameter(SEXP urlsSEXP, SEXP parameterSEXP) {
+// v_get_component
+std::vector < std::string > v_get_component(std::vector < std::string > urls, int component);
+RcppExport SEXP urltools_v_get_component(SEXP urlsSEXP, SEXP componentSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
         Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP );
-        Rcpp::traits::input_parameter< std::string >::type parameter(parameterSEXP );
-        std::vector < std::string > __result = extract_parameter(urls, parameter);
+        Rcpp::traits::input_parameter< int >::type component(componentSEXP );
+        std::vector < std::string > __result = v_get_component(urls, component);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
     return __sexp_result;
 END_RCPP
 }
-// replace_parameter
-std::vector < std::string > replace_parameter(std::vector < std::string > urls, std::string parameter, std::string new_value);
-RcppExport SEXP urltools_replace_parameter(SEXP urlsSEXP, SEXP parameterSEXP, SEXP new_valueSEXP) {
+// v_set_component
+std::vector < std::string > v_set_component(std::vector < std::string > urls, int component, std::string new_value);
+RcppExport SEXP urltools_v_set_component(SEXP urlsSEXP, SEXP componentSEXP, SEXP new_valueSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
         Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP );
-        Rcpp::traits::input_parameter< std::string >::type parameter(parameterSEXP );
+        Rcpp::traits::input_parameter< int >::type component(componentSEXP );
         Rcpp::traits::input_parameter< std::string >::type new_value(new_valueSEXP );
-        std::vector < std::string > __result = replace_parameter(urls, parameter, new_value);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
-// extract_host
-std::vector < std::string > extract_host(std::vector < std::string > urls);
-RcppExport SEXP urltools_extract_host(SEXP urlsSEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP );
-        std::vector < std::string > __result = extract_host(urls);
+        std::vector < std::string > __result = v_set_component(urls, component, new_value);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);

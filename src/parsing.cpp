@@ -3,27 +3,33 @@
 using namespace Rcpp;
 
 //Lower case a string
-std::string parsing::str_tolower(std::string x){
+std::string parsing::str_tolower(std::string url){
   
-  int string_size = x.size();
+  int string_size = url.size();
   for(int i = 0; i < string_size; i++){
-    x[i] = tolower(x[i]);
+    url[i] = tolower(url[i]);
     
   }
   //Return
-  return x;
+  return url;
+}
+
+//Merge a vector into a string.
+std::string parsing::str_merge(std::vector < std::string > parsed_url){
+  std::string output;
+  std::vector < std::string >::const_iterator it = parsed_url.begin(); 
+  for(it; it != parsed_url.end(); ++it){
+    output += *it;
+  }
+  return output;
 }
 
 //URL parser
-std::vector < std::string > parsing::parse_url(std::string url, bool normalise){
+std::vector < std::string > parsing::parse_url(std::string url){
   
-  //Output object
+  //Output object, normalise.
   std::vector < std::string > output;
-  
-  //Normalise, if wanted
-  if(normalise){
-    url = parsing::str_tolower(url);
-  }
+  url = str_tolower(url);
   
   //Extract hostname field
   std::size_t protocol = url.find("://");
@@ -80,79 +86,14 @@ std::vector < std::string > parsing::parse_url(std::string url, bool normalise){
   return output;
 }
 
-//Parameter extractor
-std::string parsing::extract_parameter(std::string url, std::string parameter){
-  
-  //Output object
-  std::string output = "";
-
-  //Find the parameter. If you can't, return an empty string
-  size_t param = url.find(parameter);
-  if(param == std::string::npos){
-    return output;
-  } else if(param + parameter.size() == url.size()) {
-    return output;
-  } else {
-    
-    //Substring, find the end of the parameter. If it can't be found, it's the end of the string,
-    //so just return the entire thing.
-    url = url.substr(param + parameter.size() + 1);
-    size_t param_end = url.find("&");
-    if(param_end == std::string::npos){
-      output = url;
-    } else {
-      output = url.substr(0, param_end);
-    }
-  }
-
-  return output;
+//Component retrieval
+std::string parsing::get_component(std::string url, int component){
+  return parse_url(url)[component];
 }
 
-std::string parsing::replace_parameter(std::string url, std::string parameter, std::string new_value){
-  
-  //Output object
-  std::string output = "";
-  std::string holding;
-  
-  size_t param_loc = url.find(parameter);
-  if(param_loc == std::string::npos){
-    output = url;
-  } else {
-    unsigned int loc = (param_loc+parameter.size()+1);
-    holding = url.substr(0,loc);
-    
-    if(loc >= url.size()){
-      output = holding + new_value;
-    } else {
-      url = url.substr(loc+1);
-      size_t param_val_term_loc = url.find("&");
-      if(param_val_term_loc == std::string::npos || param_val_term_loc == url.size()){
-        output = holding + new_value;
-      } else {
-        output = holding + new_value + url.substr(param_val_term_loc);
-      }
-    }
-
-  }
-  return output;
-}
-
-std::string parsing::extract_host(std::string url){
-  
-  //Output object
-  std::string output = "";
-  std::string holding;
-  
-  size_t scheme_loc = url.find("//");
-  size_t path_loc;
-  
-  if(scheme_loc != std::string::npos){
-    output = url.substr(scheme_loc+2);
-    path_loc = output.find("/",scheme_loc+2);
-    if(path_loc != std::string::npos){
-      output = output.substr(0,path_loc);
-    }
-  }
-  
-  return output;
+//Component modification
+std::string parsing::set_component(std::string url, int component, std::string new_value){
+  std::vector < std::string > parsed_url = parse_url(url);
+  parsed_url[component] = new_value;
+  return str_merge(parsed_url);
 }
