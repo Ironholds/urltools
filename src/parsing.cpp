@@ -14,16 +14,6 @@ std::string parsing::str_tolower(std::string url){
   return url;
 }
 
-//Merge a vector into a string.
-std::string parsing::str_merge(std::vector < std::string > parsed_url){
-  std::string output;
-  std::vector < std::string >::const_iterator it = parsed_url.begin(); 
-  for(it; it != parsed_url.end(); ++it){
-    output += *it;
-  }
-  return output;
-}
-
 //URL parser
 std::vector < std::string > parsing::parse_url(std::string url){
   
@@ -94,6 +84,6 @@ std::string parsing::get_component(std::string url, int component){
 //Component modification
 std::string parsing::set_component(std::string url, int component, std::string new_value){
   std::vector < std::string > parsed_url = parse_url(url);
-  parsed_url[component] = new_value;
-  return str_merge(parsed_url);
+  url.replace(url.find(parsed_url[component]),parsed_url[component].size(), new_value);
+  return url;
 }

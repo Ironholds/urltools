@@ -18,20 +18,6 @@ class parsing{
      */
     static std::string str_tolower(std::string url);
     
-    /**
-     * A function for merging a vector of strings into
-     * a single string. Used in set_component.
-     * 
-     * @param parsed_url a vector of strings representing
-     * a parsed URL.
-     * 
-     * @see set_component, which calls this.
-     * 
-     * @return a string containing the (merged) input
-     * vector, as a single string.
-     */
-    static std::string str_merge(std::vector < std::string > parsed_url);
-    
   public:
   
     /**
