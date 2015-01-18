@@ -84,6 +84,8 @@ std::string parsing::get_component(std::string url, int component){
 //Component modification
 std::string parsing::set_component(std::string url, int component, std::string new_value){
   std::vector < std::string > parsed_url = parse_url(url);
-  url.replace(url.find(parsed_url[component]),parsed_url[component].size(), new_value);
+  if(parsed_url[component] != ""){
+    url.replace(url.find(parsed_url[component]),parsed_url[component].size(), new_value);
+  }
   return url;
 }

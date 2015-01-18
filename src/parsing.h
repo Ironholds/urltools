@@ -61,6 +61,7 @@ class parsing{
      * 
      * @param new_value the value to insert into url[component].
      * 
+     * @param delim a delimiter, used in cases where there's no existing value.
      * @see get_component, which allows for retrieval.
      * 
      * @return a string consisting of the modified URL.
