@@ -14,7 +14,8 @@ Description: A toolkit for handling URLs that so far includes functions for URL
 License: MIT + file LICENSE
 LinkingTo: Rcpp
 Imports:
-    Rcpp
+    Rcpp,
+    methods
 Suggests:
     testthat,
     knitr
