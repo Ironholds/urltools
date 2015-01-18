@@ -66,14 +66,20 @@ url_parse("https://en.wikipedia.org/wiki/Article")
 #[1] "https"            "en.wikipedia.org" ""                 "wiki/article"     ""                 ""                
 ```
 
-One of the fields, as mentioned, is the query string - commonly used as a component of web form requests
-or API calls. Along with <code>url\_parse</code>, we also have <code>url\_extract\_param</code>, which extracts the value
-a particular query parameter holds:
+## Getting/setting URL components
+With the inclusion of a URL parser, we suddenly have the opportunity for lubridate-style component getting
+and setting. Syntax is identical to lubridate's:
 
 ```{r, eval=FALSE}
-url_extract_param(urls = "https://en.wikipedia.org/w/api.php?action=sitematrix&format=xml&smstate=all", parameter = "smstate")
-#[1] "all"
+url <- "https://en.wikipedia.org/wiki/Article"
+scheme(url)
+#[1] "https"
+scheme(url) <- "ftp"
+url
+#[1] "ftp://en.wikipedia.org/wiki/Article"
 ```
+Fields that can be extracted or set are <code>scheme</code>, <code>domain</code>, <code>port</code>, <code>path</code>,
+<code>query</code> and <code>fragment</code>, through identically-named functions.
 
 ## Other URL handlers
 If you have ideas for other URL handlers that would make your data processing easier, the best approach
