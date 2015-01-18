@@ -9,6 +9,11 @@ scheme(x)
 
 scheme(x) <- value
 }
+\arguments{
+\item{x}{a URL, or vector of URLs}
+
+\item{value}{a replacement value for x's scheme.}
+}
 \description{
 as in the lubridate package, individual components of a URL
 can be both extracted or set using the relevant function call - see the

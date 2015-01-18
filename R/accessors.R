@@ -5,6 +5,9 @@
 #'@aliases scheme
 #'@rdname scheme
 #'
+#'@param x a URL, or vector of URLs
+#'
+#'@param value a replacement value for x's scheme.
 #'@examples
 #'#Get a component
 #'example_url <- "http://cran.r-project.org/submit.html"
@@ -12,6 +15,7 @@
 #'
 #'#Set a component
 #'scheme(example_url) <- "https"
+#'@import methods
 #'@export
 scheme <- function(x){
   return(v_get_component(x,0))
@@ -29,6 +33,10 @@ setGeneric("scheme<-", useAsDefault = function(x, value){
 #'examples.
 #'@aliases domain
 #'@rdname domain
+#'
+#'@param x a URL, or vector of URLs
+#'
+#'@param value a replacement value for x's scheme.
 #'
 #'@examples
 #'#Get a component
@@ -55,6 +63,10 @@ setGeneric("domain<-", useAsDefault = function(x, value){
 #'@aliases port
 #'@rdname port
 #'
+#'@param x a URL, or vector of URLs
+#'
+#'@param value a replacement value for x's scheme.
+#'
 #'@examples
 #'#Get a component
 #'example_url <- "http://cran.r-project.org:80/submit.html"
@@ -79,6 +91,10 @@ setGeneric("port<-", useAsDefault = function(x, value){
 #'examples.
 #'@aliases path
 #'@rdname path
+#'
+#'@param x a URL, or vector of URLs
+#'
+#'@param value a replacement value for x's scheme.
 #'
 #'@examples
 #'#Get a component
@@ -105,6 +121,10 @@ setGeneric("path<-", useAsDefault = function(x, value){
 #'@aliases query
 #'@rdname query
 #'
+#'@param x a URL, or vector of URLs
+#'
+#'@param value a replacement value for x's scheme.
+#'
 #'@examples
 #'#Get a component
 #'example_url <- "http://en.wikipedia.org/wiki/Aaron_Halfaker?debug=true"
@@ -129,6 +149,10 @@ setGeneric("query<-", useAsDefault = function(x, value){
 #'examples.
 #'@aliases fragment
 #'@rdname fragment
+#'
+#'@param x a URL, or vector of URLs
+#'
+#'@param value a replacement value for x's scheme.
 #'
 #'@examples
 #'#Get a component
