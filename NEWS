@@ -1,6 +1,7 @@
-Version 0.7 (WIP)
+Version 1.0
 -------------------------------------------------------------------------
 NEW FEATURES
+*New get/set functionality, mimicking lubridate; see the package vignette.
 
 BUG FIXES
 *Fixed issues with an unterminated string in the encoding/decoding process, pointed out by Brian Ripley.
