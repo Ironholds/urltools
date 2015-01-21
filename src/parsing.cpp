@@ -5,8 +5,8 @@ using namespace Rcpp;
 //Lower case a string
 std::string parsing::str_tolower(std::string url){
   
-  int string_size = url.size();
-  for(int i = 0; i < string_size; i++){
+  unsigned int string_size = url.size();
+  for(unsigned int i = 0; i < string_size; i++){
     url[i] = tolower(url[i]);
     
   }

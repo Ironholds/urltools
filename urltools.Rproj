@@ -15,5 +15,5 @@ LaTeX: pdfLaTeX
 BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
-PackageCheckArgs: --no-manual --as-cran --use-valgrind  --check-subdirs=yes
+PackageCheckArgs: --no-manual --as-cran --use-valgrind  --check-subdirs=yes --timings --no-clean
 PackageRoxygenize: rd,collate,namespace

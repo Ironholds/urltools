@@ -124,11 +124,11 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
 std::list < std::vector < std::string > > url_parse(std::vector < std::string > urls, bool normalise = true){
   
   //Measure size, create output object
-  int input_size = urls.size();
+  unsigned int input_size = urls.size();
   std::list < std::vector < std::string > > output;
 
   //Decode each string in turn.
-  for (int i = 0; i < input_size; ++i){
+  for (unsigned int i = 0; i < input_size; ++i){
     output.push_back(parsing::parse_url(urls[i]));
   }
   
@@ -138,16 +138,16 @@ std::list < std::vector < std::string > > url_parse(std::vector < std::string > 
 
 //[[Rcpp::export]]
 std::vector < std::string > v_get_component(std::vector < std::string > urls, int component){
-  int input_size = urls.size();
-  for (int i = 0; i < input_size; ++i){
+  unsigned int input_size = urls.size();
+  for (unsigned int i = 0; i < input_size; ++i){
     urls[i] = parsing::get_component(urls[i], component);
   }
   return urls;
 }
 //[[Rcpp::export]]
 std::vector < std::string > v_set_component(std::vector < std::string > urls, int component, std::string new_value){
-  int input_size = urls.size();
-  for (int i = 0; i < input_size; ++i){
+  unsigned int input_size = urls.size();
+  for (unsigned int i = 0; i < input_size; ++i){
     urls[i] = parsing::set_component(urls[i], component, new_value);
   }
   return urls;

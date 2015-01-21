@@ -3,9 +3,6 @@ Version 1.0
 NEW FEATURES
 *New get/set functionality, mimicking lubridate; see the package vignette.
 
-BUG FIXES
-*Fixed issues with an unterminated string in the encoding/decoding process, pointed out by Brian Ripley.
-
 DEVELOPMENT
 *Internal C++ documentation added and the encoders and parsers refactored.
 
