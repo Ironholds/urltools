@@ -21,7 +21,12 @@ crucial for large datasets. For more information, see the [urltools vignette](ht
 
 ###Installation
 
-The latest released version can be obtained [from CRAN](http://cran.r-project.org/web/packages/urltools/). To get the development version:
+The latest released version can be obtained via:
+
+    library(devtools)
+    install_github("ironholds/devtools", ref = "1.0.0")
+
+To get the development version:
 
     library(devtools)
     install_github("ironholds/urltools")
