@@ -24,7 +24,7 @@ crucial for large datasets. For more information, see the [urltools vignette](ht
 The latest released version can be obtained via:
 
     library(devtools)
-    install_github("ironholds/devtools", ref = "1.0.0")
+    install_github("ironholds/urltools", ref = "1.0.0")
 
 To get the development version:
 
