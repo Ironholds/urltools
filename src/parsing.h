@@ -51,6 +51,18 @@ class parsing{
     static std::string get_component(std::string url, int component);
     
     /**
+     * Component retrieval specifically for parameters.
+     * 
+     * @param urls a reference to a vector of URLs
+     * 
+     * @param component the name of a component to retrieve
+     * the value of
+     * 
+     * @return a vector of the values for that component.
+     */
+    std::vector < std::string > get_parameter(std::vector < std::string >& urls, std::string component);
+    
+    /**
      * A function to set an individual component in a parsed
      * URL. Used in "scheme<-", et al; calls parse_url.
      * 

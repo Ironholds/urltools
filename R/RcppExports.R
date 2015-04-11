@@ -93,6 +93,26 @@ v_get_component <- function(urls, component) {
     .Call('urltools_v_get_component', PACKAGE = 'urltools', urls, component)
 }
 
+#'@title get the values of a URL's parameters
+#'@description URLs can have parameters, taking the form of \code{name=value}, chained together
+#'with \code{&} symbols. \code{url_parameters}, when provided with a vector of URLs and a vector
+#'of parameter names, will generate a data.frame consisting of the values of each parameter
+#'for each URL.
+#'
+#'@param urls a vector of URLs
+#'
+#'@param parameter_names a vector of parameter names
+#'
+#'@examples
+#'#A very simple example
+#'url <- "https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome"
+#'parameter_values <- url_parameters(url, c("api_params","hiphop"))
+#'
+#'@export
+url_parameters <- function(urls, parameter_names) {
+    .Call('urltools_url_parameters', PACKAGE = 'urltools', urls, parameter_names)
+}
+
 v_set_component <- function(urls, component, new_value) {
     .Call('urltools_v_set_component', PACKAGE = 'urltools', urls, component, new_value)
 }

@@ -81,6 +81,30 @@ std::string parsing::get_component(std::string url, int component){
   return parse_url(url)[component];
 }
 
+//Parameter retrieval
+std::vector < std::string > parsing::get_parameter(std::vector < std::string >& urls, std::string component){
+  std::size_t component_location;
+  std::size_t next_location;
+  int input_size = urls.size();
+  int component_size = component.length();
+  std::vector < std::string > output(input_size);
+  
+  for(unsigned int i = 0; i < input_size; ++i){
+    component_location = urls[i].find(component);
+    if(component_location == std::string::npos){
+      output[i] = "";
+    } else {
+      next_location = urls[i].find_first_of("&#", component_location + component_size);
+      if(next_location == std::string::npos){
+        output[i] = urls[i].substr(component_location + component_size + 1);
+      } else {
+        output[i] = urls[i].substr(component_location + component_size + 1, (next_location-(component_location + component_size + 1)));
+      }
+    }
+  }
+  return output;
+}
+
 //Component modification
 std::string parsing::set_component(std::string url, int component, std::string new_value){
   std::vector < std::string > parsed_url = parse_url(url);

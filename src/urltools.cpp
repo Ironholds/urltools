@@ -126,7 +126,7 @@ std::list < std::vector < std::string > > url_parse(std::vector < std::string > 
   //Measure size, create output object
   unsigned int input_size = urls.size();
   std::list < std::vector < std::string > > output;
-
+  
   //Decode each string in turn.
   for (unsigned int i = 0; i < input_size; ++i){
     output.push_back(parsing::parse_url(urls[i]));
@@ -144,6 +144,40 @@ std::vector < std::string > v_get_component(std::vector < std::string > urls, in
   }
   return urls;
 }
+
+//'@title get the values of a URL's parameters
+//'@description URLs can have parameters, taking the form of \code{name=value}, chained together
+//'with \code{&} symbols. \code{url_parameters}, when provided with a vector of URLs and a vector
+//'of parameter names, will generate a data.frame consisting of the values of each parameter
+//'for each URL.
+//'
+//'@param urls a vector of URLs
+//'
+//'@param parameter_names a vector of parameter names
+//'
+//'@examples
+//'#A very simple example
+//'url <- "https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome"
+//'parameter_values <- url_parameters(url, c("api_params","hiphop"))
+//'
+//'@export
+//[[Rcpp::export]]
+List url_parameters(std::vector < std::string > urls, std::vector < std::string > parameter_names){
+  parsing p_inst;
+  List output;
+  IntegerVector rownames = Rcpp::seq(1,urls.size());
+  int column_count = parameter_names.size();
+  std::vector < std::string >&url_ref = urls;
+  
+  for(unsigned int i = 0; i < column_count; ++i){
+    output.push_back(p_inst.get_parameter(url_ref, parameter_names[i]));
+  }
+  output.attr("class") = "data.frame";
+  output.attr("names") = parameter_names;
+  output.attr("row.names") = rownames;
+  return output;
+}
+
 //[[Rcpp::export]]
 std::vector < std::string > v_set_component(std::vector < std::string > urls, int component, std::string new_value){
   unsigned int input_size = urls.size();
