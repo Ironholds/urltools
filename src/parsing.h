@@ -16,7 +16,7 @@ class parsing{
      * 
      * @return a string containing the lower-cased version of x.
      */
-    static std::string str_tolower(std::string url);
+    std::string str_tolower(std::string url);
     
   public:
   
@@ -33,7 +33,7 @@ class parsing{
      * @return a vector consisting of the value for each component
      * part of the URL.
      */
-    static std::vector < std::string > parse_url(std::string url);
+    std::vector < std::string > parse_url(std::string url);
     
     /**
      * A function to retrieve an individual component from a parsed
@@ -48,7 +48,7 @@ class parsing{
      * 
      * @return a string consisting of the requested URL component.
      */
-    static std::string get_component(std::string url, int component);
+    std::string get_component(std::string url, int component);
     
     /**
      * Component retrieval specifically for parameters.
@@ -78,6 +78,6 @@ class parsing{
      * 
      * @return a string consisting of the modified URL.
      */
-    static std::string set_component(std::string url, int component, std::string new_value);
+    std::string set_component(std::string url, int component, std::string new_value);
 };
 #endif

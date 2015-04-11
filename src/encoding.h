@@ -22,7 +22,7 @@ class encoding{
      * 
      * @return a string containing the un-hexed value of x.
      */
-    static char from_hex (char x);
+    char from_hex (char x);
     
     /**
      * A function for taking a character value and converting
@@ -34,7 +34,7 @@ class encoding{
      * 
      * @return a string containing the now-hexed value of x.
      */
-    static std::string to_hex(char x);
+    std::string to_hex(char x);
 
   public:
   
@@ -48,7 +48,7 @@ class encoding{
      * 
      * @return a string containing the decoded URL.
      */
-    static std::string internal_url_decode(std::string url);
+    std::string internal_url_decode(std::string url);
     
     /**
      * A function for encoding URLs. calls to_hex, and is
@@ -60,7 +60,7 @@ class encoding{
      * 
      * @return a string containing the percent-encoded version of "url".
      */
-    static std::string internal_url_encode(std::string url);
+    std::string internal_url_encode(std::string url);
 
 };
 

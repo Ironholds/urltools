@@ -58,10 +58,10 @@ std::vector < std::string > url_decode(std::vector < std::string > urls){
   //Measure size, create output object
   int input_size = urls.size();
   std::vector < std::string > output(input_size);
-  
+  encoding enc_inst;
   //Decode each string in turn.
   for (int i = 0; i < input_size; ++i){
-    output[i] = encoding::internal_url_decode(urls[i]);
+    output[i] = enc_inst.internal_url_decode(urls[i]);
   }
   
   //Return
@@ -77,17 +77,18 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
   int input_size = urls.size();
   std::vector < std::string > output(input_size);
   size_t indices;
-  
+  encoding enc_inst;
+
   //For each string..
   for (int i = 0; i < input_size; ++i){
     
     //Extract the protocol. If you can't find it, just encode the entire thing.
     indices = urls[i].find("://");
     if(indices == std::string::npos){
-      output[i] = encoding::internal_url_encode(urls[i]);
+      output[i] = enc_inst.internal_url_encode(urls[i]);
     } else {
       //Otherwise, split out the protocol and encode !protocol.
-      output[i] = urls[i].substr(0,indices+3) + encoding::internal_url_encode(urls[i].substr(indices+3));
+      output[i] = urls[i].substr(0,indices+3) + enc_inst.internal_url_encode(urls[i].substr(indices+3));
     }
   }
   
@@ -123,13 +124,14 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
 // [[Rcpp::export]]
 std::list < std::vector < std::string > > url_parse(std::vector < std::string > urls, bool normalise = true){
   
-  //Measure size, create output object
+  //Measure size, create output object, instantiate
   unsigned int input_size = urls.size();
   std::list < std::vector < std::string > > output;
+  parsing p_inst;
   
-  //Decode each string in turn.
+  //Parse each string in turn.
   for (unsigned int i = 0; i < input_size; ++i){
-    output.push_back(parsing::parse_url(urls[i]));
+    output.push_back(p_inst.parse_url(urls[i]));
   }
   
   //Return
@@ -138,9 +140,10 @@ std::list < std::vector < std::string > > url_parse(std::vector < std::string > 
 
 //[[Rcpp::export]]
 std::vector < std::string > v_get_component(std::vector < std::string > urls, int component){
+  parsing p_inst;
   unsigned int input_size = urls.size();
   for (unsigned int i = 0; i < input_size; ++i){
-    urls[i] = parsing::get_component(urls[i], component);
+    urls[i] = p_inst.get_component(urls[i], component);
   }
   return urls;
 }
@@ -180,9 +183,10 @@ List url_parameters(std::vector < std::string > urls, std::vector < std::string 
 
 //[[Rcpp::export]]
 std::vector < std::string > v_set_component(std::vector < std::string > urls, int component, std::string new_value){
+  parsing p_inst;
   unsigned int input_size = urls.size();
   for (unsigned int i = 0; i < input_size; ++i){
-    urls[i] = parsing::set_component(urls[i], component, new_value);
+    urls[i] = p_inst.set_component(urls[i], component, new_value);
   }
   return urls;
 }
