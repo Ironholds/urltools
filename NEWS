@@ -2,6 +2,7 @@ Version 1.1.0 [WIP]
 -------------------------------------------------------------------------
 NEW FEATURES
 *url_parameters provides the values of specified parameters within a vector of URLs, as a data.frame
+*KeyboardInterrupts are now available for interrupting long computations.
 
 BUG FIXES
 

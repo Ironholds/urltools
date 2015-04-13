@@ -61,6 +61,9 @@ std::vector < std::string > url_decode(std::vector < std::string > urls){
   encoding enc_inst;
   //Decode each string in turn.
   for (int i = 0; i < input_size; ++i){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
     output[i] = enc_inst.internal_url_decode(urls[i]);
   }
   
@@ -81,6 +84,11 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
 
   //For each string..
   for (int i = 0; i < input_size; ++i){
+    
+    //Check for user interrupts.
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
     
     //Extract the protocol. If you can't find it, just encode the entire thing.
     indices = urls[i].find("://");
@@ -131,6 +139,9 @@ std::list < std::vector < std::string > > url_parse(std::vector < std::string > 
   
   //Parse each string in turn.
   for (unsigned int i = 0; i < input_size; ++i){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
     output.push_back(p_inst.parse_url(urls[i]));
   }
   
@@ -143,6 +154,9 @@ std::vector < std::string > v_get_component(std::vector < std::string > urls, in
   parsing p_inst;
   unsigned int input_size = urls.size();
   for (unsigned int i = 0; i < input_size; ++i){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
     urls[i] = p_inst.get_component(urls[i], component);
   }
   return urls;
@@ -173,6 +187,9 @@ List url_parameters(std::vector < std::string > urls, std::vector < std::string 
   std::vector < std::string >&url_ref = urls;
   
   for(unsigned int i = 0; i < column_count; ++i){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
     output.push_back(p_inst.get_parameter(url_ref, parameter_names[i]));
   }
   output.attr("class") = "data.frame";
@@ -186,6 +203,9 @@ std::vector < std::string > v_set_component(std::vector < std::string > urls, in
   parsing p_inst;
   unsigned int input_size = urls.size();
   for (unsigned int i = 0; i < input_size; ++i){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
     urls[i] = p_inst.set_component(urls[i], component, new_value);
   }
   return urls;
