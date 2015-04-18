@@ -19,7 +19,7 @@ for each URL.
 }
 \examples{
 #A very simple example
-url <- https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome
+url <- "https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome"
 parameter_values <- url_parameters(url, c("api_params","hiphop"))
 }
 
