@@ -23,7 +23,7 @@ std::string encoding::to_hex(char x){
   std::string output;
   
   //Convert
-  if( 0 <= digit_1 && digit_1 <= 9){
+  if(0 <= digit_1 && digit_1 <= 9){
     digit_1 += 48;
   } else if(10 <= digit_1 && digit_1 <=15){
     digit_1 += 97-10;
@@ -43,19 +43,22 @@ std::string encoding::internal_url_decode(std::string url){
   
   //Create output object
   std::string result;
-  
+
   //For each character...
   for (std::string::size_type i = 0; i <  url.size(); ++i){
     
     //If it's a +, space
     if (url[i] == '+'){
       result += ' ';
-    } else if (url[i] == '%' && url.size() > i+2){//Escaped? Convert from hex and includes
+    } else if (url[i] == '%' && url.size() > i+2){
+      
+      //Escaped? Convert from hex and includes
       char holding_1 = encoding::from_hex(url[i+1]);
       char holding_2 = encoding::from_hex(url[i+2]);
       char holding = (holding_1 << 4) | holding_2;
       result += holding;
       i += 2;
+      
     } else { //Permitted? Include.
       result += url[i];
     }
