@@ -5,9 +5,13 @@ using namespace Rcpp;
 #define __DECOMPOSE_INCLUDED__
 
 class decompose{
+  
+  public:
     std::string scheme(std::string& url);
-    
     std::vector < std::string > domain_and_port(std::string& url);
+    std::string path(std::string& url);
+    std::string query(std::string& url);
     
-    std::string decompose::path(std::string& url);
 };
+
+#endif

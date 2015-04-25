@@ -1,6 +1,8 @@
 #include <Rcpp.h>
 #include "encoding.h"
 #include "parsing.h"
+#include "decompose.h"
+
 using namespace Rcpp;
 
 //'@title Encode or decode a URI

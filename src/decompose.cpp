@@ -41,7 +41,7 @@ std::string decompose::path(std::string& url){
   std::string output;
   std::size_t path = url.find("?");
   if(path == std::string::npos){
-    std::size_t fragment == url.find("#");
+    std::size_t fragment = url.find("#");
     if(fragment == std::string::npos){
       output = url;
       url = "";
