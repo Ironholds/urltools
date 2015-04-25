@@ -141,6 +141,31 @@ List url_parameters(std::vector < std::string > urls, std::vector < std::string 
   return output;
 }
 
+
+//'@title split URLs into their component parts
+//'@description \code{url_parse} takes a vector of URLs and splits each one into its component
+//'parts, as recognised by RfC 3986.
+//'
+//'@param urls a vector of URLs
+//'
+//'@param normalise whether to normalise the URLs - essentially, whether or not to
+//'make them consistently lower-case. Set to TRUE by default.
+//'
+//'@details It's useful to be able to take a URL and split it out into its component parts - 
+//'for the purpose of hostname extraction, for example, or analysing API calls. This functionality
+//'is not provided in base R, although it is provided in \code{\link[httr]{parse_url}}; that
+//'implementation is entirely in R, uses regular expressions, and is not vectorised. It's
+//'perfectly suitable for the intended purpose (decomposition in the context of automated
+//'HTTP requests from R), but not for large-scale analysis.
+//'
+//'@return a list of vectors, one for each URL, with each vector containing (in sequence)
+//'the URL's scheme, domain, port, path, query string and fragment identifier. See the
+//'\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for definitions. If an element
+//'cannot be identified, it is replaced with an empty string.
+//'
+//'@examples
+//'url_parse("https://en.wikipedia.org/wiki/Article")
+//'
 //'@export
 //[[Rcpp::export]]
 DataFrame url_parse(std::vector < std::string > urls){
