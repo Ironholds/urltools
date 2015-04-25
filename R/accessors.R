@@ -18,13 +18,13 @@
 #'@import methods
 #'@export
 scheme <- function(x){
-  return(v_get_component(x,0))
+  return(get_component_(x,0))
 }
 "scheme<-" <- function(x, value) standardGeneric("scheme<-")
 #'@rdname scheme
 #'@export
 setGeneric("scheme<-", useAsDefault = function(x, value){
-  return(v_set_component(x, 0, value))
+  return(set_component_(x, 0, value))
 })
 
 #'@title Get or set a URL's domain
@@ -47,13 +47,13 @@ setGeneric("scheme<-", useAsDefault = function(x, value){
 #'domain(example_url) <- "en.wikipedia.org"
 #'@export
 domain <- function(x){
-  return(v_get_component(x,1))
+  return(get_component_(x,1))
 }
 "domain<-" <- function(x, value) standardGeneric("domain<-")
 #'@rdname domain
 #'@export
 setGeneric("domain<-", useAsDefault = function(x, value){
-  return(v_set_component(x, 1, value))
+  return(set_component_(x, 1, value))
 })
 
 #'@title Get or set a URL's port
@@ -76,13 +76,13 @@ setGeneric("domain<-", useAsDefault = function(x, value){
 #'port(example_url) <- "12"
 #'@export
 port <- function(x){
-  return(v_get_component(x,2))
+  return(get_component_(x,2))
 }
 "port<-" <- function(x, value) standardGeneric("port<-")
 #'@rdname port
 #'@export
 setGeneric("port<-", useAsDefault = function(x, value){
-  return(v_set_component(x, 2, value))
+  return(set_component_(x, 2, value))
 })
 
 #'@title Get or set a URL's path
@@ -105,13 +105,13 @@ setGeneric("port<-", useAsDefault = function(x, value){
 #'path(example_url) <- "bin/windows/"
 #'@export
 path <- function(x){
-  return(v_get_component(x,3))
+  return(get_component_(x,3))
 }
 "path<-" <- function(x, value) standardGeneric("path<-")
 #'@rdname path
 #'@export
 setGeneric("path<-", useAsDefault = function(x, value){
-  return(v_set_component(x, 3, value))
+  return(set_component_(x, 3, value))
 })
 
 #'@title Get or set a URL's query string
@@ -134,13 +134,13 @@ setGeneric("path<-", useAsDefault = function(x, value){
 #'query(example_url) <- "debug=false"
 #'@export
 query <- function(x){
-  return(v_get_component(x,4))
+  return(get_component_(x,4))
 }
 "query<-" <- function(x, value) standardGeneric("query<-")
 #'@rdname query
 #'@export
 setGeneric("query<-", useAsDefault = function(x, value){
-  return(v_set_component(x, 4, value))
+  return(set_component_(x, 4, value))
 })
 
 #'@title Get or set a URL's fragment identifier
@@ -165,11 +165,11 @@ setGeneric("query<-", useAsDefault = function(x, value){
 #'@rdname fragment
 #'@export
 fragment <- function(x){
-  return(v_get_component(x,5))
+  return(get_component_(x,5))
 }
 "fragment<-" <- function(x, value) standardGeneric("fragment<-")
 #'@rdname fragment
 #'@export
 setGeneric("fragment<-", useAsDefault = function(x, value){
-  return(v_set_component(x, 5, value))
+  return(set_component_(x, 5, value))
 })

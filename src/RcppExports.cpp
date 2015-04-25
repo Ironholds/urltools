@@ -5,6 +5,31 @@
 
 using namespace Rcpp;
 
+// get_component_
+std::vector < std::string > get_component_(std::vector < std::string > urls, int component);
+RcppExport SEXP urltools_get_component_(SEXP urlsSEXP, SEXP componentSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< int >::type component(componentSEXP);
+    __result = Rcpp::wrap(get_component_(urls, component));
+    return __result;
+END_RCPP
+}
+// set_component_
+std::vector < std::string > set_component_(std::vector < std::string > urls, int component, std::string new_value);
+RcppExport SEXP urltools_set_component_(SEXP urlsSEXP, SEXP componentSEXP, SEXP new_valueSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< int >::type component(componentSEXP);
+    Rcpp::traits::input_parameter< std::string >::type new_value(new_valueSEXP);
+    __result = Rcpp::wrap(set_component_(urls, component, new_value));
+    return __result;
+END_RCPP
+}
 // url_decode
 std::vector < std::string > url_decode(std::vector < std::string > urls);
 RcppExport SEXP urltools_url_decode(SEXP urlsSEXP) {
@@ -27,30 +52,6 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// url_parse
-std::list < std::vector < std::string > > url_parse(std::vector < std::string > urls, bool normalise);
-RcppExport SEXP urltools_url_parse(SEXP urlsSEXP, SEXP normaliseSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
-    Rcpp::traits::input_parameter< bool >::type normalise(normaliseSEXP);
-    __result = Rcpp::wrap(url_parse(urls, normalise));
-    return __result;
-END_RCPP
-}
-// v_get_component
-std::vector < std::string > v_get_component(std::vector < std::string > urls, int component);
-RcppExport SEXP urltools_v_get_component(SEXP urlsSEXP, SEXP componentSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
-    Rcpp::traits::input_parameter< int >::type component(componentSEXP);
-    __result = Rcpp::wrap(v_get_component(urls, component));
-    return __result;
-END_RCPP
-}
 // url_parameters
 List url_parameters(std::vector < std::string > urls, std::vector < std::string > parameter_names);
 RcppExport SEXP urltools_url_parameters(SEXP urlsSEXP, SEXP parameter_namesSEXP) {
@@ -63,16 +64,14 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// v_set_component
-std::vector < std::string > v_set_component(std::vector < std::string > urls, int component, std::string new_value);
-RcppExport SEXP urltools_v_set_component(SEXP urlsSEXP, SEXP componentSEXP, SEXP new_valueSEXP) {
+// url_parse
+DataFrame url_parse(std::vector < std::string > urls);
+RcppExport SEXP urltools_url_parse(SEXP urlsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
-    Rcpp::traits::input_parameter< int >::type component(componentSEXP);
-    Rcpp::traits::input_parameter< std::string >::type new_value(new_valueSEXP);
-    __result = Rcpp::wrap(v_set_component(urls, component, new_value));
+    __result = Rcpp::wrap(url_parse(urls));
     return __result;
 END_RCPP
 }

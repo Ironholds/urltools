@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 #include "encoding.h"
 #include "parsing.h"
-#include "decompose.h"
 
 using namespace Rcpp;
 
@@ -106,64 +105,6 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
   return output;
 }
 
-//'@title split URLs into their component parts
-//'@description \code{url_parse} takes a vector of URLs and splits each one into its component
-//'parts, as recognised by RfC 3986.
-//'
-//'@param urls a vector of URLs
-//'
-//'@param normalise whether to normalise the URLs - essentially, whether or not to
-//'make them consistently lower-case. Set to TRUE by default.
-//'
-//'@details It's useful to be able to take a URL and split it out into its component parts - 
-//'for the purpose of hostname extraction, for example, or analysing API calls. This functionality
-//'is not provided in base R, although it is provided in \code{\link[httr]{parse_url}}; that
-//'implementation is entirely in R, uses regular expressions, and is not vectorised. It's
-//'perfectly suitable for the intended purpose (decomposition in the context of automated
-//'HTTP requests from R), but not for large-scale analysis.
-//'
-//'@return a list of vectors, one for each URL, with each vector containing (in sequence)
-//'the URL's scheme, domain, port, path, query string and fragment identifier. See the
-//'\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for definitions. If an element
-//'cannot be identified, it is replaced with an empty string.
-//'
-//'@examples
-//'url_parse("https://en.wikipedia.org/wiki/Article")
-//'
-//'@export
-// [[Rcpp::export]]
-std::list < std::vector < std::string > > url_parse(std::vector < std::string > urls, bool normalise = true){
-  
-  //Measure size, create output object, instantiate
-  unsigned int input_size = urls.size();
-  std::list < std::vector < std::string > > output;
-  parsing p_inst;
-  
-  //Parse each string in turn.
-  for (unsigned int i = 0; i < input_size; ++i){
-    if((i % 10000) == 0){
-      Rcpp::checkUserInterrupt();
-    }
-    output.push_back(p_inst.parse_url(urls[i]));
-  }
-  
-  //Return
-  return output;
-}
-
-//[[Rcpp::export]]
-std::vector < std::string > v_get_component(std::vector < std::string > urls, int component){
-  parsing p_inst;
-  unsigned int input_size = urls.size();
-  for (unsigned int i = 0; i < input_size; ++i){
-    if((i % 10000) == 0){
-      Rcpp::checkUserInterrupt();
-    }
-    urls[i] = p_inst.get_component(urls[i], component);
-  }
-  return urls;
-}
-
 //'@title get the values of a URL's parameters
 //'@description URLs can have parameters, taking the form of \code{name=value}, chained together
 //'with \code{&} symbols. \code{url_parameters}, when provided with a vector of URLs and a vector
@@ -200,15 +141,10 @@ List url_parameters(std::vector < std::string > urls, std::vector < std::string 
   return output;
 }
 
+//'@export
 //[[Rcpp::export]]
-std::vector < std::string > v_set_component(std::vector < std::string > urls, int component, std::string new_value){
+DataFrame url_parse(std::vector < std::string > urls){
+  std::vector < std::string >& urls_ptr = urls;
   parsing p_inst;
-  unsigned int input_size = urls.size();
-  for (unsigned int i = 0; i < input_size; ++i){
-    if((i % 10000) == 0){
-      Rcpp::checkUserInterrupt();
-    }
-    urls[i] = p_inst.set_component(urls[i], component, new_value);
-  }
-  return urls;
+  return p_inst.parse_to_df(urls_ptr);
 }
