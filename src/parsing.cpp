@@ -105,11 +105,6 @@ std::vector < std::string > parsing::url_to_vector(std::string& url){
   return output;
 }
 
-//Component retrieval
-std::string parsing::get_component(std::string& url, int component){
-  return url_to_vector(url)[component];
-}
-
 //Parameter retrieval
 std::vector < std::string > parsing::get_parameter(std::vector < std::string >& urls, std::string component){
   std::size_t component_location;
@@ -134,11 +129,16 @@ std::vector < std::string > parsing::get_parameter(std::vector < std::string >& 
   return output;
 }
 
+//Component retrieval
+std::string parsing::get_component(std::string& url, int component){
+  return url_to_vector(url)[component];
+}
+
 //Component modification
 std::string parsing::set_component(std::string url, int component, std::string new_value){
-  std::vector < std::string > parsed_url = url_to_vector(url);
-  if(parsed_url[component] != ""){
-    url.replace(url.find(parsed_url[component]), parsed_url[component].size(), new_value);
+  std::string parsed_url_elem = url_to_vector(url)[component];
+  if(parsed_url_elem.size() != 0){
+    url.replace(url.find(parsed_url_elem), parsed_url_elem.size(), new_value);
   }
   return url;
 }
