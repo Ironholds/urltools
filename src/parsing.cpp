@@ -135,7 +135,7 @@ std::vector < std::string > parsing::get_parameter(std::vector < std::string >& 
 }
 
 //Component modification
-std::string parsing::set_component(std::string url, int component, std::string& new_value){
+std::string parsing::set_component(std::string url, int component, std::string new_value){
   std::vector < std::string > parsed_url = url_to_vector(url);
   if(parsed_url[component] != ""){
     url.replace(url.find(parsed_url[component]), parsed_url[component].size(), new_value);

@@ -37,7 +37,7 @@ class parsing{
     std::string path(std::string& url);
     std::string query(std::string& url);
   public:
-    
+  
     /**
      * A function to retrieve an individual component from a parsed
      * URL. Used in scheme(), host() et al; calls parse_url.
@@ -69,7 +69,7 @@ class parsing{
      * 
      * @return a string consisting of the modified URL.
      */
-    std::string set_component(std::string url, int component, std::string& new_value);
+    std::string set_component(std::string url, int component, std::string new_value);
 
     /**
      * Component retrieval specifically for parameters.
