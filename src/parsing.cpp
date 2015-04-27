@@ -136,11 +136,12 @@ std::string parsing::get_component(std::string& url, int component){
 
 //Component modification
 std::string parsing::set_component(std::string url, int component, std::string new_value){
+  std::string url_cp = url;
   std::string parsed_url_elem = url_to_vector(url)[component];
   if(parsed_url_elem.size() != 0){
-    url.replace(url.find(parsed_url_elem), parsed_url_elem.size(), new_value);
+    url_cp.replace(url_cp.find(parsed_url_elem), parsed_url_elem.size(), new_value);
   }
-  return url;
+  return url_cp;
 }
 
 DataFrame parsing::parse_to_df(std::vector < std::string >& urls_ptr){
