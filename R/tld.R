@@ -16,7 +16,6 @@
 #'update_domains()
 #'}
 #'
-#'@export
 update_domains <- function(){
   con <- url("http://data.iana.org/TLD/tlds-alpha-by-domain.txt")
   raw_results <- readLines(con)
