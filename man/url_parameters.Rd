@@ -11,6 +11,10 @@ url_parameters(urls, parameter_names)
 
 \item{parameter_names}{a vector of parameter names}
 }
+\value{
+a data.frame containing one column for each provided parameter name. Values that
+cannot be found within a particular URL are represented by an empty string.
+}
 \description{
 URLs can have parameters, taking the form of \code{name=value}, chained together
 with \code{&} symbols. \code{url_parameters}, when provided with a vector of URLs and a vector
@@ -21,5 +25,8 @@ for each URL.
 #A very simple example
 url <- "https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome"
 parameter_values <- url_parameters(url, c("api_params","hiphop"))
+}
+\seealso{
+\code{\link{url_parse}} for decomposing URLs into their constituent parts.
 }
 

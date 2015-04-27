@@ -33,4 +33,8 @@ HTTP requests from R), but not for large-scale analysis.
 \examples{
 url_parse("https://en.wikipedia.org/wiki/Article")
 }
+\seealso{
+\code{url_parameters} for extracting values associated with particular keys in a URL's
+query string.
+}
 

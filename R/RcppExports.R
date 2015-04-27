@@ -78,10 +78,15 @@ url_encode <- function(urls) {
 #'
 #'@param parameter_names a vector of parameter names
 #'
+#'@return a data.frame containing one column for each provided parameter name. Values that
+#'cannot be found within a particular URL are represented by an empty string.
+#'
 #'@examples
 #'#A very simple example
 #'url <- "https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome"
 #'parameter_values <- url_parameters(url, c("api_params","hiphop"))
+#'
+#'@seealso \code{\link{url_parse}} for decomposing URLs into their constituent parts.
 #'
 #'@export
 url_parameters <- function(urls, parameter_names) {
@@ -111,6 +116,9 @@ url_parameters <- function(urls, parameter_names) {
 #'
 #'@examples
 #'url_parse("https://en.wikipedia.org/wiki/Article")
+#'
+#'@seealso \code{url_parameters} for extracting values associated with particular keys in a URL's
+#'query string.
 #'
 #'@export
 url_parse <- function(urls) {
