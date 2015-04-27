@@ -10,6 +10,7 @@ BUG FIXES
 DEVELOPMENT
 *De-static the hell out of all the C++.
 *Internal refactor to store each logical stage of url decomposition as its own method
+*Internal refactor to use references, minimising memory usage; thanks to Mark Greenaway for making this work!
 *Roxygen upgrade
 
 Version 1.0.0

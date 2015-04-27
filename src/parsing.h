@@ -18,11 +18,67 @@ class parsing{
      * @return a string containing the lower-cased version of x.
      */
     std::string str_tolower(std::string& url);
-
+    
+    /**
+     * A function for extracting the scheme of a URL; part of the
+     * URL parsing framework.
+     * 
+     * @param url a reference to a url.
+     * 
+     * @see url_to_vector which calls this.
+     * 
+     * @return a string containing the scheme of the URL if identifiable,
+     * and "" if not.
+     */
+    std::string scheme(std::string& url);
+    
+    /**
+     * A function for extracting the domain and port of a URL; part of the
+     * URL parsing framework. Fairly unique in that it outputs a
+     * vector, unlike the rest of the framework, which outputs a string,
+     * since it has to handle multiple elements.
+     * 
+     * @param url a reference to a url. Should've been run through
+     * scheme() first.
+     * 
+     * @see url_to_vector which calls this.
+     * 
+     * @return a vector containing the domain and port of the URL if identifiable,
+     * and "" for each non-identifiable element.
+     */
+    std::vector < std::string > domain_and_port(std::string& url);
+    
+    /**
+     * A function for extracting the path of a URL; part of the
+     * URL parsing framework.
+     * 
+     * @param url a reference to a url. Should've been run through
+     * scheme() and domain_and_port() first.
+     * 
+     * @see url_to_vector which calls this.
+     * 
+     * @return a string containing the path of the URL if identifiable,
+     * and "" if not.
+     */
+    std::string path(std::string& url);
+    
+    /**
+     * A function for extracting the path of a URL; part of the
+     * URL parsing framework.
+     * 
+     * @param url a reference to a url. Should've been run through
+     * scheme(), domain_and_port() and path() first.
+     * 
+     * @see url_to_vector which calls this.
+     * 
+     * @return a string containing the query string of the URL if identifiable,
+     * and "" if not.
+     */
+    std::string query(std::string& url);
+    
     /**
      * A function for parsing a URL and turning it into a vector.
-     * Tremendously useful for get- and set-scheme, otherwise
-     * pretty much useless these days.
+     * Tremendously useful (read: everything breaks without this)
      * 
      * @param url a URL.
      * 
@@ -32,10 +88,6 @@ class parsing{
      * part of the URL.
      */
     std::vector < std::string > url_to_vector(std::string& url_ptr);
-    std::string scheme(std::string& url);
-    std::vector < std::string > domain_and_port(std::string& url);
-    std::string path(std::string& url);
-    std::string query(std::string& url);
   public:
   
     /**
@@ -84,11 +136,11 @@ class parsing{
     std::vector < std::string > get_parameter(std::vector < std::string >& urls, std::string component);
     
     /**
-     * Decompose a URL and turn it into a list
+     * Decompose a vector of URLs and turn it into a data.frame.
      * 
      * @param URLs a reference to a vector of URLs
      * 
-     * @return an Rcpp List that can then be classified as a data.frame.
+     * @return an Rcpp data.frame.
      * 
      */
     DataFrame parse_to_df(std::vector < std::string >& urls_ptr);
