@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 #include "encoding.h"
 #include "parsing.h"
+#include "domains.h"
 
 using namespace Rcpp;
 
