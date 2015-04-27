@@ -9,10 +9,8 @@ to create connections to retrieve datasets. This is an essential feature for the
 but it also means that URL handlers are designed for situations where URLs *get* you to the data - 
 not situations where URLs *are* the data.
 
-As web analytics and research around human-computer interaction becomes more prominent, there is
-an increasing need for packages that can handle things like server-side logs. urltools is intended
-to provide the URL-centric component of this, containing functions for encoding, decoding, parsing
-and component extraction.
+There is no support for encoding or decoding URLs en-masse, and no support for parsing and
+interpreting them. `urltools` provides this support!
 
 ## URL encoding and decoding
 
@@ -26,9 +24,9 @@ Not only are they not vectorised, they also have several particularly idiosyncra
 
 ```{r, eval=FALSE}
 URLdecode("test%gIL")
-#Error in rawToChar(out) : embedded nul in string: '\0L'
-#In addition: Warning message:
-#In URLdecode("%gIL") : out-of-range values treated as 0 in coercion to raw
+Error in rawToChar(out) : embedded nul in string: '\0L'
+In addition: Warning message:
+In URLdecode("%gIL") : out-of-range values treated as 0 in coercion to raw
 ```
 
 URLencode, on the other hand, encodes slashes on its most strict setting - without
@@ -36,7 +34,7 @@ paying attention to where those slashes *are*: if we attempt to URLencode an ent
 
 ```{r, eval=FALSE}
 URLencode("https://en.wikipedia.org/wiki/Article", reserved = TRUE)
-#[1] "https%3a%2f%2fen.wikipedia.org%2fwiki%2fArticle"
+[1] "https%3a%2f%2fen.wikipedia.org%2fwiki%2fArticle"
 ```
 That's a completely unusable URL (or ewRL, if you will).
 
@@ -44,12 +42,13 @@ urltools replaces both functions with <code>url\_decode</code> and <code>url\_en
 ```{r, eval=FALSE}
 library(urltools)
 url_decode("test%gIL")
-#[1] "test"
+[1] "test"
 url_encode("https://en.wikipedia.org/wiki/Article")
-#[1] "https://en.wikipedia.org%2fwiki%2fArticle"
+[1] "https://en.wikipedia.org%2fwiki%2fArticle"
 ```
 
-As you can see, <code>url_decode</code> simply excludes out-of-range characters from consideration, while <code>url_encode</code> detects characters that make up part of the URLs scheme, and leaves them unencoded.
+As you can see, <code>url\_decode</code> simply excludes out-of-range characters from consideration, while <code>url\_encode</code> detects characters that make up part of the URLs scheme, and leaves them unencoded. Both are extremely fast; with `urltools`, you can
+decode a vector of 1,000,000 URLs in 0.9 seconds.
 
 ## URL parsing
 
@@ -58,28 +57,47 @@ you won't actually care about most of the URL. You'll want to look at the scheme
 but not the entire thing as one string.
 
 The solution is <code>url_parse</code>, which takes a URL and breaks it out into its [RfC 3986](http://www.ietf.org/rfc/rfc3986.txt) components: scheme, domain, port, path, query string and fragment identifier. This is,
-again, fully vectorised, and can happily be run over hundreds of thousands of URLs, rapidly processing them.
+again, fully vectorised, and can happily be run over hundreds of thousands of URLs, rapidly processing them. The
+results are provided as a data.frame, since most people use data.frames to store data.
 
 ```{r, eval=FALSE}
-url_parse("https://en.wikipedia.org/wiki/Article")
-#[[1]]
-#[1] "https"            "en.wikipedia.org" ""                 "wiki/article"     ""                 ""                
+> str(url_parse("https://en.wikipedia.org/wiki/Article"))
+'data.frame':	1 obs. of  6 variables:
+ $ scheme   : chr "https"
+ $ domain   : chr "en.wikipedia.org"
+ $ port     : chr ""
+ $ path     : chr "wiki/article"
+ $ parameter: chr ""
+ $ fragment : chr ""                           
+```
+
+## Value extraction
+Once a URL is parsed, it's sometimes useful to get the value associated with a particular query parameter. As
+an example, take the URL `http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json`. What
+pageID is being used? What is the export format? We can find out with `url_parameters`.
+
+```{r, eval=FALSE}
+> str(url_parameters(urls = "http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json",
+                     parameter_names = c("pageid","export")))
+'data.frame':	1 obs. of  2 variables:
+ $ pageid: chr "1023"
+ $ export: chr "json"
 ```
 
 ## Getting/setting URL components
 With the inclusion of a URL parser, we suddenly have the opportunity for lubridate-style component getting
-and setting. Syntax is identical to lubridate's:
+and setting. Syntax is identical to that of `lubridate`, but uses URL components as function names.
 
 ```{r, eval=FALSE}
 url <- "https://en.wikipedia.org/wiki/Article"
 scheme(url)
-#[1] "https"
+"https"
 scheme(url) <- "ftp"
 url
-#[1] "ftp://en.wikipedia.org/wiki/Article"
+"ftp://en.wikipedia.org/wiki/Article"
 ```
 Fields that can be extracted or set are <code>scheme</code>, <code>domain</code>, <code>port</code>, <code>path</code>,
-<code>query</code> and <code>fragment</code>, through identically-named functions.
+<code>query</code> and <code>fragment</code>.
 
 ## Other URL handlers
 If you have ideas for other URL handlers that would make your data processing easier, the best approach
