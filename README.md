@@ -5,6 +5,8 @@ __Author:__ Oliver Keyes<br/>
 __License:__ [MIT](http://opensource.org/licenses/MIT)<br/>
 __Status:__ In development
 
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/urltools)
+
 ###Description
 
 URLs in R are often treated as nothing more than part of data retrieval -
