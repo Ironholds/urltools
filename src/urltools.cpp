@@ -120,8 +120,8 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
 //'
 //'@examples
 //'#A very simple example
-//'url <- "https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome"
-//'parameter_values <- url_parameters(url, c("api_params","hiphop"))
+//'url <- "https://google.com:80/foo.php?this_parameter=selfreferencing&hiphop=awesome"
+//'parameter_values <- url_parameters(url, c("this_parameter","hiphop"))
 //'
 //'@seealso \code{\link{url_parse}} for decomposing URLs into their constituent parts.
 //'
@@ -131,7 +131,7 @@ List url_parameters(std::vector < std::string > urls, std::vector < std::string 
   parsing p_inst;
   List output;
   IntegerVector rownames = Rcpp::seq(1,urls.size());
-  int column_count = parameter_names.size();
+  unsigned int column_count = parameter_names.size();
   std::vector < std::string >&url_ref = urls;
   
   for(unsigned int i = 0; i < column_count; ++i){
@@ -152,9 +152,6 @@ List url_parameters(std::vector < std::string > urls, std::vector < std::string 
 //'parts, as recognised by RfC 3986.
 //'
 //'@param urls a vector of URLs
-//'
-//'@param normalise whether to normalise the URLs - essentially, whether or not to
-//'make them consistently lower-case. Set to TRUE by default.
 //'
 //'@details It's useful to be able to take a URL and split it out into its component parts - 
 //'for the purpose of hostname extraction, for example, or analysing API calls. This functionality

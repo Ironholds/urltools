@@ -65,7 +65,6 @@ std::string encoding::internal_url_decode(std::string url){
   }
   
   //Return
-  result + "\0";
   return result;
 }
 

@@ -23,8 +23,8 @@ for each URL.
 }
 \examples{
 #A very simple example
-url <- "https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome"
-parameter_values <- url_parameters(url, c("api_params","hiphop"))
+url <- "https://google.com:80/foo.php?this_parameter=selfreferencing&hiphop=awesome"
+parameter_values <- url_parameters(url, c("this_parameter","hiphop"))
 }
 \seealso{
 \code{\link{url_parse}} for decomposing URLs into their constituent parts.

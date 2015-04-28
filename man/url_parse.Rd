@@ -8,9 +8,6 @@ url_parse(urls)
 }
 \arguments{
 \item{urls}{a vector of URLs}
-
-\item{normalise}{whether to normalise the URLs - essentially, whether or not to
-make them consistently lower-case. Set to TRUE by default.}
 }
 \value{
 a list of vectors, one for each URL, with each vector containing (in sequence)

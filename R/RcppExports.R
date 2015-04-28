@@ -83,8 +83,8 @@ url_encode <- function(urls) {
 #'
 #'@examples
 #'#A very simple example
-#'url <- "https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome"
-#'parameter_values <- url_parameters(url, c("api_params","hiphop"))
+#'url <- "https://google.com:80/foo.php?this_parameter=selfreferencing&hiphop=awesome"
+#'parameter_values <- url_parameters(url, c("this_parameter","hiphop"))
 #'
 #'@seealso \code{\link{url_parse}} for decomposing URLs into their constituent parts.
 #'
@@ -98,9 +98,6 @@ url_parameters <- function(urls, parameter_names) {
 #'parts, as recognised by RfC 3986.
 #'
 #'@param urls a vector of URLs
-#'
-#'@param normalise whether to normalise the URLs - essentially, whether or not to
-#'make them consistently lower-case. Set to TRUE by default.
 #'
 #'@details It's useful to be able to take a URL and split it out into its component parts - 
 #'for the purpose of hostname extraction, for example, or analysing API calls. This functionality

@@ -109,7 +109,7 @@ std::vector < std::string > parsing::url_to_vector(std::string& url){
 std::vector < std::string > parsing::get_parameter(std::vector < std::string >& urls, std::string component){
   std::size_t component_location;
   std::size_t next_location;
-  int input_size = urls.size();
+  unsigned int input_size = urls.size();
   int component_size = component.length();
   std::vector < std::string > output(input_size);
   

@@ -8,10 +8,6 @@ test_that("Check encoding does encode subsequent slashes", {
   expect_that(url_encode("https:////"), equals("https://%2f%2f"))
 })
 
-test_that("Check decoding handles ASCII NULs", {
-  expect_that(url_decode("0;%20@%gIL"), equals("0; @"))
-})
-
 test_that("Check decoding and encoding are equivalent", {
   
   url <- "Hinrichtung_auf_dem_Altst%c3%a4dter_Ring.JPG%2f120px-Hinrichtung_auf_dem_Altst%c3%a4dter_Ring.JPG"
