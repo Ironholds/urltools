@@ -112,6 +112,7 @@ std::vector < std::string > parsing::get_parameter(std::vector < std::string >& 
   unsigned int input_size = urls.size();
   int component_size = component.length();
   std::vector < std::string > output(input_size);
+  component = component + "=";
   
   for(unsigned int i = 0; i < input_size; ++i){
     component_location = urls[i].find(component);

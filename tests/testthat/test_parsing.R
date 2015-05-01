@@ -32,4 +32,11 @@ test_that("Parameter parsing can handle multiple, non-existent and pre-trailing 
             "https://www.google.com:80/foo.php?this_parameter=selfreferencing&hiphop=awesome")
   results <- url_parameters(urls, c("api_params","hiphop"))
   expect_that(results[,1], equals(c("parsable","parsable","")))
+  
+})
+
+test_that("Parameter parsing works where the parameter appears earlier in the URL", {
+  url <- url_parameters("www.housetrip.es/tos-de-vacaciones/geo?from=01/04/2015&guests=4&to=05/04/2015","to")
+  expect_that(ncol(data), equals(1))
+  expect_that(url$from[1] == "01/04/2015")
 })

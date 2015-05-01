@@ -1,3 +1,11 @@
+Version 1.1.1 [WIP] (maintenance release)
+-------------------------------------------------------------------------
+BUG FIXES
+
+* Parameter parsing now fixed to require a = after the parameter name, thus solving for scenarios where
+the URL would contain the parameter name as part of, say, the domain, and it'd grab the wrong thing. Thanks
+to Jacob Barnett for the bug report and example.
+
 Version 1.1.0
 -------------------------------------------------------------------------
 NEW FEATURES
