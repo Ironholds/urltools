@@ -37,6 +37,6 @@ test_that("Parameter parsing can handle multiple, non-existent and pre-trailing 
 
 test_that("Parameter parsing works where the parameter appears earlier in the URL", {
   url <- url_parameters("www.housetrip.es/tos-de-vacaciones/geo?from=01/04/2015&guests=4&to=05/04/2015","to")
-  expect_that(ncol(data), equals(1))
-  expect_that(url$from[1] == "01/04/2015")
+  expect_that(ncol(url), equals(1))
+  expect_that(url$to[1], equals("05/04/2015"))
 })
