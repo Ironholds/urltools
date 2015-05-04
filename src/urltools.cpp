@@ -80,7 +80,8 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
   //Measure size, create output object and holding objects
   int input_size = urls.size();
   std::vector < std::string > output(input_size);
-  size_t indices;
+  size_t scheme_start;
+  size_t first_slash;
   encoding enc_inst;
 
   //For each string..
@@ -92,12 +93,17 @@ std::vector < std::string > url_encode(std::vector < std::string > urls){
     }
     
     //Extract the protocol. If you can't find it, just encode the entire thing.
-    indices = urls[i].find("://");
-    if(indices == std::string::npos){
+    scheme_start = urls[i].find("://");
+    if(scheme_start == std::string::npos){
       output[i] = enc_inst.internal_url_encode(urls[i]);
     } else {
       //Otherwise, split out the protocol and encode !protocol.
-      output[i] = urls[i].substr(0,indices+3) + enc_inst.internal_url_encode(urls[i].substr(indices+3));
+      first_slash = urls[i].find("/", scheme_start+3);
+      if(first_slash == std::string::npos){
+        output[i] = urls[i].substr(0,scheme_start+3) + enc_inst.internal_url_encode(urls[i].substr(scheme_start+3));
+      } else {
+        output[i] = urls[i].substr(0,first_slash+1) + enc_inst.internal_url_encode(urls[i].substr(first_slash+1));
+      }
     }
   }
   
