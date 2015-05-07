@@ -107,6 +107,23 @@ std::vector < std::string > parsing::url_to_vector(std::string& url){
 
 std::vector < std::string > parsing::identify_single_suffix(std::string& domain_ptr, std::vector < std::string >& suffix_ptr){
   
+  unsigned int domain_size = domain_ptr.size();
+  unsigned int suffix_vec_size = suffix_ptr.size();
+  size_t location;
+  unsigned int single_suffix_size;
+  
+  std::vector < std::string > output(2);
+  
+  for(unsigned int i = 0; i < suffix_vec_size; ++i){
+    single_suffix_size = suffix_ptr[i].size();
+    location = domain_ptr.find(suffix_ptr[i], (domain_size - single_suffix_size));
+    if(location != std::string::npos){
+      output[0] = domain_ptr.substr(0, location);
+      output[1] = domain_ptr.substr(location+1);
+      break;
+    }
+  }
+  return output;
 }
 
 //Parameter retrieval

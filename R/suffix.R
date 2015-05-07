@@ -54,3 +54,9 @@ suffix_refresh <- function(){
 #' @note Last updated 2015-05-06.
 #' @format A vector of 7430 elements.
 NULL
+
+suffix_extract <- function(domains){
+  load(system.file("data/suffix_dataset.rda", package = "urltools"))
+  suffix_dataset <- suffix_dataset[order(1:length(suffix_dataset), decreasing=T)]
+  return(suffix_extract_(domains, suffix_dataset))
+}
