@@ -21,12 +21,13 @@ Accordingly, the package also includes \code{\link{tld_refresh}}, which refreshe
 this dataset on the user end. This requires CURL (the library, not the
 R package) on your system to function.
 }
-\seealso{
-\code{\link{tld_extract}} to extract TLDs from domain names,
-or \code{\link{tld_dataset}} for the dataset itself.
-#examples
+\examples{
 \dontrun{
 tld_refresh()
 }
+}
+\seealso{
+\code{\link{tld_extract}} to extract TLDs from domain names,
+or \code{\link{tld_dataset}} for the dataset itself.
 }
 

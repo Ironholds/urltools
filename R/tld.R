@@ -15,7 +15,8 @@
 #'
 #'@seealso \code{\link{tld_extract}} to extract TLDs from domain names,
 #'or \code{\link{tld_dataset}} for the dataset itself.
-#'#examples
+#'
+#'@examples
 #'\dontrun{
 #'tld_refresh()
 #'}
