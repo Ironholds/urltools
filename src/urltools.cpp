@@ -186,7 +186,7 @@ DataFrame url_parse(std::vector < std::string > urls){
 }
 
 //[[Rcpp::export]]
-DataFrame tld_extract(std::vector < std::string > domains, std::vector < std::string > tlds){
+DataFrame suffix_extract_(std::vector < std::string > domains, std::vector < std::string > tlds){
   
   //Check the domains have actually been filtered. Filter, if not. This
   //assumes that the first URL is actually valid, though, which may not be the case.
@@ -205,5 +205,5 @@ DataFrame tld_extract(std::vector < std::string > domains, std::vector < std::st
   //Assuming that worked, create the pointers, dispatch to the class and return.
   std::vector < std::string >& domains_ptr = domains;
   std::vector < std::string >& tld_ptr = tlds;
-  return p_inst.identify_multi_tld_(domains_ptr, tld_ptr);
+  return p_inst.identify_multi_suffix(domains_ptr, tld_ptr);
 }

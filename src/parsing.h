@@ -90,19 +90,19 @@ class parsing{
     std::vector < std::string > url_to_vector(std::string& url_ptr);
     
     /**
-     * Take a URL and identify the TLD in use.
+     * Take a URL and identify the public suffix in use.
      * 
      * @param domain_ptr a reference pointer to the domain name
      * 
-     * @param tlds a reference pointer to the vector of
-     * TLDs
+     * @param suffix_ptr a reference pointer to the vector of
+     * public suffixes
      * 
-     * @see identify_multi_tld, the vectorised version.
+     * @see identify_multi_suffix, the vectorised version.
      * 
-     * @return if a match is found, {"remaining_domain_fragment","matched_tld"}.
+     * @return if a match is found, {"remaining_domain_fragment","matched_suffix"}.
      * If not, {"entire_domain","Not found"}
      */
-    std::vector < std::string > identify_single_tld(std::string& domain_ptr, std::vector < std::string >& tld_ptr);
+    std::vector < std::string > identify_single_suffix(std::string& domain_ptr, std::vector < std::string >& suffix_ptr);
     
   public:
   
@@ -162,20 +162,20 @@ class parsing{
     DataFrame parse_to_df(std::vector < std::string >& urls_ptr);
     
     /**
-     * Take a URL and identify the TLD in use.
+     * Take a vector of URLs and identify the public suffixes in use.
      * 
      * @param domains_ptr a reference pointer to a vector of
      * domain names.
      * 
-     * @param tld_ptr a reference pointer to the vector of
-     * TLDs
+     * @param suffix_ptr a reference pointer to the vector of
+     * suffixes
      * 
      * @see identify_multi_tld, the vectorised version.
      * 
      * @return if a match is found, {"remaining_domain_fragment","matched_tld"}.
      * If not, {"entire_domain","Not found"}
      */
-    DataFrame identify_multi_tld_(std::vector < std::string >& domains_ptr, std::vector < std::string >& tld_ptr);
+    DataFrame identify_multi_suffix(std::vector < std::string >& domains_ptr, std::vector < std::string >& suffix_ptr);
 
 };
 #endif

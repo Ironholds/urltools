@@ -105,7 +105,7 @@ std::vector < std::string > parsing::url_to_vector(std::string& url){
   return output;
 }
 
-std::vector < std::string > parsing::identify_single_tld(std::string& domain_ptr, std::vector < std::string >& tld_ptr){
+std::vector < std::string > parsing::identify_single_suffix(std::string& domain_ptr, std::vector < std::string >& suffix_ptr){
   
 }
 
@@ -185,7 +185,7 @@ DataFrame parsing::parse_to_df(std::vector < std::string >& urls_ptr){
                            _["stringsAsFactors"] = false);
 }
 
-DataFrame parsing::identify_multi_tld_(std::vector < std::string >& domains_ptr, std::vector < std::string >& tld_ptr){
+DataFrame parsing::identify_multi_suffix(std::vector < std::string >& domains_ptr, std::vector < std::string >& suffix_ptr){
   
   int input_size = domains_ptr.size();
   std::vector < std::string > domain_fragment(input_size);
@@ -196,7 +196,7 @@ DataFrame parsing::identify_multi_tld_(std::vector < std::string >& domains_ptr,
     if((i % 10000) == 0){
       Rcpp::checkUserInterrupt();
     }
-    holding = identify_single_tld(domains_ptr[i], tld_ptr);
+    holding = identify_single_suffix(domains_ptr[i], suffix_ptr);
     domain_fragment[i] = holding[0];
     tld_match[i] = holding[1];
   }
