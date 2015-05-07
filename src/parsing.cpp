@@ -219,6 +219,6 @@ DataFrame parsing::identify_multi_suffix(std::vector < std::string >& domains_pt
   }
   
   return DataFrame::create(_["domain_body"] = domain_fragment,
-                           _["tld"] = tld_match,
+                           _["suffix"] = tld_match,
                            _["stringsAsFactors"] = false);
 }

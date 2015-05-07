@@ -55,8 +55,47 @@ suffix_refresh <- function(){
 #' @format A vector of 7430 elements.
 NULL
 
+#'@title extract the suffix from domain names
+#'@description domain names have suffixes - common endings that people
+#'can or could register domains under. This includes things like ".org", but
+#'also things like ".edu.co". A simple Top Level Domain list, as a 
+#'result, probably won't cut it.
+#'
+#'\code{\link{suffix_extract}} takes the list of public suffixes,
+#'as maintained by Mozilla (see \code{\link{suffix_dataset}}) and
+#'a vector of domain names, and produces a data.frame containing the
+#'suffix that each domain uses, and the remaining fragment.
+#'
+#'@param domains a vector of damains, from \code{\link{domain}}
+#'or \code{\link{url_parse}}. Alternately, full URLs can be provided
+#'and will then be run through \code{\link{domain}} internally.
+#'
+#'@details
+#'This code is both slow and experimental; it'll get a lot faster,
+#'one way or another.
+#'
+#'@return a data.frame of two columns, "domain_body" and "suffix".
+#'"domain_body" contains that part of the domain name that came
+#'before the matched suffix.
+#'
+#'@seealso \code{\link{suffix_dataset}} for the dataset of suffixes,
+#'and \code{\link{suffix_refresh}} for refreshing it.
+#'
+#'@examples
+#'
+#'#Using url_parse
+#'domain_name <- url_parse("http://en.wikipedia.org")$domain
+#'suffix_extract(domain_name)
+#'
+#'#Using domain()
+#'domain_name <- domain("http://en.wikipedia.org")
+#'suffix_extract(domain_name)
+#'
+#'#Using internal parsing
+#'suffix_extract("http://en.wikipedia.org")
+#'
+#'@export
 suffix_extract <- function(domains){
   load(system.file("data/suffix_dataset.rda", package = "urltools"))
-  suffix_dataset <- suffix_dataset[order(1:length(suffix_dataset), decreasing=T)]
   return(suffix_extract_(domains, suffix_dataset))
 }
