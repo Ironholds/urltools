@@ -180,3 +180,7 @@ DataFrame parsing::parse_to_df(std::vector < std::string >& urls_ptr){
                            _["fragment"] = fragments,
                            _["stringsAsFactors"] = false);
 }
+
+DataFrame parsing::identify_multi_tld_(std::vector < std::string >& domains_ptr, std::vector < std::string >& tld_ptr){
+  
+}

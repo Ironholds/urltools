@@ -75,3 +75,15 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// tld_extract
+DataFrame tld_extract(std::vector < std::string > domains, std::vector < std::string > tlds);
+RcppExport SEXP urltools_tld_extract(SEXP domainsSEXP, SEXP tldsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< std::vector < std::string > >::type domains(domainsSEXP);
+    Rcpp::traits::input_parameter< std::vector < std::string > >::type tlds(tldsSEXP);
+    __result = Rcpp::wrap(tld_extract(domains, tlds));
+    return __result;
+END_RCPP
+}
