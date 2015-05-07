@@ -88,6 +88,22 @@ class parsing{
      * part of the URL.
      */
     std::vector < std::string > url_to_vector(std::string& url_ptr);
+    
+    /**
+     * Take a URL and identify the TLD in use.
+     * 
+     * @param domain_ptr a reference pointer to the domain name
+     * 
+     * @param tlds a reference pointer to the vector of
+     * TLDs
+     * 
+     * @see identify_multi_tld, the vectorised version.
+     * 
+     * @return if a match is found, {"remaining_domain_fragment","matched_tld"}.
+     * If not, {"entire_domain","Not found"}
+     */
+    std::vector < std::string > identify_single_tld (std::string& domain_ptr, std::vector < std::string >& tld_ptr);
+    
   public:
   
     /**
@@ -144,6 +160,22 @@ class parsing{
      * 
      */
     DataFrame parse_to_df(std::vector < std::string >& urls_ptr);
+    
+    /**
+     * Take a URL and identify the TLD in use.
+     * 
+     * @param domains_ptr a reference pointer to a vector of
+     * domain names.
+     * 
+     * @param tld_ptr a reference pointer to the vector of
+     * TLDs
+     * 
+     * @see identify_multi_tld, the vectorised version.
+     * 
+     * @return if a match is found, {"remaining_domain_fragment","matched_tld"}.
+     * If not, {"entire_domain","Not found"}
+     */
+    DataFrame identify_multi_tld_(std::vector < std::string >& domains_ptr, std::vector < std::string >& tld_ptr);
 
 };
 #endif

@@ -23,14 +23,17 @@ crucial for large datasets. For more information, see the [urltools vignette](ht
 
 ###Installation
 
-The latest released version can be obtained via:
+The latest CRAN version can be obtained via:
 
     install.packages("urltools")
 
+The latest maintenance version:
+
+    devtools::install_github("ironholds/urltools", ref = "1.0.0")
+    
 To get the development version:
 
-    library(devtools)
-    install_github("ironholds/urltools")
+    devtools::install_github("ironholds/urltools")
 
 ###Dependencies
 * R. Doy.

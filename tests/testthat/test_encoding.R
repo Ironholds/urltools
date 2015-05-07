@@ -4,11 +4,7 @@ test_that("Check encoding doesn't encode the scheme", {
   expect_that(url_encode("https://"), equals("https://"))
 })
 
-test_that("Check encoding does not encode domain-level slashes", {
-  expect_that(url_encode("https://foo.org/"), equals("https://foo.org/"))
-})
-
-test_that("Check encoding does encode post-domain slashes", {
+test_that("Check encoding does does not encode pre-path slashes", {
   expect_that(url_encode("https://foo.org/bar/"), equals("https://foo.org/bar%2f"))
 })
 
