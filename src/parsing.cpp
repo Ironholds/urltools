@@ -105,6 +105,10 @@ std::vector < std::string > parsing::url_to_vector(std::string& url){
   return output;
 }
 
+std::vector < std::string > parsing::identify_single_tld(std::string& domain_ptr, std::vector < std::string >& tld_ptr){
+  
+}
+
 //Parameter retrieval
 std::vector < std::string > parsing::get_parameter(std::vector < std::string >& urls, std::string component){
   std::size_t component_location;
@@ -183,4 +187,21 @@ DataFrame parsing::parse_to_df(std::vector < std::string >& urls_ptr){
 
 DataFrame parsing::identify_multi_tld_(std::vector < std::string >& domains_ptr, std::vector < std::string >& tld_ptr){
   
+  int input_size = domains_ptr.size();
+  std::vector < std::string > domain_fragment(input_size);
+  std::vector < std::string > tld_match(input_size);
+  std::vector < std::string > holding(2);
+  
+  for(unsigned int i = 0; i < input_size; i++){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
+    holding = identify_single_tld(domains_ptr[i], tld_ptr);
+    domain_fragment[i] = holding[0];
+    tld_match[i] = holding[1];
+  }
+  
+  return DataFrame::create(_["domain_body"] = domain_fragment,
+                           _["tld"] = tld_match,
+                           _["stringsAsFactors"] = false);
 }

@@ -102,7 +102,7 @@ class parsing{
      * @return if a match is found, {"remaining_domain_fragment","matched_tld"}.
      * If not, {"entire_domain","Not found"}
      */
-    std::vector < std::string > identify_single_tld (std::string& domain_ptr, std::vector < std::string >& tld_ptr);
+    std::vector < std::string > identify_single_tld(std::string& domain_ptr, std::vector < std::string >& tld_ptr);
     
   public:
   
