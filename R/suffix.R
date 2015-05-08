@@ -27,13 +27,32 @@ suffix_refresh <- function(){
   results <- readLines(connection)
   close(connection)
   results <- results[!grepl(x = results, pattern = "//", fixed = TRUE) & !results == ""]
-  results <- paste0(".", results)
+  suffix_dataset <- paste0(".", results)
   
-  #Sort by the number of periods
-  match_order <- order(unlist(lapply(strsplit(x = results, split = ".", fixed = TRUE), length)),
-                       decreasing = TRUE)
-  suffix_dataset <- results[match_order]
+  #Return the user-friendly version
   save(suffix_dataset, file = system.file("data/suffix_dataset.rda", package = "urltools"))
+  
+  #The urltools version is more complicated
+  split_suffixes <- strsplit(x = suffix_dataset, split = ".", fixed = TRUE)
+  to_df <- lapply(split_suffixes, function(x){
+    if(length(x) == 1){
+      return(c(paste0(".",x[1]),NA))
+    } else {
+      return(c(x[length(x)],paste(x[1:length(x)], collapse = ".")))
+    }
+  })
+  results <- data.frame(matrix(unlist(to_df), nrow = length(to_df), byrow = TRUE),
+                        stringsAsFactors = FALSE)
+  results <- unname(split(results$X2, results$X1))
+  suffix_internal_dataset <- lapply(results, function(x){
+    if(length(x) > 1){
+      match_order <- order(unlist(lapply(strsplit(x = x, split = ".", fixed = TRUE), length)))
+      x <- x[match_order]
+    }
+    return(x)
+  })
+  save(suffix_internal_dataset, file = system.file("data/suffix_internal_dataset.rda", package = "urltools"))
+  
   return(TRUE)
 }
 
