@@ -2,7 +2,8 @@ Version 1.2.0 [WIP]
 -------------------------------------------------------------------------
 
 NEW FEATURES
-*Experimental public suffix matching through suffix_extract
+*Jay Jacobs' "tldextract" functionality has been merged with urltools, and can be accessed
+with "suffix_extract"
 
 Version 1.1.1
 -------------------------------------------------------------------------

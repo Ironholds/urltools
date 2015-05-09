@@ -105,27 +105,6 @@ std::vector < std::string > parsing::url_to_vector(std::string& url){
   return output;
 }
 
-std::vector < std::string > parsing::identify_single_suffix(std::string& domain_ptr, std::vector < std::string >& suffix_ptr){
-  
-  unsigned int domain_size = domain_ptr.size();
-  unsigned int suffix_vec_size = suffix_ptr.size();
-  size_t location;
-  unsigned int single_suffix_size;
-  
-  std::vector < std::string > output(2);
-  
-  for(unsigned int i = 0; i < suffix_vec_size; ++i){
-    single_suffix_size = suffix_ptr[i].size();
-    location = domain_ptr.find(suffix_ptr[i], (domain_size - single_suffix_size));
-    if(location != std::string::npos){
-      output[0] = domain_ptr.substr(0, location);
-      output[1] = domain_ptr.substr(location+1);
-      break;
-    }
-  }
-  return output;
-}
-
 //Parameter retrieval
 std::vector < std::string > parsing::get_parameter(std::vector < std::string >& urls, std::string component){
   std::size_t component_location;
@@ -199,26 +178,5 @@ DataFrame parsing::parse_to_df(std::vector < std::string >& urls_ptr){
                            _["path"] = paths,
                            _["parameter"] = parameters,
                            _["fragment"] = fragments,
-                           _["stringsAsFactors"] = false);
-}
-
-DataFrame parsing::identify_multi_suffix(std::vector < std::string >& domains_ptr, std::vector < std::string >& suffix_ptr){
-  
-  int input_size = domains_ptr.size();
-  std::vector < std::string > domain_fragment(input_size);
-  std::vector < std::string > tld_match(input_size);
-  std::vector < std::string > holding(2);
-  
-  for(unsigned int i = 0; i < input_size; i++){
-    if((i % 10000) == 0){
-      Rcpp::checkUserInterrupt();
-    }
-    holding = identify_single_suffix(domains_ptr[i], suffix_ptr);
-    domain_fragment[i] = holding[0];
-    tld_match[i] = holding[1];
-  }
-  
-  return DataFrame::create(_["domain_body"] = domain_fragment,
-                           _["suffix"] = tld_match,
                            _["stringsAsFactors"] = false);
 }

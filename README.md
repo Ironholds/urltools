@@ -1,7 +1,7 @@
 ##urltools
 A package for elegantly handling and parsing URLs from within R.
 
-__Author:__ Oliver Keyes<br/>
+__Author:__ Oliver Keyes, Jay Jacobs<br/>
 __License:__ [MIT](http://opensource.org/licenses/MIT)<br/>
 __Status:__ In development
 

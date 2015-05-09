@@ -122,7 +122,3 @@ url_parse <- function(urls) {
     .Call('urltools_url_parse', PACKAGE = 'urltools', urls)
 }
 
-suffix_extract_ <- function(domains, tlds) {
-    .Call('urltools_suffix_extract_', PACKAGE = 'urltools', domains, tlds)
-}
-

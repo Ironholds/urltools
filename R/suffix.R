@@ -26,33 +26,10 @@ suffix_refresh <- function(){
   connection <- url("https://www.publicsuffix.org/list/effective_tld_names.dat", method = "libcurl")
   results <- readLines(connection)
   close(connection)
-  results <- results[!grepl(x = results, pattern = "//", fixed = TRUE) & !results == ""]
-  suffix_dataset <- paste0(".", results)
-  
+  suffix_dataset <- results[!grepl(x = results, pattern = "//", fixed = TRUE) & !results == ""]
+
   #Return the user-friendly version
   save(suffix_dataset, file = system.file("data/suffix_dataset.rda", package = "urltools"))
-  
-  #The urltools version is more complicated
-  split_suffixes <- strsplit(x = suffix_dataset, split = ".", fixed = TRUE)
-  to_df <- lapply(split_suffixes, function(x){
-    if(length(x) == 1){
-      return(c(paste0(".",x[1]),NA))
-    } else {
-      return(c(x[length(x)],paste(x[1:length(x)], collapse = ".")))
-    }
-  })
-  results <- data.frame(matrix(unlist(to_df), nrow = length(to_df), byrow = TRUE),
-                        stringsAsFactors = FALSE)
-  results <- unname(split(results$X2, results$X1))
-  suffix_internal_dataset <- lapply(results, function(x){
-    if(length(x) > 1){
-      match_order <- order(unlist(lapply(strsplit(x = x, split = ".", fixed = TRUE), length)))
-      x <- x[match_order]
-    }
-    return(x)
-  })
-  save(suffix_internal_dataset, file = system.file("data/suffix_internal_dataset.rda", package = "urltools"))
-  
   return(TRUE)
 }
 
@@ -89,13 +66,13 @@ NULL
 #'or \code{\link{url_parse}}. Alternately, full URLs can be provided
 #'and will then be run through \code{\link{domain}} internally.
 #'
-#'@details
-#'This code is both slow and experimental; it'll get a lot faster,
-#'one way or another.
 #'
 #'@return a data.frame of two columns, "domain_body" and "suffix".
 #'"domain_body" contains that part of the domain name that came
-#'before the matched suffix.
+#'before the matched suffix, and the suffix contains..well, the
+#'suffix. If a suffix cannot be extracted, \code{domain_body}
+#'will contain the entire domain, and \code{suffix} the string
+#'"Invalid".
 #'
 #'@seealso \code{\link{suffix_dataset}} for the dataset of suffixes,
 #'and \code{\link{suffix_refresh}} for refreshing it.
@@ -115,6 +92,44 @@ NULL
 #'
 #'@export
 suffix_extract <- function(domains){
-  load(system.file("data/suffix_dataset.rda", package = "urltools"))
-  return(suffix_extract_(domains, suffix_dataset))
+  
+  data("suffix_dataset", envir = environment())
+  wilds <- grepl('^\\*', suffix_dataset)
+  wildcard <- sub('\\*\\.', "", suffix_dataset[wilds])
+  static <- suffix_dataset[!wilds]
+  
+  subdomain <- domain <- tld <- rep(NA_character_, length(domains))
+  splithosts <- strsplit(tolower(domains), "[.]")
+  names(splithosts) <- seq(length(splithosts))
+  maxlen <- max(sapply(splithosts, length))
+  for(split.after in seq(1, maxlen-1)) {
+    templ <- sapply(splithosts, function(x)
+      paste0(x[(split.after+1):length(x)], collapse=".")
+    )
+    matched <- templ %in% static
+    if (any(matched)) {
+      index <- as.numeric(names(splithosts)[matched])
+      if (split.after>1) {
+        subdomain[index] <- sapply(splithosts[matched], function(x) paste(x[1:(split.after-1)], collapse="."))
+      }
+      domain[index] <- sapply(splithosts[matched], function(x) unlist(x[split.after]))
+      tld[index] <- sapply(splithosts[matched], function(x) paste(x[(split.after+1):length(x)], collapse="."))
+    }
+    # now the wildcard
+    matched2 <- templ %in% wildcard
+    if (any(matched2) && split.after > 1) {
+      safter <-  split.after - 1
+      index <- as.numeric(names(splithosts)[matched2])
+      if (safter>1) {
+        subdomain[index] <- sapply(splithosts[matched2], function(x) paste(x[1:(safter-1)], collapse="."))
+      }
+      domain[index] <- sapply(splithosts[matched2], function(x) x[safter])
+      tld[index] <- sapply(splithosts[matched2], function(x) paste(x[(safter+1):length(x)], collapse="."))
+    }
+    if (any(matched2 | matched)) {
+      splithosts <- splithosts[!(matched | matched2)]
+      if(length(splithosts)<1) break
+    }
+  }
+  data.frame(host=domains, subdomain=subdomain, domain=domain, tld=tld, stringsAsFactors=F)
 }

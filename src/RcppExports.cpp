@@ -75,15 +75,3 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// suffix_extract_
-DataFrame suffix_extract_(std::vector < std::string > domains, std::vector < std::string > tlds);
-RcppExport SEXP urltools_suffix_extract_(SEXP domainsSEXP, SEXP tldsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type domains(domainsSEXP);
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type tlds(tldsSEXP);
-    __result = Rcpp::wrap(suffix_extract_(domains, tlds));
-    return __result;
-END_RCPP
-}
