@@ -3,7 +3,7 @@ A package for elegantly handling and parsing URLs from within R.
 
 __Author:__ Oliver Keyes, Jay Jacobs<br/>
 __License:__ [MIT](http://opensource.org/licenses/MIT)<br/>
-__Status:__ In development
+__Status:__ Stable
 
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/urltools)
 
