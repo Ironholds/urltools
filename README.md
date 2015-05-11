@@ -21,6 +21,9 @@ cases, the functions are designed to be content-safe (not breaking on unexpected
 and fully vectorised, resulting in a dramatic speed improvement over existing implementations -
 crucial for large datasets. For more information, see the [urltools vignette](https://github.com/Ironholds/urltools/blob/master/vignettes/urltools.Rmd).
 
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md).
+By participating in this project you agree to abide by its terms.
+
 ###Installation
 
 The latest CRAN version can be obtained via:
@@ -38,4 +41,3 @@ To get the development version:
 ###Dependencies
 * R. Doy.
 * [Rcpp](http://cran.rstudio.com/web/packages/Rcpp/)
-
