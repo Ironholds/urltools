@@ -106,10 +106,9 @@ url_parameters <- function(urls, parameter_names) {
 #'perfectly suitable for the intended purpose (decomposition in the context of automated
 #'HTTP requests from R), but not for large-scale analysis.
 #'
-#'@return a list of vectors, one for each URL, with each vector containing (in sequence)
-#'the URL's scheme, domain, port, path, query string and fragment identifier. See the
-#'\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for definitions. If an element
-#'cannot be identified, it is replaced with an empty string.
+#'@return a data.frame consisting of the columns scheme, domain, port, path, query
+#'and fragment. See the '\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for
+#'definitions. If an element cannot be identified, it is represented by an empty string.
 #'
 #'@examples
 #'url_parse("https://en.wikipedia.org/wiki/Article")

@@ -10,10 +10,9 @@ url_parse(urls)
 \item{urls}{a vector of URLs}
 }
 \value{
-a list of vectors, one for each URL, with each vector containing (in sequence)
-the URL's scheme, domain, port, path, query string and fragment identifier. See the
-\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for definitions. If an element
-cannot be identified, it is replaced with an empty string.
+a data.frame consisting of the columns scheme, domain, port, path, query
+and fragment. See the '\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for
+definitions. If an element cannot be identified, it is represented by an empty string.
 }
 \description{
 \code{url_parse} takes a vector of URLs and splits each one into its component

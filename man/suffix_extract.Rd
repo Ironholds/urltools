@@ -14,7 +14,10 @@ and will then be run through \code{\link{domain}} internally.}
 \value{
 a data.frame of two columns, "domain_body" and "suffix".
 "domain_body" contains that part of the domain name that came
-before the matched suffix.
+before the matched suffix, and the suffix contains..well, the
+suffix. If a suffix cannot be extracted, \code{domain_body}
+will contain the entire domain, and \code{suffix} the string
+"Invalid".
 }
 \description{
 domain names have suffixes - common endings that people
@@ -26,10 +29,6 @@ result, probably won't cut it.
 as maintained by Mozilla (see \code{\link{suffix_dataset}}) and
 a vector of domain names, and produces a data.frame containing the
 suffix that each domain uses, and the remaining fragment.
-}
-\details{
-This code is both slow and experimental; it'll get a lot faster,
-one way or another.
 }
 \examples{
 #Using url_parse
