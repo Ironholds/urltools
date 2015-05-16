@@ -1,16 +1,5 @@
 #include "parsing.h"
 
-//Lower case a string
-std::string parsing::str_tolower(std::string& url){
-  
-  unsigned int string_size = url.size();
-  for(unsigned int i = 0; i < string_size; i++){
-    url[i] = tolower(url[i]);
-  }
-  return url;
-  
-}
-
 std::string parsing::scheme(std::string& url){
   std::string output;
   std::size_t protocol = url.find("://");
@@ -92,7 +81,7 @@ std::vector < std::string > parsing::url_to_vector(std::string& url){
   //Output object, holding object, normalise.
   std::vector < std::string > output(6);
   std::vector < std::string > holding;
-  url = str_tolower(url);
+  url = string_tolower(url);
   
   //Run
   output[0] = scheme(url);
@@ -139,9 +128,7 @@ std::string parsing::get_component(std::string& url, int component){
 std::string parsing::set_component(std::string url, int component, std::string new_value){
   std::string url_cp = url;
   std::string parsed_url_elem = url_to_vector(url)[component];
-  if(parsed_url_elem.size() != 0){
-    url_cp.replace(url_cp.find(parsed_url_elem), parsed_url_elem.size(), new_value);
-  }
+  url_cp = string_replace(url_cp, parsed_url_elem, new_value);
   return url_cp;
 }
 

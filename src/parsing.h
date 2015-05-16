@@ -1,4 +1,7 @@
 #include <Rcpp.h>
+//[[Rcpp::depends(strapi)]]
+#include <strapi/case.h>
+#include <strapi/replace.h>
 using namespace Rcpp;
 
 #ifndef __PARSING_INCLUDED__
@@ -7,17 +10,6 @@ using namespace Rcpp;
 class parsing{
   
   private:
-    /**
-     * A function for lower-casing a string; wraps tolower.
-     * Used when normalising URLs prior to parsing.
-     * 
-     * @param url a (possibly mixed-case) URL.
-     * 
-     * @see parse_url, which calls this.
-     * 
-     * @return a string containing the lower-cased version of x.
-     */
-    std::string str_tolower(std::string& url);
     
     /**
      * A function for extracting the scheme of a URL; part of the
