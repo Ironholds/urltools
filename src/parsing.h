@@ -1,7 +1,7 @@
 #include <Rcpp.h>
-//[[Rcpp::depends(strapi)]]
-#include <strapi/case.h>
-#include <strapi/replace.h>
+//[[Rcpp::depends(rope)]]
+#include <rope/case.h>
+#include <rope/replace.h>
 using namespace Rcpp;
 
 #ifndef __PARSING_INCLUDED__

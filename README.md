@@ -38,7 +38,7 @@ To get the development version:
 
     devtools::install_github("ironholds/urltools")
 
-Please note that the development version depends on the experimental [strapi](https://github.com/Ironholds/strapi)
+Please note that the development version depends on the experimental [rope](https://github.com/Ironholds/rope)
 package.
 
 ###Dependencies
