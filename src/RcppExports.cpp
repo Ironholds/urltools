@@ -75,3 +75,14 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// url_compose
+std::vector < std::string > url_compose(DataFrame parsed_urls);
+RcppExport SEXP urltools_url_compose(SEXP parsed_urlsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< DataFrame >::type parsed_urls(parsed_urlsSEXP);
+    __result = Rcpp::wrap(url_compose(parsed_urls));
+    return __result;
+END_RCPP
+}

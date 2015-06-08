@@ -46,3 +46,8 @@ test_that("Parameter parsing works where the parameter appears earlier in the UR
   expect_that(url$to[1], equals("05/04/2015"))
 })
 
+test_that("Composing works",{
+  url <- "http://foo.bar.baz/qux/"
+  amended_url <- url_compose(url_parse(url))
+  expect_that(url, equals(amended_url))
+})

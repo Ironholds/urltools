@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 #include "encoding.h"
 #include "parsing.h"
+#include "compose.h"
 
 using namespace Rcpp;
 
@@ -173,8 +174,8 @@ List url_parameters(std::vector < std::string > urls, std::vector < std::string 
 //'@examples
 //'url_parse("https://en.wikipedia.org/wiki/Article")
 //'
-//'@seealso \code{url_parameters} for extracting values associated with particular keys in a URL's
-//'query string.
+//'@seealso \code{\link{url_parameters}} for extracting values associated with particular keys in a URL's
+//'query string, and \code{\link{url_compose}}, which is \code{url_parse} in reverse.
 //'
 //'@export
 //[[Rcpp::export]]
@@ -182,4 +183,30 @@ DataFrame url_parse(std::vector < std::string > urls){
   std::vector < std::string >& urls_ptr = urls;
   parsing p_inst;
   return p_inst.parse_to_df(urls_ptr);
+}
+
+//'@title Recompose Parsed URLs
+//'
+//'@description Sometimes you want to take a vector of URLs, parse them, perform
+//'some operations and then rebuild them. \code{url_compose} takes a data.frame produced
+//'by \code{\link{url_parse}} and rebuilds it into a vector of full URLs (or: URLs as full
+//'as the vector initially thrown into url_parse).
+//'
+//'This is currently a `beta` feature; please do report bugs if you find them.
+//'
+//'@param parsed_urls a data.frame sourced from \code{\link{url_parse}}
+//'
+//'@seealso \code{\link{scheme}} and other accessors, which you may want to
+//'run URLs through before composing them to modify individual values.
+//'
+//'@examples
+//'#Parse a URL and compose it
+//'url <- "http://en.wikipedia.org"
+//'url_compose(url_parse(url))
+//'
+//'@export
+//[[Rcpp::export]]
+std::vector < std::string > url_compose(DataFrame parsed_urls){
+  compose c_inst;
+  return c_inst.compose_multiple(parsed_urls);
 }

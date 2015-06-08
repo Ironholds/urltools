@@ -5,6 +5,8 @@ NEW FEATURES
 * Jay Jacobs' "tldextract" functionality has been merged with urltools, and can be accessed
 with "suffix_extract"
 
+* At Nicolas Coutin's suggestion, url_compose - url_parse in reverse - has been introduced.
+
 BUG FIXES
 
 * A bug in which fragments could not be retrieved (and were incorrectly identified as parameters)
