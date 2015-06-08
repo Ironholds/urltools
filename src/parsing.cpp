@@ -49,7 +49,7 @@ std::string parsing::path(std::string& url){
       return output;
     }
     output = url.substr(0,fragment);
-    url = url.substr(fragment+1);
+    url = url.substr(fragment);
     return output;
   }
 
