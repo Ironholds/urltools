@@ -27,4 +27,8 @@ domain(example_url)
 #Set a component
 domain(example_url) <- "en.wikipedia.org"
 }
+\seealso{
+\code{\link{scheme}}, \code{\link{port}}, \code{\link{path}},
+\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
+}
 

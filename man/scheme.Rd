@@ -27,4 +27,8 @@ scheme(example_url)
 #Set a component
 scheme(example_url) <- "https"
 }
+\seealso{
+\code{\link{domain}}, \code{\link{port}}, \code{\link{path}},
+\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
+}
 

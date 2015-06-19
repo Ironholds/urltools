@@ -3,7 +3,7 @@
 \name{fragment}
 \alias{fragment}
 \alias{fragment<-}
-\title{Get or set a URL's fragment identifier}
+\title{Get or set a URL's fragment}
 \usage{
 fragment(x)
 
@@ -12,7 +12,7 @@ fragment(x) <- value
 \arguments{
 \item{x}{a URL, or vector of URLs}
 
-\item{value}{a replacement value for x's scheme.}
+\item{value}{a replacement value for x's fragment.}
 }
 \description{
 as in the lubridate package, individual components of a URL
@@ -26,5 +26,9 @@ fragment(example_url)
 
 #Set a component
 fragment(example_url) <- "production"
+}
+\seealso{
+\code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
+\code{\link{path}} and \code{\link{parameters}} for other accessors.
 }
 

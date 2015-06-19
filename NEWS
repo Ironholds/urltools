@@ -1,14 +1,14 @@
-Version 1.2.0 [WIP]
+Version 1.2.0
 -------------------------------------------------------------------------
 
 NEW FEATURES
 * Jay Jacobs' "tldextract" functionality has been merged with urltools, and can be accessed
 with "suffix_extract"
-
 * At Nicolas Coutin's suggestion, url_compose - url_parse in reverse - has been introduced.
 
 BUG FIXES
 
+* To adhere to RfC standards, "query" functions have been renamed "parameter"
 * A bug in which fragments could not be retrieved (and were incorrectly identified as parameters)
 has been fixed. Thanks to Nicolas Coutin for reporting it and providing a reproducible example.
 

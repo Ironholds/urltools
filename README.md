@@ -32,14 +32,11 @@ The latest CRAN version can be obtained via:
 
 The latest maintenance version:
 
-    devtools::install_github("ironholds/urltools", ref = "1.1.1")
+    devtools::install_github("ironholds/urltools", ref = "1.2.0")
     
 To get the development version:
 
     devtools::install_github("ironholds/urltools")
-
-Please note that the development version depends on the experimental [rope](https://github.com/Ironholds/rope)
-package.
 
 ###Dependencies
 * R. Doy.

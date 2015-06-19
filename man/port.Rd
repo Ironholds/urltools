@@ -12,7 +12,7 @@ port(x) <- value
 \arguments{
 \item{x}{a URL, or vector of URLs}
 
-\item{value}{a replacement value for x's scheme.}
+\item{value}{a replacement value for x's port.}
 }
 \description{
 as in the lubridate package, individual components of a URL
@@ -26,5 +26,9 @@ port(example_url)
 
 #Set a component
 port(example_url) <- "12"
+}
+\seealso{
+\code{\link{scheme}}, \code{\link{domain}}, \code{\link{path}},
+\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 }
 

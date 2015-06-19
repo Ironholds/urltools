@@ -1,7 +1,4 @@
 #include <Rcpp.h>
-//[[Rcpp::depends(rope)]]
-#include <rope/case.h>
-#include <rope/replace.h>
 using namespace Rcpp;
 
 #ifndef __PARSING_INCLUDED__
@@ -11,6 +8,7 @@ class parsing{
   
   private:
     
+    std::string string_tolower(std::string str);
     /**
      * A function for extracting the scheme of a URL; part of the
      * URL parsing framework.

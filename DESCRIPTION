@@ -1,8 +1,8 @@
 Package: urltools
 Type: Package
 Title: Vectorised Tools for URL Handling and Parsing
-Version: 1.1.1
-Date: 2015-04-11
+Version: 1.2.0
+Date: 2015-06-18
 Author: Oliver Keyes [aut, cre], Jay Jacobs [aut, cre], Mark Greenaway [ctb]
 Maintainer: Oliver Keyes <ironholds@gmail.com>
 Description: A toolkit for handling URLs that so far includes functions for URL
@@ -13,8 +13,7 @@ Description: A toolkit for handling URLs that so far includes functions for URL
     URLs.
 License: MIT + file LICENSE
 LinkingTo:
-    Rcpp,
-    rope
+    Rcpp
 Imports:
     Rcpp,
     methods

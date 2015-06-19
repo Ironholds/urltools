@@ -13,6 +13,14 @@ std::string parsing::scheme(std::string& url){
   return output;
 }
 
+std::string parsing::string_tolower(std::string str){
+  unsigned int input_size = str.size();
+  for(unsigned int i = 0; i < input_size; i++){
+    str[i] = tolower(str[i]);
+  }
+  return str;
+}
+
 std::vector < std::string > parsing::domain_and_port(std::string& url){
   
   std::vector < std::string > output(2);
@@ -128,7 +136,9 @@ std::string parsing::get_component(std::string& url, int component){
 std::string parsing::set_component(std::string url, int component, std::string new_value){
   std::string url_cp = url;
   std::string parsed_url_elem = url_to_vector(url)[component];
-  url_cp = string_replace(url_cp, parsed_url_elem, new_value);
+  if(parsed_url_elem.size() != 0){
+    url_cp.replace(url_cp.find(parsed_url_elem), parsed_url_elem.size(), new_value);
+  }
   return url_cp;
 }
 

@@ -12,7 +12,7 @@ path(x) <- value
 \arguments{
 \item{x}{a URL, or vector of URLs}
 
-\item{value}{a replacement value for x's scheme.}
+\item{value}{a replacement value for x's path}
 }
 \description{
 as in the lubridate package, individual components of a URL
@@ -26,5 +26,9 @@ path(example_url)
 
 #Set a component
 path(example_url) <- "bin/windows/"
+}
+\seealso{
+\code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
+\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 }
 

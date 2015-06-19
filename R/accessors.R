@@ -8,6 +8,10 @@
 #'@param x a URL, or vector of URLs
 #'
 #'@param value a replacement value for x's scheme.
+#'
+#'@seealso \code{\link{domain}}, \code{\link{port}}, \code{\link{path}},
+#'\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
+#'
 #'@examples
 #'#Get a component
 #'example_url <- "http://cran.r-project.org/submit.html"
@@ -20,6 +24,7 @@
 scheme <- function(x){
   return(get_component_(x,0))
 }
+
 "scheme<-" <- function(x, value) standardGeneric("scheme<-")
 #'@rdname scheme
 #'@export
@@ -37,6 +42,9 @@ setGeneric("scheme<-", useAsDefault = function(x, value){
 #'@param x a URL, or vector of URLs
 #'
 #'@param value a replacement value for x's scheme.
+#'
+#'@seealso \code{\link{scheme}}, \code{\link{port}}, \code{\link{path}},
+#'\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 #'
 #'@examples
 #'#Get a component
@@ -60,12 +68,16 @@ setGeneric("domain<-", useAsDefault = function(x, value){
 #'@description as in the lubridate package, individual components of a URL
 #'can be both extracted or set using the relevant function call - see the
 #'examples.
+#'
 #'@aliases port
 #'@rdname port
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's scheme.
+#'@param value a replacement value for x's port.
+#'
+#'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{path}},
+#'\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 #'
 #'@examples
 #'#Get a component
@@ -94,7 +106,10 @@ setGeneric("port<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's scheme.
+#'@param value a replacement value for x's path
+#'
+#'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
+#'\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 #'
 #'@examples
 #'#Get a component
@@ -114,36 +129,41 @@ setGeneric("path<-", useAsDefault = function(x, value){
   return(set_component_(x, 3, value))
 })
 
-#'@title Get or set a URL's query string
+#'@title Get or set a URL's parameters
 #'@description as in the lubridate package, individual components of a URL
 #'can be both extracted or set using the relevant function call - see the
 #'examples.
-#'@aliases query
-#'@rdname query
+#'
+#'@aliases parameters
+#'@rdname parameters
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's scheme.
+#'@param value a replacement value for x's parameters.
+#'
+#'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
+#'\code{\link{path}} and \code{\link{fragment}} for other accessors.
 #'
 #'@examples
 #'#Get a component
 #'example_url <- "http://en.wikipedia.org/wiki/Aaron_Halfaker?debug=true"
-#'query(example_url)
+#'parameters(example_url)
+#'#[1] "debug=true"
 #'
 #'#Set a component
-#'query(example_url) <- "debug=false"
+#'parameters(example_url) <- "debug=false"
 #'@export
-query <- function(x){
+parameters <- function(x){
   return(get_component_(x,4))
 }
-"query<-" <- function(x, value) standardGeneric("query<-")
-#'@rdname query
+"parameters<-" <- function(x, value) standardGeneric("parameters<-")
+#'@rdname parameters
 #'@export
-setGeneric("query<-", useAsDefault = function(x, value){
+setGeneric("parameters<-", useAsDefault = function(x, value){
   return(set_component_(x, 4, value))
 })
 
-#'@title Get or set a URL's fragment identifier
+#'@title Get or set a URL's fragment
 #'@description as in the lubridate package, individual components of a URL
 #'can be both extracted or set using the relevant function call - see the
 #'examples.
@@ -152,7 +172,10 @@ setGeneric("query<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's scheme.
+#'@param value a replacement value for x's fragment.
+#'
+#'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
+#'\code{\link{path}} and \code{\link{parameters}} for other accessors.
 #'
 #'@examples
 #'#Get a component
@@ -167,6 +190,7 @@ setGeneric("query<-", useAsDefault = function(x, value){
 fragment <- function(x){
   return(get_component_(x,5))
 }
+
 "fragment<-" <- function(x, value) standardGeneric("fragment<-")
 #'@rdname fragment
 #'@export

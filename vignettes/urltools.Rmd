@@ -61,7 +61,8 @@ again, fully vectorised, and can happily be run over hundreds of thousands of UR
 results are provided as a data.frame, since most people use data.frames to store data.
 
 ```{r, eval=FALSE}
-> str(url_parse("https://en.wikipedia.org/wiki/Article"))
+> parsed_address <- url_parse("https://en.wikipedia.org/wiki/Article")
+> str(parsed_address)
 'data.frame':	1 obs. of  6 variables:
  $ scheme   : chr "https"
  $ domain   : chr "en.wikipedia.org"
@@ -69,6 +70,12 @@ results are provided as a data.frame, since most people use data.frames to store
  $ path     : chr "wiki/article"
  $ parameter: chr ""
  $ fragment : chr ""                           
+```
+
+We can also perform the opposite of this operation with `url_compose`:
+```{r, eval=FALSE}
+> url_compose(parsed_address)
+[1] "https://en.wikipedia.org/wiki/article"
 ```
 
 ### Value extraction
@@ -97,7 +104,25 @@ url
 "ftp://en.wikipedia.org/wiki/Article"
 ```
 Fields that can be extracted or set are <code>scheme</code>, <code>domain</code>, <code>port</code>, <code>path</code>,
-<code>query</code> and <code>fragment</code>.
+<code>parameters</code> and <code>fragment</code>.
+
+### Suffix extraction
+
+Once we've extracted a domain from a URL with `domain` or `url_parse`, we can identify which bit is the domain name, and which
+bit is the "top-level domain" or suffix, thanks to code contributed by Jay Jacobs:
+
+```{r, eval=FALSE}
+> url <- "https://en.wikipedia.org/wiki/Article"
+> domain_name <- domain(url)
+> domain_name
+[1] "en.wikipedia.org"
+> str(suffix_extract(domain_name))
+'data.frame':	1 obs. of  4 variables:
+ $ host     : chr "en.wikipedia.org"
+ $ subdomain: chr "en"
+ $ domain   : chr "wikipedia"
+ $ tld      : chr "org"
+```
 
 ### Other URL handlers
 If you have ideas for other URL handlers that would make your data processing easier, the best approach
