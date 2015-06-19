@@ -93,7 +93,7 @@ NULL
 #'@export
 suffix_extract <- function(domains){
   
-  data("suffix_dataset", envir = environment())
+  suffix_dataset <- urltools::suffix_dataset
   wilds <- grepl('^\\*', suffix_dataset)
   wildcard <- sub('\\*\\.', "", suffix_dataset[wilds])
   static <- suffix_dataset[!wilds]

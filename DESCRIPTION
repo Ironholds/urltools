@@ -12,6 +12,7 @@ Description: A toolkit for handling URLs that so far includes functions for URL
     logs, although may be useful for other situations involving large sets of
     URLs.
 License: MIT + file LICENSE
+LazyData: TRUE
 LinkingTo:
     Rcpp
 Imports:
