@@ -20,6 +20,8 @@
 #'\dontrun{
 #'suffix_refresh()
 #'}
+#'
+#'@export
 suffix_refresh <- function(){
   
   #Read in and filter
