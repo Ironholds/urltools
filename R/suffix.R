@@ -53,85 +53,110 @@ suffix_refresh <- function(){
 #' @format A vector of 7430 elements.
 NULL
 
-#'@title extract the suffix from domain names
-#'@description domain names have suffixes - common endings that people
-#'can or could register domains under. This includes things like ".org", but
-#'also things like ".edu.co". A simple Top Level Domain list, as a 
-#'result, probably won't cut it.
+#' @title extract the suffix from domain names
+#' @description domain names have suffixes - common endings that people
+#' can or could register domains under. This includes things like ".org", but
+#' also things like ".edu.co". A simple Top Level Domain list, as a 
+#' result, probably won't cut it.
 #'
-#'\code{\link{suffix_extract}} takes the list of public suffixes,
-#'as maintained by Mozilla (see \code{\link{suffix_dataset}}) and
-#'a vector of domain names, and produces a data.frame containing the
-#'suffix that each domain uses, and the remaining fragment.
+#' \code{\link{suffix_extract}} takes the list of public suffixes,
+#' as maintained by Mozilla (see \code{\link{suffix_dataset}}) and
+#' a vector of domain names, and produces a data.frame containing the
+#' suffix that each domain uses, and the remaining fragment.
 #'
-#'@param domains a vector of damains, from \code{\link{domain}}
-#'or \code{\link{url_parse}}. Alternately, full URLs can be provided
-#'and will then be run through \code{\link{domain}} internally.
+#' @param domains a vector of damains, from \code{\link{domain}}
+#' or \code{\link{url_parse}}. Alternately, full URLs can be provided
+#' and will then be run through \code{\link{domain}} internally.
 #'
+#' @return a data.frame of four columns, "host" "subdomain", "domain" & "suffix".
+#' "host" is what was passed in. "subdomain" is the subdomain of the suffix.
+#' "domain" contains the part of the domain name that came before the matched suffix.
+#' "suffix" is, well, the suffix.
 #'
-#'@return a data.frame of two columns, "domain_body" and "suffix".
-#'"domain_body" contains that part of the domain name that came
-#'before the matched suffix, and the suffix contains..well, the
-#'suffix. If a suffix cannot be extracted, \code{domain_body}
-#'will contain the entire domain, and \code{suffix} the string
-#'"Invalid".
+#' @seealso \code{\link{suffix_dataset}} for the dataset of suffixes,
+#' and \code{\link{suffix_refresh}} for refreshing it.
 #'
-#'@seealso \code{\link{suffix_dataset}} for the dataset of suffixes,
-#'and \code{\link{suffix_refresh}} for refreshing it.
+#' @examples
 #'
-#'@examples
+#' # Using url_parse
+#' domain_name <- url_parse("http://en.wikipedia.org")$domain
+#' suffix_extract(domain_name)
 #'
-#'#Using url_parse
-#'domain_name <- url_parse("http://en.wikipedia.org")$domain
-#'suffix_extract(domain_name)
+#' # Using domain()
+#' domain_name <- domain("http://en.wikipedia.org")
+#' suffix_extract(domain_name)
 #'
-#'#Using domain()
-#'domain_name <- domain("http://en.wikipedia.org")
-#'suffix_extract(domain_name)
+#' #Using internal parsing
+#' suffix_extract("http://en.wikipedia.org")
 #'
-#'#Using internal parsing
-#'suffix_extract("http://en.wikipedia.org")
-#'
-#'@export
+#' @export
 suffix_extract <- function(domains){
   
   suffix_dataset <- urltools::suffix_dataset
+  
+  # separate out wildcard & static suffixes
   wilds <- grepl('^\\*', suffix_dataset)
   wildcard <- sub('\\*\\.', "", suffix_dataset[wilds])
   static <- suffix_dataset[!wilds]
   
+  # carve up some space to save time/memory
   subdomain <- domain <- tld <- rep(NA_character_, length(domains))
+
+  # lowercase and split domain components 
   splithosts <- strsplit(tolower(domains), "[.]")
   names(splithosts) <- seq(length(splithosts))
   maxlen <- max(sapply(splithosts, length))
+
   for(split.after in seq(1, maxlen-1)) {
-    templ <- sapply(splithosts, function(x)
-      paste0(x[(split.after+1):length(x)], collapse=".")
-    )
+    
+    templ <- vapply(splithosts, function(x)
+      paste0(x[(split.after+1):length(x)], collapse=".") , "character")
+    
+    # process static bits
     matched <- templ %in% static
     if (any(matched)) {
+
       index <- as.numeric(names(splithosts)[matched])
+
       if (split.after>1) {
-        subdomain[index] <- sapply(splithosts[matched], function(x) paste(x[1:(split.after-1)], collapse="."))
+        subdomain[index] <- vapply(splithosts[matched], 
+                                   function(x) paste(x[1:(split.after-1)], collapse="."), "character")
       }
-      domain[index] <- sapply(splithosts[matched], function(x) unlist(x[split.after]))
-      tld[index] <- sapply(splithosts[matched], function(x) paste(x[(split.after+1):length(x)], collapse="."))
+      
+      domain[index] <- vapply(splithosts[matched], 
+                              function(x) unlist(x[split.after]), "character")
+      
+      tld[index] <- vapply(splithosts[matched], 
+                           function(x) paste(x[(split.after+1):length(x)], collapse="."), "character")
     }
-    # now the wildcard
+
+    # process wildcard bits
     matched2 <- templ %in% wildcard
     if (any(matched2) && split.after > 1) {
-      safter <-  split.after - 1
+      
+      safter <- split.after - 1
       index <- as.numeric(names(splithosts)[matched2])
+
       if (safter>1) {
-        subdomain[index] <- sapply(splithosts[matched2], function(x) paste(x[1:(safter-1)], collapse="."))
+        subdomain[index] <- vapply(splithosts[matched2],
+                                   function(x) paste(x[1:(safter-1)], collapse="."), "character")
       }
-      domain[index] <- sapply(splithosts[matched2], function(x) x[safter])
-      tld[index] <- sapply(splithosts[matched2], function(x) paste(x[(safter+1):length(x)], collapse="."))
+      
+      domain[index] <- vapply(splithosts[matched2], 
+                              function(x) x[safter], "character")
+      
+      tld[index] <- vapply(splithosts[matched2], 
+                           function(x) paste(x[(safter+1):length(x)], collapse="."), "character")
     }
+    
+    # the remainder
     if (any(matched2 | matched)) {
       splithosts <- splithosts[!(matched | matched2)]
-      if(length(splithosts)<1) break
+      if (length(splithosts)<1) break
     }
+    
   }
-  data.frame(host=domains, subdomain=subdomain, domain=domain, suffix=tld, stringsAsFactors=F)
+  
+  data.frame(host=domains, subdomain=subdomain, domain=domain, suffix=tld, 
+             check.names=FALSE, stringsAsFactors=FALSE)
 }

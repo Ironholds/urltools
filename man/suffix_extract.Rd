@@ -12,12 +12,10 @@ or \code{\link{url_parse}}. Alternately, full URLs can be provided
 and will then be run through \code{\link{domain}} internally.}
 }
 \value{
-a data.frame of two columns, "domain_body" and "suffix".
-"domain_body" contains that part of the domain name that came
-before the matched suffix, and the suffix contains..well, the
-suffix. If a suffix cannot be extracted, \code{domain_body}
-will contain the entire domain, and \code{suffix} the string
-"Invalid".
+a data.frame of four columns, "host" "subdomain", "domain" & "suffix".
+"host" is what was passed in. "subdomain" is the subdomain of the suffix.
+"domain" contains the part of the domain name that came before the matched suffix.
+"suffix" is, well, the suffix.
 }
 \description{
 domain names have suffixes - common endings that people
@@ -31,11 +29,11 @@ a vector of domain names, and produces a data.frame containing the
 suffix that each domain uses, and the remaining fragment.
 }
 \examples{
-#Using url_parse
+# Using url_parse
 domain_name <- url_parse("http://en.wikipedia.org")$domain
 suffix_extract(domain_name)
 
-#Using domain()
+# Using domain()
 domain_name <- domain("http://en.wikipedia.org")
 suffix_extract(domain_name)
 
