@@ -133,5 +133,5 @@ suffix_extract <- function(domains){
       if(length(splithosts)<1) break
     }
   }
-  data.frame(host=domains, subdomain=subdomain, domain=domain, suffix=tld, stringsAsFactors=F)
+  data.frame(host=domains, subdomain=subdomain, domain=domain, suffix=tld, stringsAsFactors = FALSE)
 }
