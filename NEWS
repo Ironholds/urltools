@@ -1,6 +1,16 @@
+Version 1.2.1
+-------------------------------------------------------------------------
+CHANGES
+* Changed "tld" column to "suffix" in return of "suffix_extract" to more
+accurately reflect what it is
+* Switched to "vapply" in "suffix_extract" to give a bit of a speedup to
+an already fast function
+
+BUG FIXES
+* Fixed documentation of "suffix_extract"
+
 Version 1.2.0
 -------------------------------------------------------------------------
-
 NEW FEATURES
 * Jay Jacobs' "tldextract" functionality has been merged with urltools, and can be accessed
 with "suffix_extract"
