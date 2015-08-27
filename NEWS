@@ -1,5 +1,6 @@
 Version 1.2.1
 -------------------------------------------------------------------------
+
 CHANGES
 * Changed "tld" column to "suffix" in return of "suffix_extract" to more
 accurately reflect what it is
@@ -8,6 +9,9 @@ an already fast function
 
 BUG FIXES
 * Fixed documentation of "suffix_extract"
+
+DEVELOPMENT
+* More internal documentation added to compiled code.
 
 Version 1.2.0
 -------------------------------------------------------------------------

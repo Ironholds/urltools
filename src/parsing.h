@@ -8,7 +8,16 @@ class parsing{
   
   private:
     
+    /**
+     * A function for lower-casing an entire string
+     * 
+     * @param str a string to lower-case
+     * 
+     * @return a string containing the lower-cased version of the
+     * input.
+     */
     std::string string_tolower(std::string str);
+    
     /**
      * A function for extracting the scheme of a URL; part of the
      * URL parsing framework.
