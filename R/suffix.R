@@ -23,7 +23,12 @@
 #'
 #'@export
 suffix_refresh <- function(){
-
+  
+  has_libcurl <- capabilities("libcurl")
+  if(length(has_libcurl) == 0 || has_libcurl == FALSE){
+    stop("libcurl support is needed for this function")
+  }
+  
   #Read in and filter
   connection <- url("https://www.publicsuffix.org/list/effective_tld_names.dat", method = "libcurl")
   results <- readLines(connection)
