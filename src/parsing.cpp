@@ -24,16 +24,24 @@ std::string parsing::string_tolower(std::string str){
 std::vector < std::string > parsing::domain_and_port(std::string& url){
   
   std::vector < std::string > output(2);
+  std::string holding;
+  
   std::size_t domain = url.find("/");
   if(domain == std::string::npos){
-    output[0] = url;
-    output[1] = "";
-    url = "";
-    return output;
+    std::size_t param = url.find("?");
+    if(param == std::string::npos){
+      output[0] = url;
+      output[1] = "";
+      url = "";
+      return output;
+    }
+    holding = url.substr(0, param);
+    url = url.substr((param));
+  } else {
+    holding = url.substr(0, domain);
+    url = url.substr((domain+1));
   }
   
-  std::string holding = url.substr(0,domain);
-  url = url.substr((domain+1));
   std::size_t port = holding.find(":");
   if(port == std::string::npos){
     output[0] = holding;

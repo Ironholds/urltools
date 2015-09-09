@@ -1,3 +1,9 @@
+Version 1.2.2 [WIP]
+-------------------------------------------------------------------------
+BUG FIXES
+* Fixed a bug reported by Alex Pinto whereby URLs with parameters but no paths would not have their domain
+  correctly parsed.
+
 Version 1.2.1
 -------------------------------------------------------------------------
 

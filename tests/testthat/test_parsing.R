@@ -51,3 +51,11 @@ test_that("Composing works",{
   amended_url <- url_compose(url_parse(url))
   expect_that(url, equals(amended_url))
 })
+
+test_that("URLs with parameters but no paths work", {
+  url <- url_parse("http://www.nextpedition.com?inav=menu_travel_nextpedition")
+  expect_true(url$domain[1] == "www.nextpedition.com")
+  expect_true(url$port[1] == "")
+  expect_true(url$path[1] == "")
+  expect_true(url$parameter[1] == "inav=menu_travel_nextpedition")
+})
