@@ -9,6 +9,31 @@ set_component_ <- function(urls, component, new_value) {
     .Call('urltools_set_component_', PACKAGE = 'urltools', urls, component, new_value)
 }
 
+#'@title get the values of a URL's parameters
+#'@description URLs can have parameters, taking the form of \code{name=value}, chained together
+#'with \code{&} symbols. \code{param_get}, when provided with a vector of URLs and a vector
+#'of parameter names, will generate a data.frame consisting of the values of each parameter
+#'for each URL.
+#'
+#'@param urls a vector of URLs
+#'
+#'@param parameter_names a vector of parameter names
+#'
+#'@return a data.frame containing one column for each provided parameter name. Values that
+#'cannot be found within a particular URL are represented by an empty string.
+#'
+#'@examples
+#'#A very simple example
+#'url <- "https://google.com:80/foo.php?this_parameter=selfreferencing&hiphop=awesome"
+#'parameter_values <- param_get(url, c("this_parameter","hiphop"))
+#'
+#'@seealso \code{\link{url_parse}} for decomposing URLs into their constituent parts.
+#'
+#'@export
+param_get <- function(urls, parameter_names) {
+    .Call('urltools_param_get', PACKAGE = 'urltools', urls, parameter_names)
+}
+
 #'@title Encode or decode a URI
 #'@description encodes or decodes a URI/URL
 #'
@@ -66,31 +91,6 @@ url_decode <- function(urls) {
 #'@export
 url_encode <- function(urls) {
     .Call('urltools_url_encode', PACKAGE = 'urltools', urls)
-}
-
-#'@title get the values of a URL's parameters
-#'@description URLs can have parameters, taking the form of \code{name=value}, chained together
-#'with \code{&} symbols. \code{url_parameters}, when provided with a vector of URLs and a vector
-#'of parameter names, will generate a data.frame consisting of the values of each parameter
-#'for each URL.
-#'
-#'@param urls a vector of URLs
-#'
-#'@param parameter_names a vector of parameter names
-#'
-#'@return a data.frame containing one column for each provided parameter name. Values that
-#'cannot be found within a particular URL are represented by an empty string.
-#'
-#'@examples
-#'#A very simple example
-#'url <- "https://google.com:80/foo.php?this_parameter=selfreferencing&hiphop=awesome"
-#'parameter_values <- url_parameters(url, c("this_parameter","hiphop"))
-#'
-#'@seealso \code{\link{url_parse}} for decomposing URLs into their constituent parts.
-#'
-#'@export
-url_parameters <- function(urls, parameter_names) {
-    .Call('urltools_url_parameters', PACKAGE = 'urltools', urls, parameter_names)
 }
 
 #'@title split URLs into their component parts

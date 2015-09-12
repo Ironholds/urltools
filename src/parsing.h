@@ -4,7 +4,22 @@ using namespace Rcpp;
 #ifndef __PARSING_INCLUDED__
 #define __PARSING_INCLUDED__
 
-class parsing{
+class parsing {
+  
+  protected:
+  
+  /**
+   * A function for parsing a URL and turning it into a vector.
+   * Tremendously useful (read: everything breaks without this)
+   * 
+   * @param url a URL.
+   * 
+   * @see get_ and set_component, which call this.
+   * 
+   * @return a vector consisting of the value for each component
+   * part of the URL.
+   */
+  std::vector < std::string > url_to_vector(std::string& url_ptr);
   
   private:
     
@@ -75,19 +90,6 @@ class parsing{
      */
     std::string query(std::string& url);
     
-    /**
-     * A function for parsing a URL and turning it into a vector.
-     * Tremendously useful (read: everything breaks without this)
-     * 
-     * @param url a URL.
-     * 
-     * @see get_ and set_component, which call this.
-     * 
-     * @return a vector consisting of the value for each component
-     * part of the URL.
-     */
-    std::vector < std::string > url_to_vector(std::string& url_ptr);
-    
   public:
   
     /**
@@ -122,18 +124,6 @@ class parsing{
      * @return a string consisting of the modified URL.
      */
     std::string set_component(std::string url, int component, std::string new_value);
-
-    /**
-     * Component retrieval specifically for parameters.
-     * 
-     * @param urls a reference to a vector of URLs
-     * 
-     * @param component the name of a component to retrieve
-     * the value of
-     * 
-     * @return a vector of the values for that component.
-     */
-    std::vector < std::string > get_parameter(std::vector < std::string >& urls, std::string component);
     
     /**
      * Decompose a vector of URLs and turn it into a data.frame.
