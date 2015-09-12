@@ -55,6 +55,18 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// param_remove
+std::vector < std::string > param_remove(std::vector < std::string > urls, std::vector < std::string > keys);
+RcppExport SEXP urltools_param_remove(SEXP urlsSEXP, SEXP keysSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< std::vector < std::string > >::type keys(keysSEXP);
+    __result = Rcpp::wrap(param_remove(urls, keys));
+    return __result;
+END_RCPP
+}
 // url_decode
 std::vector < std::string > url_decode(std::vector < std::string > urls);
 RcppExport SEXP urltools_url_decode(SEXP urlsSEXP) {

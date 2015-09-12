@@ -31,3 +31,24 @@ test_that("Setting parameter values works", {
   expect_true(param_set("https://en.wikipedia.org/wiki/api.php?foo=bar", "baz", "quorn") ==
                 "https://en.wikipedia.org/wiki/api.php?foo=bar&baz=quorn")
 })
+
+test_that("Removing parameter keys works", {
+  expect_true(param_remove("https://en.wikipedia.org/api.php?baz=qux", "baz") ==
+                "https://en.wikipedia.org/api.php?")
+})
+
+test_that("Removing parameter keys works when there are multiple parameters in the URL", {
+  expect_true(param_remove("https://en.wikipedia.org/api.php?baz=qux&foo=bar", "baz") ==
+                "https://en.wikipedia.org/api.php?foo=bar")
+})
+
+test_that("Removing parameter keys works when there are multiple parameters to remove", {
+  expect_true(param_remove("https://en.wikipedia.org/api.php?baz=qux&foo=bar", c("baz","foo")) ==
+                "https://en.wikipedia.org/api.php?")
+})
+
+test_that("Removing parameter keys works when there is no query", {
+  expect_true(param_remove("https://en.wikipedia.org/api.php", "baz") ==
+              "https://en.wikipedia.org/api.php")
+})
+

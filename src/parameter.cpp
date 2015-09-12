@@ -17,7 +17,7 @@ std::string parameter::set_parameter(std::string url, std::string& component, st
   
   std::vector < std::string > holding = get_query_string(url);
   if(holding.size() == 1){
-    return holding[1] + ("?" + component + "=" + value);
+    return holding[0] + ("?" + component + "=" + value);
   }
   
   size_t component_location = holding[1].find((component + "="));
@@ -32,6 +32,26 @@ std::string parameter::set_parameter(std::string url, std::string& component, st
   return(holding[0] + holding[1]);
   
 }
+
+std::string parameter::remove_parameter_single(std::string url, std::vector < std::string >& params){
+  
+  std::vector < std::string > parsed_url = get_query_string(url);
+  if(parsed_url.size() == 1){
+    return url;
+  }
+  
+  for(unsigned int i = 0; i < params.size(); i++){
+    size_t param_location = parsed_url[1].find(params[i]);
+    while(param_location != std::string::npos){
+      size_t end_location = parsed_url[1].find("&", param_location);
+      parsed_url[1].erase(param_location, end_location);
+      param_location = parsed_url[i].find(params[i], param_location);
+    }
+  }
+  
+  return (parsed_url[0] + parsed_url[1]);
+}
+
 
 //Parameter retrieval
 std::vector < std::string > parameter::get_parameter(std::vector < std::string >& urls, std::string component){
@@ -82,5 +102,26 @@ std::vector < std::string > parameter::set_parameter_vectorised(std::vector < st
     throw std::range_error("'value' must be the same length as 'urls', or of length 1");
   }
   
+  return urls;
+}
+
+std::vector < std::string > parameter::remove_parameter_vectorised(std::vector < std::string > urls,
+                                                                   std::vector < std::string > params){
+  
+  // Generate easily find-able params.
+  for(unsigned int i = 0; i < params.size(); i++){
+    params[i] = params[i] + "=";
+  }
+  std::vector < std::string >& param_ref = params;
+  
+  // For each URL, remove those parameters.
+  for(unsigned int i = 0; i < urls.size(); i++){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
+    urls[i] = remove_parameter_single(urls[i], param_ref);
+  }
+  
+  // Return
   return urls;
 }

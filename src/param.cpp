@@ -24,6 +24,8 @@ using namespace Rcpp;
 //'@seealso \code{\link{url_parse}} for decomposing URLs into their constituent parts and
 //'\code{\link{param_set}} for inserting or modifying key/value pairs within a query string.
 //'
+//'@aliases param_get url_parameter
+//'@rdname param_get
 //'@export
 //[[Rcpp::export]]
 List param_get(std::vector < std::string > urls, std::vector < std::string > parameter_names){
@@ -70,7 +72,7 @@ List param_get(std::vector < std::string > urls, std::vector < std::string > par
 //'param_set("https://en.wikipedia.org/api.php?list=props", "action", "pageinfo")
 //'
 //'@seealso \code{\link{param_get}} to retrieve the values associated with multiple keys in
-//'a vector of URLs.
+//'a vector of URLs, and \code{\link{param_remove}} to strip key/value pairs from a URL entirely.
 //'
 //'@export
 //[[Rcpp::export]]
@@ -79,14 +81,34 @@ std::vector < std::string > param_set(std::vector < std::string > urls, std::str
   return p_inst.set_parameter_vectorised(urls, key, value);
 }
 
-std::vector < std::string > param_remove(std::vector < std::string > urls, std::vector < std::string > params){
+//'@title Remove key-value pairs from query strings
+//'@description URLs often have queries associated with them, particularly URLs for
+//'APIs, that look like \code{?key=value&key=value&key=value}. \code{param_remove}
+//'allows you to remove key/value pairs while leaving the rest of the URL intact.
+//'
+//'@param urls a vector of URLs. These should be decoded with \code{url_decode} but don't
+//'have to have been otherwise processed.
+//'
+//'@param keys a vector of parameter keys to remove.
+//'
+//'@return the original URLs but with the key/value pairs specified by \code{keys} removed.
+//'
+//'@seealso \code{\link{param_set}} to modify values associated with keys, or \code{\link{param_get}}
+//'to retrieve those values.
+//'
+//'@examples
+//'# Remove multiple parameters from a URL
+//'param_remove(urls = "https://en.wikipedia.org/wiki/api.php?action=list&type=query&format=json",
+//'             keys = c("action","format"))
+//'@export
+//[[Rcpp::export]]
+std::vector < std::string > param_remove(std::vector < std::string > urls, std::vector < std::string > keys){
   parameter p_inst;
-  return p_inst.remove_parameter_vectorised(urls, params);
+  return p_inst.remove_parameter_vectorised(urls, keys);
   
 }
 
 std::vector < std::string > param_compress(std::vector < std::string > urls, bool strict = true){
-  parameter p_inst;
-  return p_inst.compress_parameter_vectorised(urls, strict);
+  return urls;
   
 }

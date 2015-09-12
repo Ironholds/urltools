@@ -12,6 +12,8 @@ private:
   
   std::string set_parameter(std::string url, std::string& component, std::string& value);
   
+  std::string remove_parameter_single(std::string url, std::vector < std::string >& params);
+  
 public:
   
   /**

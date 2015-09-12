@@ -12,10 +12,7 @@
 #' @aliases urltools urltools-package
 NULL
 
-#'@title get the values of a URL's parameters (deprecated)
-#'@description the old name for \code{\link{param_get}}; deprecated
-#'in favour of that function.
-#'
+#'@rdname param_get
 #'@export
 url_parameters <- function(urls, parameter_names){
   return(param_get(urls, parameter_names))
