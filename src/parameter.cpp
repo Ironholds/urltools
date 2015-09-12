@@ -1,24 +1,35 @@
 #include "parameter.h"
 
-std::string parameter::set_parameter(std::string url, std::string& component, std::string& value){
+std::vector < std::string > parameter::get_query_string(std::string url){
   
+  std::vector < std::string > output;
   size_t query_location = url.find("?");
   if(query_location == std::string::npos){
-    return url + ("?" + component + "=" + value);
+    output.push_back(url);
+  } else {
+    output.push_back(url.substr(0, query_location));
+    output.push_back(url.substr(query_location));
+  }
+  return output;
+}
+
+std::string parameter::set_parameter(std::string url, std::string& component, std::string& value){
+  
+  std::vector < std::string > holding = get_query_string(url);
+  if(holding.size() == 1){
+    return holding[1] + ("?" + component + "=" + value);
   }
   
-  std::string output = url.substr(query_location);
-  url = url.substr(0, query_location);
-  size_t component_location = output.find((component + "="));
+  size_t component_location = holding[1].find((component + "="));
   
   if(component_location == std::string::npos){
-    output = (output + "&" + component + "=" + value);
+    holding[1] = (holding[1] + "&" + component + "=" + value);
   } else {
-    size_t value_location = output.find("&", component_location);
-    output.replace(component_location, value_location, (component + "=" + value));
+    size_t value_location = holding[1].find("&", component_location);
+    holding[1].replace(component_location, value_location, (component + "=" + value));
   }
   
-  return(url + output);
+  return(holding[0] + holding[1]);
   
 }
 
@@ -47,8 +58,8 @@ std::vector < std::string > parameter::get_parameter(std::vector < std::string >
   return output;
 }
 
-std::vector < std::string > parameter::set_parameter_vectorised(std::vector < std::string > urls,
-                                                                std::string component, std::vector < std::string > value){
+std::vector < std::string > parameter::set_parameter_vectorised(std::vector < std::string > urls, std::string component,
+                                                                std::vector < std::string > value){
   
   unsigned int input_size = urls.size();
   std::string& component_ref = component;

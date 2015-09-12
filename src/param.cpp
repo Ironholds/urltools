@@ -78,3 +78,15 @@ std::vector < std::string > param_set(std::vector < std::string > urls, std::str
   parameter p_inst;
   return p_inst.set_parameter_vectorised(urls, key, value);
 }
+
+std::vector < std::string > param_remove(std::vector < std::string > urls, std::vector < std::string > params){
+  parameter p_inst;
+  return p_inst.remove_parameter_vectorised(urls, params);
+  
+}
+
+std::vector < std::string > param_compress(std::vector < std::string > urls, bool strict = true){
+  parameter p_inst;
+  return p_inst.compress_parameter_vectorised(urls, strict);
+  
+}

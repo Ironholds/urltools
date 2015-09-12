@@ -8,6 +8,8 @@ class parameter: public parsing {
   
 private:
   
+  std::vector < std::string > get_query_string(std::string url);
+  
   std::string set_parameter(std::string url, std::string& component, std::string& value);
   
 public:
@@ -27,7 +29,11 @@ public:
   std::vector < std::string > set_parameter_vectorised(std::vector < std::string > urls, std::string component,
                                                        std::vector < std::string > value);
   
+  std::vector < std::string > remove_parameter_vectorised(std::vector < std::string > urls, std::vector < std::string > params);
   
+  std::vector < std::string > compress_parameter_vectorised(std::vector < std::string > urls, bool strict);
+  
+    
 };
 
 #endif
