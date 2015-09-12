@@ -1,5 +1,13 @@
-Version 1.2.2 [WIP]
+Version 1.3.0 [WIP]
 -------------------------------------------------------------------------
+
+NEW FEATURES
+* param_set() for inserting or modifying key/value pairs in URL query strings.
+
+CHANGES
+* url_parameters has been renamed param_get() under the new naming scheme - url_parameters still exists, however,
+for the purpose of backwards-compatibiltiy.
+
 BUG FIXES
 * Fixed a bug reported by Alex Pinto whereby URLs with parameters but no paths would not have their domain
   correctly parsed.

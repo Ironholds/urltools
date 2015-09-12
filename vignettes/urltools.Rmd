@@ -81,10 +81,10 @@ We can also perform the opposite of this operation with `url_compose`:
 ### Value extraction
 Once a URL is parsed, it's sometimes useful to get the value associated with a particular query parameter. As
 an example, take the URL `http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json`. What
-pageID is being used? What is the export format? We can find out with `url_parameters`.
+pageID is being used? What is the export format? We can find out with `param_get`.
 
 ```{r, eval=FALSE}
-> str(url_parameters(urls = "http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json",
+> str(param_get(urls = "http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json",
                      parameter_names = c("pageid","export")))
 'data.frame':	1 obs. of  2 variables:
  $ pageid: chr "1023"

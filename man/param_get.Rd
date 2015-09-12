@@ -27,6 +27,7 @@ url <- "https://google.com:80/foo.php?this_parameter=selfreferencing&hiphop=awes
 parameter_values <- param_get(url, c("this_parameter","hiphop"))
 }
 \seealso{
-\code{\link{url_parse}} for decomposing URLs into their constituent parts.
+\code{\link{url_parse}} for decomposing URLs into their constituent parts and
+\code{\link{param_set}} for inserting or modifying key/value pairs within a query string.
 }
 

@@ -31,31 +31,8 @@ test_that("Parsing does not up and die and misplace the fragment",{
   expect_that(data$fragment[1], equals("protein"))
 })
 
-test_that("Parameter parsing can handle multiple, non-existent and pre-trailing parameters",{
-  urls <- c("https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome",
-            "https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome#foob",
-            "https://www.google.com:80/foo.php?this_parameter=selfreferencing&hiphop=awesome")
-  results <- url_parameters(urls, c("api_params","hiphop"))
-  expect_that(results[,1], equals(c("parsable","parsable","")))
-  
-})
-
-test_that("Parameter parsing works where the parameter appears earlier in the URL", {
-  url <- url_parameters("www.housetrip.es/tos-de-vacaciones/geo?from=01/04/2015&guests=4&to=05/04/2015","to")
-  expect_that(ncol(url), equals(1))
-  expect_that(url$to[1], equals("05/04/2015"))
-})
-
 test_that("Composing works",{
   url <- "http://foo.bar.baz/qux/"
   amended_url <- url_compose(url_parse(url))
   expect_that(url, equals(amended_url))
-})
-
-test_that("URLs with parameters but no paths work", {
-  url <- url_parse("http://www.nextpedition.com?inav=menu_travel_nextpedition")
-  expect_true(url$domain[1] == "www.nextpedition.com")
-  expect_true(url$port[1] == "")
-  expect_true(url$path[1] == "")
-  expect_true(url$parameter[1] == "inav=menu_travel_nextpedition")
 })
