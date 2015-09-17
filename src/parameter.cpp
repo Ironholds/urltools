@@ -13,6 +13,7 @@ std::vector < std::string > parameter::get_query_string(std::string url){
   return output;
 }
 
+
 std::string parameter::set_parameter(std::string url, std::string& component, std::string& value){
   
   std::vector < std::string > holding = get_query_string(url);
@@ -51,7 +52,6 @@ std::string parameter::remove_parameter_single(std::string url, std::vector < st
   
   return (parsed_url[0] + parsed_url[1]);
 }
-
 
 //Parameter retrieval
 std::vector < std::string > parameter::get_parameter(std::vector < std::string >& urls, std::string component){

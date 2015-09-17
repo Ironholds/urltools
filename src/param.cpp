@@ -107,8 +107,3 @@ std::vector < std::string > param_remove(std::vector < std::string > urls, std::
   return p_inst.remove_parameter_vectorised(urls, keys);
   
 }
-
-std::vector < std::string > param_compress(std::vector < std::string > urls, bool strict = true){
-  return urls;
-  
-}

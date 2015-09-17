@@ -32,9 +32,6 @@ public:
                                                        std::vector < std::string > value);
   
   std::vector < std::string > remove_parameter_vectorised(std::vector < std::string > urls, std::vector < std::string > params);
-  
-  std::vector < std::string > compress_parameter_vectorised(std::vector < std::string > urls, bool strict);
-  
     
 };
 
