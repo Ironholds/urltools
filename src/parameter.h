@@ -8,8 +8,31 @@ class parameter: public parsing {
   
 private:
   
+  /**
+   * Split out a URL query from the actual body. Used
+   * in set_ and remove_parameter.
+   * 
+   * @param url a URL.
+   * 
+   * @return a vector either of length 1, indicating that no
+   * query was found, or 2, indicating that one was.
+   */
   std::vector < std::string > get_query_string(std::string url);
   
+  /**
+   * Set the value of a single key=value parameter.
+   * 
+   * @param url a URL.
+   * 
+   * @param component a reference to the key to set
+   * 
+   * @param value a reference to the value to set.
+   * 
+   * @return a string containing URL + key=value, controlling
+   * for the possibility that the URL did not previously have a query
+   * associated - or did, and /had that key/, but was associating a
+   * different value with it.
+   */
   std::string set_parameter(std::string url, std::string& component, std::string& value);
   
   std::string remove_parameter_single(std::string url, std::vector < std::string >& params);
@@ -32,7 +55,6 @@ public:
                                                        std::vector < std::string > value);
   
   std::vector < std::string > remove_parameter_vectorised(std::vector < std::string > urls, std::vector < std::string > params);
-    
 };
 
 #endif
