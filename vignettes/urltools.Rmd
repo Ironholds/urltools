@@ -78,19 +78,6 @@ We can also perform the opposite of this operation with `url_compose`:
 [1] "https://en.wikipedia.org/wiki/article"
 ```
 
-### Value extraction
-Once a URL is parsed, it's sometimes useful to get the value associated with a particular query parameter. As
-an example, take the URL `http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json`. What
-pageID is being used? What is the export format? We can find out with `param_get`.
-
-```{r, eval=FALSE}
-> str(param_get(urls = "http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json",
-                     parameter_names = c("pageid","export")))
-'data.frame':	1 obs. of  2 variables:
- $ pageid: chr "1023"
- $ export: chr "json"
-```
-
 ### Getting/setting URL components
 With the inclusion of a URL parser, we suddenly have the opportunity for lubridate-style component getting
 and setting. Syntax is identical to that of `lubridate`, but uses URL components as function names.
@@ -124,6 +111,49 @@ bit is the "top-level domain" or suffix, thanks to code contributed by Jay Jacob
  $ tld      : chr "org"
 ```
 
+### Query manipulation
+Once a URL is parsed, it's sometimes useful to get the value associated with a particular query parameter. As
+an example, take the URL `http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json`. What
+pageID is being used? What is the export format? We can find out with `param_get`.
+
+```{r, eval=FALSE}
+> str(param_get(urls = "http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json",
+                     parameter_names = c("pageid","export")))
+'data.frame':	1 obs. of  2 variables:
+ $ pageid: chr "1023"
+ $ export: chr "json"
+```
+
+This isn't the only function for query manipulation; we can also dynamically modify the values a particular parameter
+might have, or strip them out entirely.
+
+To modify the values, we use `param_set`:
+
+```{r, eval=FALSE}
+url <- "http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json"
+url <- param_set(url, key = "pageid", value = "12")
+url
+# [1] "http://en.wikipedia.org/wiki/api.php?action=parse&pageid=12&export=json"
+```
+
+As you can see this works pretty well; it even works in situations where the URL doesn't *have* a query yet:
+
+```{r, eval=FALSE}
+url <- "http://en.wikipedia.org/wiki/api.php"
+url <- param_set(url, key = "pageid", value = "12")
+url
+# [1] "http://en.wikipedia.org/wiki/api.php?pageid=12"
+```
+
+On the other hand we might have a parameter we just don't want any more - that can be handled with `param_remove`, which can
+take multiple parameters as well as multiple URLs:
+
+```{r, eval=FALSE}
+url <- "http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json"
+url <- param_remove(url, keys = c("action","export"))
+url
+# [1] "http://en.wikipedia.org/wiki/api.php?pageid=1023"
+```
 ### Other URL handlers
 If you have ideas for other URL handlers that would make your data processing easier, the best approach
 is to either [request it](https://github.com/Ironholds/urltools/issues) or [add it](https://github.com/Ironholds/urltools/pulls)!

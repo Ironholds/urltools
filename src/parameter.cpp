@@ -27,7 +27,12 @@ std::string parameter::set_parameter(std::string url, std::string& component, st
     holding[1] = (holding[1] + "&" + component + "=" + value);
   } else {
     size_t value_location = holding[1].find("&", component_location);
-    holding[1].replace(component_location, value_location, (component + "=" + value));
+    if(value_location == std::string::npos){
+      holding[1].replace(component_location, value_location, (component + "=" + value));
+    } else {
+      holding[1].replace(component_location, (value_location - component_location), (component + "=" + value));
+    }
+    
   }
   
   return(holding[0] + holding[1]);
@@ -48,6 +53,12 @@ std::string parameter::remove_parameter_single(std::string url, std::vector < st
       parsed_url[1].erase(param_location, end_location);
       param_location = parsed_url[i].find(params[i], param_location);
     }
+  }
+  
+  // We may have removed all of the parameters or the last one, leading to trailing ampersands or
+  // question marks. If those exist, erase them.
+  if(parsed_url[1][parsed_url[1].size()-1] == '&' || parsed_url[1][parsed_url[1].size()-1] == '?'){
+    parsed_url[1].erase(parsed_url[1].size()-1);
   }
   
   return (parsed_url[0] + parsed_url[1]);
