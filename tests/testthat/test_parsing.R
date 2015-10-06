@@ -36,3 +36,19 @@ test_that("Composing works",{
   amended_url <- url_compose(url_parse(url))
   expect_that(url, equals(amended_url))
 })
+
+test_that("Port handling works", {
+  url <- "https://en.wikipedia.org:4000/wiki/api.php"
+  expect_that(port(url), equals("4000"))
+  expect_that(path(url), equals("wiki/api.php"))
+  url <- "https://en.wikipedia.org:4000"
+  expect_that(port(url), equals("4000"))
+  expect_that(path(url), equals(""))
+  url <- "https://en.wikipedia.org:4000/"
+  expect_that(port(url), equals("4000"))
+  expect_that(path(url), equals(""))
+  url <- "https://en.wikipedia.org:4000?foo=bar"
+  expect_that(port(url), equals("4000"))
+  expect_that(path(url), equals(""))
+  expect_that(parameters(url), equals("foo=bar"))
+})

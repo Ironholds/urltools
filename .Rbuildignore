@@ -2,4 +2,3 @@
 ^\.Rproj\.user$
 ^CONDUCT\.md$
 presentations/*
-^.*\.o$

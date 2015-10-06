@@ -25,36 +25,53 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   
   std::vector < std::string > output(2);
   std::string holding;
+  unsigned int output_offset = 0;
   
-  std::size_t domain = url.find("/");
-  if(domain == std::string::npos){
-    std::size_t param = url.find("?");
-    if(param == std::string::npos){
-      output[0] = url;
-      output[1] = "";
-      url = "";
-      return output;
-    }
-    holding = url.substr(0, param);
-    url = url.substr((param));
+  // Identify the port. If there is one, push everything
+  // before that straight into the output, and the remainder
+  // into the holding string. If not, the entire
+  // url goes into the holding string.
+  std::size_t port = url.find(":");
+  
+  if(port != std::string::npos){
+    output[0] = url.substr(0,port);
+    holding = url.substr(port+1);
+    output_offset++;
   } else {
-    holding = url.substr(0, domain);
-    url = url.substr((domain+1));
+    holding = url;
   }
   
-  std::size_t port = holding.find(":");
-  if(port == std::string::npos){
-    output[0] = holding;
-    output[1] = "";
+  // Look for a trailing slash
+  std::size_t trailing_slash = holding.find("/");
+  
+  // If there is one, that's when everything ends
+  if(trailing_slash != std::string::npos){
+    output[output_offset] = holding.substr(0, trailing_slash);
+    url = holding.substr(trailing_slash+1);
     return output;
   }
   
-  output[0] = holding.substr(0,port);
-  output[1] = holding.substr(port+1);
+  // If not, there might be a query parameter associated
+  // with the base URL, which we need to preserve.
+  std::size_t param = holding.find("?");
+  
+  // If there is, handle that
+  if(param != std::string::npos){
+    output[output_offset] = holding.substr(0, param);
+    url = holding.substr(param);
+    return output;
+  }
+  
+  // Otherwise we're done here
+  output[output_offset] = holding;
+  url = "";
   return output;
 }
 
 std::string parsing::path(std::string& url){
+  if(url.size() == 0){
+    return url;
+  }
   std::string output;
   std::size_t path = url.find("?");
   if(path == std::string::npos){
