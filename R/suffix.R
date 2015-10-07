@@ -1,45 +1,3 @@
-#'@title refresh the stored public suffix dataset
-#'
-#'@description \code{urltools} comes with an inbuilt
-#'dataset of public suffixes, \code{\link{suffix_dataset}}.
-#'This is used in \code{\link{suffix_extract}} to identify the top-level domain
-#'within a particular domain name.
-#'
-#'While updates to the dataset will be included in each new package release,
-#'there's going to be a gap between changes to TLDs and changes to the package.
-#'Accordingly, the package also includes \code{\link{suffix_refresh}}, which refreshes
-#'this dataset on the user end. This requires CURL (the library, not the
-#'R package) on your system to function.
-#'
-#'@return TRUE if this worked; an error otherwise.
-#'
-#'@seealso \code{\link{suffix_extract}} to extract suffixes from domain names,
-#'or \code{\link{suffix_dataset}} for the dataset itself.
-#'
-#'@examples
-#'\dontrun{
-#'suffix_refresh()
-#'}
-#'
-#'@export
-suffix_refresh <- function(){
-  
-  has_libcurl <- capabilities("libcurl")
-  if(length(has_libcurl) == 0 || has_libcurl == FALSE){
-    stop("libcurl support is needed for this function")
-  }
-  
-  #Read in and filter
-  connection <- url("https://www.publicsuffix.org/list/effective_tld_names.dat", method = "libcurl")
-  results <- readLines(connection)
-  close(connection)
-  suffix_dataset <- results[!grepl(x = results, pattern = "//", fixed = TRUE) & !results == ""]
-
-  #Return the user-friendly version
-  save(suffix_dataset, file = system.file("data/suffix_dataset.rda", package = "urltools"))
-  return(TRUE)
-}
-
 #' @title Dataset of public suffixes
 #' @description This dataset contains a registry of public suffixes, as retrieved from
 #' and defined by the \href{https://publicsuffix.org/}{public suffix list}. It is
@@ -50,8 +8,7 @@ suffix_refresh <- function(){
 #' @keywords datasets
 #' @name suffix_dataset
 #'
-#' @seealso \code{\link{suffix_refresh}} for updating the dataset, and
-#' \code{\link{suffix_extract}} for extracting suffixes from domain names.
+#' @seealso \code{\link{suffix_extract}} for extracting suffixes from domain names.
 #'
 #' @usage data(suffix_dataset)
 #' @note Last updated 2015-05-06.
@@ -78,8 +35,7 @@ NULL
 #' "domain" contains the part of the domain name that came before the matched suffix.
 #' "suffix" is, well, the suffix.
 #'
-#' @seealso \code{\link{suffix_dataset}} for the dataset of suffixes,
-#' and \code{\link{suffix_refresh}} for refreshing it.
+#' @seealso \code{\link{suffix_dataset}} for the dataset of suffixes.
 #'
 #' @examples
 #'

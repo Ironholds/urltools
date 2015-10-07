@@ -18,7 +18,6 @@ sorted by how many periods(".") appear in the suffix, to optimise it for
 Last updated 2015-05-06.
 }
 \seealso{
-\code{\link{suffix_refresh}} for updating the dataset, and
 \code{\link{suffix_extract}} for extracting suffixes from domain names.
 }
 \keyword{datasets}

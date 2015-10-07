@@ -41,7 +41,6 @@ suffix_extract(domain_name)
 suffix_extract("http://en.wikipedia.org")
 }
 \seealso{
-\code{\link{suffix_dataset}} for the dataset of suffixes,
-and \code{\link{suffix_refresh}} for refreshing it.
+\code{\link{suffix_dataset}} for the dataset of suffixes.
 }
 
