@@ -1,4 +1,11 @@
+Version 1.3.2
+-------------------------------------------------------------------------
+
+BUG FIXES
+* Fixed a critical bug impacting URLs with colons in the path
+
 Version 1.3.1
+-------------------------------------------------------------------------
 
 CHANGES
 * suffix_refresh has been removed, since LazyData's parameters prevented it from functioning; thanks to

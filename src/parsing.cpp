@@ -33,7 +33,7 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   // url goes into the holding string.
   std::size_t port = url.find(":");
   
-  if(port != std::string::npos){
+  if(port != std::string::npos && url.find("/") >= port){
     output[0] = url.substr(0,port);
     holding = url.substr(port+1);
     output_offset++;
@@ -47,6 +47,7 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   // If there is one, that's when everything ends
   if(trailing_slash != std::string::npos){
     output[output_offset] = holding.substr(0, trailing_slash);
+    output_offset++;
     url = holding.substr(trailing_slash+1);
     return output;
   }

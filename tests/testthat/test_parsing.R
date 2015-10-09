@@ -52,3 +52,9 @@ test_that("Port handling works", {
   expect_that(path(url), equals(""))
   expect_that(parameters(url), equals("foo=bar"))
 })
+
+test_that("Port handling does not break path handling", {
+  url <- "https://en.wikipedia.org/wiki/File:Vice_City_Public_Radio_(logo).jpg"
+  expect_that(port(url), equals(""))
+  expect_that(path(url), equals("wiki/file:vice_city_public_radio_(logo).jpg"))
+})
