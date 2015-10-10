@@ -32,7 +32,7 @@ The latest CRAN version can be obtained via:
 
 The latest maintenance version:
 
-    devtools::install_github("ironholds/urltools", ref = "1.3.0")
+    devtools::install_github("ironholds/urltools", ref = "1.3.2")
     
 To get the development version:
 
