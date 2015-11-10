@@ -115,12 +115,15 @@ std::vector < std::string > parsing::url_to_vector(std::string& url){
   //Output object, holding object, normalise.
   std::vector < std::string > output(6);
   std::vector < std::string > holding;
-  url = string_tolower(url);
   
-  //Run
-  output[0] = scheme(url);
+  std::string s = scheme(url);
+  
   holding = domain_and_port(url);
-  output[1] = holding[0];
+  std::string d = holding[0];
+    
+  //Run
+  output[0] = string_tolower(s);
+  output[1] = string_tolower(d);
   output[2] = holding[1];
   output[3] = path(url);
   output[4] = query(url);
