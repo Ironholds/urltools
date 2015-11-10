@@ -12,6 +12,9 @@ not situations where URLs *are* the data.
 There is no support for encoding or decoding URLs en-masse, and no support for parsing and
 interpreting them. `urltools` provides this support!
 
+One cautionary note; NAs are not fully supported. By this I don't mean that you can't pass in NA values,
+but that the output won't be an NA if you do - it'll be the string "na" or "NA".
+
 ### URL encoding and decoding
 
 Base R provides two functions - <code>URLdecode</code> and <code>URLencode</code> - for taking percentage-encoded
