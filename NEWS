@@ -5,6 +5,7 @@ BUG FIXES
 
 DOCUMENTATION
 * A note on NAs (as reported by Alex Pinto) added to the vignette
+* Mention Bob Rudis's 'punycode' package.
 
 Version 1.3.2
 -------------------------------------------------------------------------

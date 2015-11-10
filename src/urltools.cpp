@@ -42,6 +42,9 @@ using namespace Rcpp;
 //'
 //'@return a character vector containing the encoded (or decoded) versions of "urls".
 //'
+//'@seealso Bob Rudis's \href{https://github.com/hrbrmstr/punycode}{Punycode} package on GitHub, for handling
+//'punycode in URLs.
+//'
 //'@examples
 //'
 //'url_decode("https://en.wikipedia.org/wiki/File:Vice_City_Public_Radio_%28logo%29.jpg")
