@@ -22,5 +22,6 @@ Imports:
 Suggests:
     testthat,
     knitr
+URL: https://github.com/Ironholds/urltools/
 BugReports: https://github.com/Ironholds/urltools/issues
 VignetteBuilder: knitr
