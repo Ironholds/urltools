@@ -2,7 +2,6 @@
 #include "encoding.h"
 #include "compose.h"
 #include "parsing.h"
-#include "punycode.h"
 
 using namespace Rcpp;
 
