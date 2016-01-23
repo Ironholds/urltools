@@ -1,4 +1,11 @@
+Version 1.4.0
+
+DEVELOPMENT
+
+* NAs are now supported in encoding, decoding,
+
 Version 1.3.3
+-------------------------------------------------------------------------
 
 BUG FIXES
 * url_parse no longer lower-cases URLs (case sensitivity is Important) thanks to GitHub user 17843

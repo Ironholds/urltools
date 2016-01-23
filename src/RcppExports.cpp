@@ -68,23 +68,23 @@ BEGIN_RCPP
 END_RCPP
 }
 // url_decode
-std::vector < std::string > url_decode(std::vector < std::string > urls);
+CharacterVector url_decode(CharacterVector urls);
 RcppExport SEXP urltools_url_decode(SEXP urlsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
     __result = Rcpp::wrap(url_decode(urls));
     return __result;
 END_RCPP
 }
 // url_encode
-std::vector < std::string > url_encode(std::vector < std::string > urls);
+CharacterVector url_encode(CharacterVector urls);
 RcppExport SEXP urltools_url_encode(SEXP urlsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
     __result = Rcpp::wrap(url_encode(urls));
     return __result;
 END_RCPP
