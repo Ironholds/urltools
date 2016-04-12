@@ -1,26 +1,28 @@
 #include "compose.h"
 
-bool compose::emptycheck(std::string element){
-  if(element.size() == 0){
+bool compose::emptycheck(String element){
+  if(element == NA_STRING){
     return false;
   }
   return true;
 }
 
-std::string compose::compose_single(std::string scheme, std::string domain, std::string port, std::string path,
-                                    std::string parameter, std::string fragment){
+std::string compose::compose_single(String scheme, String domain, String port, String path,
+                                    String parameter, String fragment){
   
   std::string output;
   
   if(emptycheck(scheme)){
-    output += scheme + "://";
+    output += scheme;
+    output += "://";
   }
   
   if(emptycheck(domain)){
     output += domain;
     
     if(emptycheck(port)){
-      output += ":" + port;
+      output += ":";
+      output += port;
     } else {
       output += "/";
     }
@@ -43,16 +45,16 @@ std::string compose::compose_single(std::string scheme, std::string domain, std:
   return output;
 }
 
-std::vector < std::string > compose::compose_multiple(DataFrame parsed_urls){
+CharacterVector compose::compose_multiple(DataFrame parsed_urls){
   
-  std::vector < std::string > schemes = parsed_urls["scheme"];
-  std::vector < std::string > domains = parsed_urls["domain"];
-  std::vector < std::string > ports = parsed_urls["port"];
-  std::vector < std::string > paths = parsed_urls["path"];
-  std::vector < std::string > parameters = parsed_urls["parameter"];
-  std::vector < std::string > fragments = parsed_urls["fragment"];
+  CharacterVector schemes = parsed_urls["scheme"];
+  CharacterVector domains = parsed_urls["domain"];
+  CharacterVector ports = parsed_urls["port"];
+  CharacterVector paths = parsed_urls["path"];
+  CharacterVector parameters = parsed_urls["parameter"];
+  CharacterVector fragments = parsed_urls["fragment"];
   
-  std::vector < std::string > output(schemes.size());
+  CharacterVector output(schemes.size());
   
   for(unsigned int i = 0; i < schemes.size(); i++){
     if((i % 10000) == 0){

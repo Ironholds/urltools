@@ -15,11 +15,11 @@ private:
    * A function for briefly checking if a component is empty before doing anything
    * with it
    * 
-   * @param str a string to check
+   * @param str a Rcpp String to check
    * 
    * @return true if the string is not empty, false if it is.
    */
-  bool emptycheck(std::string element);
+  bool emptycheck(String element);
   
   /**
    * A function for recomposing a single URL
@@ -36,10 +36,12 @@ private:
    * 
    * @param fragment the fragment of the URL
    * 
-   * @return a string containing the recomposed URL
+   * @return an Rcpp String containing the recomposed URL
+   * 
+   * @seealso compose_multiple for the vectorised version
    */
-  std::string compose_single(std::string scheme, std::string domain, std::string port, std::string path,
-                             std::string parameter, std::string fragment);
+  std::string compose_single(String scheme, String domain, String port, String path,
+                             String parameter, String fragment);
   
 public:
   
@@ -48,9 +50,9 @@ public:
    * 
    * @param parsed_urls a DataFrame provided by url_parse
    * 
-   * @return a string vector containing the recomposed URLs
+   * @return a CharacterVector containing the recomposed URLs
    */
-  std::vector < std::string > compose_multiple(DataFrame parsed_urls);
+  CharacterVector compose_multiple(DataFrame parsed_urls);
 };
 
 #endif

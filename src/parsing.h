@@ -19,7 +19,7 @@ class parsing {
    * @return a vector consisting of the value for each component
    * part of the URL.
    */
-  std::vector < std::string > url_to_vector(std::string& url_ptr);
+  CharacterVector url_to_vector(std::string url);
   
   private:
     
@@ -90,6 +90,8 @@ class parsing {
      */
     std::string query(std::string& url);
     
+    String check_parse_out(std::string x);
+    
   public:
   
     /**
@@ -105,7 +107,7 @@ class parsing {
      * 
      * @return a string consisting of the requested URL component.
      */
-    std::string get_component(std::string& url, int component);
+    String get_component(std::string url, int component);
     
     /**
      * A function to set an individual component in a parsed
@@ -123,7 +125,7 @@ class parsing {
      * 
      * @return a string consisting of the modified URL.
      */
-    std::string set_component(std::string url, int component, std::string new_value);
+    String set_component(std::string url, int component, String new_value);
     
     /**
      * Decompose a vector of URLs and turn it into a data.frame.
@@ -133,7 +135,7 @@ class parsing {
      * @return an Rcpp data.frame.
      * 
      */
-    DataFrame parse_to_df(std::vector < std::string >& urls_ptr);
+    DataFrame parse_to_df(CharacterVector& urls_ptr);
 
 };
 #endif

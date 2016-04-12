@@ -29,10 +29,6 @@ By participating in this project you agree to abide by its terms.
 The latest CRAN version can be obtained via:
 
     install.packages("urltools")
-
-The latest maintenance version:
-
-    devtools::install_github("ironholds/urltools", ref = "1.3.2")
     
 To get the development version:
 
@@ -40,4 +36,4 @@ To get the development version:
 
 ###Dependencies
 * R. Doy.
-* [Rcpp](http://cran.rstudio.com/web/packages/Rcpp/)
+* [Rcpp](https://cran.r-project.org/package=Rcpp)

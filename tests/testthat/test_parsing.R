@@ -20,7 +20,7 @@ test_that("Check parsing can handle missing elements", {
   expect_that(names(data), equals(c("scheme","domain","port","path","parameter","fragment")))
   expect_that(data$scheme[1], equals("https"))
   expect_that(data$domain[1], equals("www.google.com"))
-  expect_that(data$port[1], equals(""))
+  expect_true(is.na(data$port[1]))
   expect_that(data$path[1], equals("foo.php"))
   expect_that(data$parameter[1], equals("api_params=turnip"))
   expect_that(data$fragment[1], equals("ending"))
@@ -43,18 +43,26 @@ test_that("Port handling works", {
   expect_that(path(url), equals("wiki/api.php"))
   url <- "https://en.wikipedia.org:4000"
   expect_that(port(url), equals("4000"))
-  expect_that(path(url), equals(""))
+  expect_true(is.na(path(url)))
   url <- "https://en.wikipedia.org:4000/"
   expect_that(port(url), equals("4000"))
-  expect_that(path(url), equals(""))
+  expect_true(is.na(path(url)))
   url <- "https://en.wikipedia.org:4000?foo=bar"
   expect_that(port(url), equals("4000"))
-  expect_that(path(url), equals(""))
+  expect_true(is.na(path(url)))
   expect_that(parameters(url), equals("foo=bar"))
 })
 
 test_that("Port handling does not break path handling", {
   url <- "https://en.wikipedia.org/wiki/File:Vice_City_Public_Radio_(logo).jpg"
-  expect_that(port(url), equals(""))
+  expect_true(is.na(port(url)))
   expect_that(path(url), equals("wiki/File:Vice_City_Public_Radio_(logo).jpg"))
+})
+
+test_that("URLs with parameters but no paths work", {
+  url <- url_parse("http://www.nextpedition.com?inav=menu_travel_nextpedition")
+  expect_true(url$domain[1] == "www.nextpedition.com")
+  expect_true(is.na(url$port[1]))
+  expect_true(is.na(url$path[1]))
+  expect_true(url$parameter[1] == "inav=menu_travel_nextpedition")
 })

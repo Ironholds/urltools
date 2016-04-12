@@ -15,14 +15,6 @@ test_that("Parameter parsing works where the parameter appears earlier in the UR
   expect_that(url$to[1], equals("05/04/2015"))
 })
 
-test_that("URLs with parameters but no paths work", {
-  url <- url_parse("http://www.nextpedition.com?inav=menu_travel_nextpedition")
-  expect_true(url$domain[1] == "www.nextpedition.com")
-  expect_true(url$port[1] == "")
-  expect_true(url$path[1] == "")
-  expect_true(url$parameter[1] == "inav=menu_travel_nextpedition")
-})
-
 test_that("Setting parameter values works", {
   expect_true(param_set("https://en.wikipedia.org/wiki/api.php", "baz", "quorn") ==
               "https://en.wikipedia.org/wiki/api.php?baz=quorn")

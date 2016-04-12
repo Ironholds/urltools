@@ -5,7 +5,7 @@
 #' entirely vectorised. It is intended to be useful for people dealing with
 #' web-related datasets, such as server-side logs.
 #' 
-#' @seealso the \href{http://cran.rstudio.com/web/packages/urltools/vignettes/urltools.html}{package vignette}.
+#' @seealso the \href{https://cran.r-project.org/web/packages/urltools/vignettes/urltools.html}{package vignette}.
 #' @useDynLib urltools
 #' @importFrom Rcpp sourceCpp
 #' @docType package

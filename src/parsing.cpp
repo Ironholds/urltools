@@ -109,68 +109,98 @@ std::string parsing::query(std::string& url){
   return output;
 }
 
+String parsing::check_parse_out(std::string x){
+  
+  if(x == ""){
+    return NA_STRING;
+  }
+  return x;
+}
+
 //URL parser
-std::vector < std::string > parsing::url_to_vector(std::string& url){
+CharacterVector parsing::url_to_vector(std::string url){
+  
+  std::string &url_ptr = url;
   
   //Output object, holding object, normalise.
-  std::vector < std::string > output(6);
-  std::vector < std::string > holding;
+  CharacterVector output(6);
+  std::vector < std::string > holding(2);
   
-  std::string s = scheme(url);
+  std::string s = scheme(url_ptr);
   
-  holding = domain_and_port(url);
-  std::string d = holding[0];
-    
+  holding = domain_and_port(url_ptr);
+
   //Run
-  output[0] = string_tolower(s);
-  output[1] = string_tolower(d);
-  output[2] = holding[1];
-  output[3] = path(url);
-  output[4] = query(url);
-  output[5] = url;
+  output[0] = check_parse_out(string_tolower(s));
+  output[1] = check_parse_out(string_tolower(holding[0]));
+  output[2] = check_parse_out(holding[1]);
+  output[3] = check_parse_out(path(url_ptr));
+  output[4] = check_parse_out(query(url_ptr));
+  output[5] = check_parse_out(url_ptr);
+  
   return output;
 }
 
 //Component retrieval
-std::string parsing::get_component(std::string& url, int component){
+String parsing::get_component(std::string url, int component){
   return url_to_vector(url)[component];
 }
 
 //Component modification
-std::string parsing::set_component(std::string url, int component, std::string new_value){
+String parsing::set_component(std::string url, int component, String new_value){
+  
   std::string url_cp = url;
-  std::string parsed_url_elem = url_to_vector(url)[component];
-  if(parsed_url_elem.size() != 0){
-    url_cp.replace(url_cp.find(parsed_url_elem), parsed_url_elem.size(), new_value);
+  if(new_value == NA_STRING){
+    return url_cp;
   }
+  CharacterVector parsed_url = url_to_vector(url);
+  if(parsed_url[component] == NA_STRING){
+    return url_cp;
+  }
+  
+  std::string element = Rcpp::as<std::string>(parsed_url[component]);
+  url_cp.replace(url_cp.find(element), element.size(), new_value);
   return url_cp;
 }
 
-DataFrame parsing::parse_to_df(std::vector < std::string >& urls_ptr){
+DataFrame parsing::parse_to_df(CharacterVector& urls_ptr){
   
   //Input and holding objects
   unsigned int input_size = urls_ptr.size();
-  std::vector < std::string > holding(6);
+  CharacterVector holding(6);
   
   //Output objects
-  std::vector < std::string > schemes(input_size);
-  std::vector < std::string > domains(input_size);
-  std::vector < std::string > ports(input_size);
-  std::vector < std::string > paths(input_size);
-  std::vector < std::string > parameters(input_size);
-  std::vector < std::string > fragments(input_size);
-  
+  CharacterVector schemes(input_size);
+  CharacterVector domains(input_size);
+  CharacterVector ports(input_size);
+  CharacterVector paths(input_size);
+  CharacterVector parameters(input_size);
+  CharacterVector fragments(input_size);
+
   for(unsigned int i = 0; i < input_size; i++){
     if((i % 10000) == 0){
       Rcpp::checkUserInterrupt();
     }
-    holding = url_to_vector(urls_ptr[i]);
-    schemes[i] = holding[0];
-    domains[i] = holding[1];
-    ports[i] = holding[2];
-    paths[i] = holding[3];
-    parameters[i] = holding[4];
-    fragments[i] = holding[5];
+    
+    // Handle NAs on input
+    if(urls_ptr[i] == NA_STRING){
+      
+      schemes[i] = NA_STRING;
+      domains[i] = NA_STRING;
+      ports[i] = NA_STRING;
+      paths[i] = NA_STRING;
+      parameters[i] = NA_STRING;
+      fragments[i] = NA_STRING;
+      
+    } else {
+      holding = url_to_vector(Rcpp::as<std::string>(urls_ptr[i]));
+      schemes[i] = holding[0];
+      domains[i] = holding[1];
+      ports[i] = holding[2];
+      paths[i] = holding[3];
+      parameters[i] = holding[4];
+      fragments[i] = holding[5];
+    }
   }
   
   return DataFrame::create(_["scheme"] = schemes,

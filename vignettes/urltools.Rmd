@@ -12,9 +12,6 @@ not situations where URLs *are* the data.
 There is no support for encoding or decoding URLs en-masse, and no support for parsing and
 interpreting them. `urltools` provides this support!
 
-One cautionary note; NAs are not fully supported. By this I don't mean that you can't pass in NA values,
-but that the output won't be an NA if you do - it'll be the string "na" or "NA".
-
 ### URL encoding and decoding
 
 Base R provides two functions - <code>URLdecode</code> and <code>URLencode</code> - for taking percentage-encoded
@@ -69,10 +66,10 @@ results are provided as a data.frame, since most people use data.frames to store
 'data.frame':	1 obs. of  6 variables:
  $ scheme   : chr "https"
  $ domain   : chr "en.wikipedia.org"
- $ port     : chr ""
- $ path     : chr "wiki/article"
- $ parameter: chr ""
- $ fragment : chr ""                           
+ $ port     : chr NA
+ $ path     : chr "wiki/Article"
+ $ parameter: chr NA
+ $ fragment : chr NA                         
 ```
 
 We can also perform the opposite of this operation with `url_compose`:
@@ -157,6 +154,7 @@ url <- param_remove(url, keys = c("action","export"))
 url
 # [1] "http://en.wikipedia.org/wiki/api.php?pageid=1023"
 ```
+
 ### Other URL handlers
 If you have ideas for other URL handlers that would make your data processing easier, the best approach
 is to either [request it](https://github.com/Ironholds/urltools/issues) or [add it](https://github.com/Ironholds/urltools/pulls)!

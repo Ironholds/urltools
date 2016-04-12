@@ -126,8 +126,6 @@ CharacterVector url_encode(CharacterVector urls){
   return output;
 }
 
-
-
 //'@title split URLs into their component parts
 //'@description \code{url_parse} takes a vector of URLs and splits each one into its component
 //'parts, as recognised by RfC 3986.
@@ -153,8 +151,8 @@ CharacterVector url_encode(CharacterVector urls){
 //'
 //'@export
 //[[Rcpp::export]]
-DataFrame url_parse(std::vector < std::string > urls){
-  std::vector < std::string >& urls_ptr = urls;
+DataFrame url_parse(CharacterVector urls){
+  CharacterVector& urls_ptr = urls;
   parsing p_inst;
   return p_inst.parse_to_df(urls_ptr);
 }
@@ -180,7 +178,7 @@ DataFrame url_parse(std::vector < std::string > urls){
 //'
 //'@export
 //[[Rcpp::export]]
-std::vector < std::string > url_compose(DataFrame parsed_urls){
+CharacterVector url_compose(DataFrame parsed_urls){
   compose c_inst;
   return c_inst.compose_multiple(parsed_urls);
 }

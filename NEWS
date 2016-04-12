@@ -1,8 +1,11 @@
 Version 1.4.0
 
-DEVELOPMENT
+BUG FIXES
+* Full NA support is now available!
 
-* NAs are now supported in encoding, decoding,
+DEVELOPMENT
+* A substantial (20%) speed increase is now available thanks to internal
+refactoring.
 
 Version 1.3.3
 -------------------------------------------------------------------------
