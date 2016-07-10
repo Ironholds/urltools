@@ -14,10 +14,12 @@ Description: A toolkit for handling URLs that so far includes functions for URL
     URLs.
 License: MIT + file LICENSE
 LazyData: TRUE
-LinkingTo: Rcpp
+LinkingTo:
+    Rcpp
 Imports:
     Rcpp,
-    methods
+    methods,
+    triebeard
 Suggests:
     testthat,
     knitr

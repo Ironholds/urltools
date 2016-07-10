@@ -67,6 +67,30 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// reverse_strings
+CharacterVector reverse_strings(CharacterVector strings);
+RcppExport SEXP urltools_reverse_strings(SEXP stringsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< CharacterVector >::type strings(stringsSEXP);
+    __result = Rcpp::wrap(reverse_strings(strings));
+    return __result;
+END_RCPP
+}
+// finalise_suffixes
+DataFrame finalise_suffixes(CharacterVector full_domains, CharacterVector suffixes, LogicalVector wildcard);
+RcppExport SEXP urltools_finalise_suffixes(SEXP full_domainsSEXP, SEXP suffixesSEXP, SEXP wildcardSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< CharacterVector >::type full_domains(full_domainsSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type suffixes(suffixesSEXP);
+    Rcpp::traits::input_parameter< LogicalVector >::type wildcard(wildcardSEXP);
+    __result = Rcpp::wrap(finalise_suffixes(full_domains, suffixes, wildcard));
+    return __result;
+END_RCPP
+}
 // url_decode
 CharacterVector url_decode(CharacterVector urls);
 RcppExport SEXP urltools_url_decode(SEXP urlsSEXP) {

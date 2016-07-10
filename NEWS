@@ -1,4 +1,11 @@
+Version 1.5.0 [WIP]
+-------------------------------------------------------------------------
+FEATURES
+
+* Using tries as a data structure (see https://github.com/Ironholds/triebeard), we've increased the speed of suffix_extract() (instead of taking twenty seconds to process a million domains, it now takes..one.)
+
 Version 1.4.0
+-------------------------------------------------------------------------
 
 BUG FIXES
 * Full NA support is now available!
