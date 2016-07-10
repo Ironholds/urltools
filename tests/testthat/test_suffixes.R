@@ -26,7 +26,7 @@ test_that("Suffix extraction works with multiple domains",{
 })
 
 test_that("Suffix extraction works when the domain is the same as the suffix",{
-    result <- suffix_extract(c("googleapis.com", "myapi.googleapis.com"))
+  result <- suffix_extract(c("googleapis.com", "myapi.googleapis.com"))
   expect_that(ncol(result), equals(4))
   expect_that(names(result), equals(c("host","subdomain","domain","suffix")))
   expect_that(nrow(result), equals(2))
