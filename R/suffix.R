@@ -13,7 +13,7 @@
 #' @usage data(suffix_dataset)
 #' @note Last updated 2015-05-06.
 #' @format A vector of 7430 elements.
-NULL
+"suffix_dataset"
 
 #' @title extract the suffix from domain names
 #' @description domain names have suffixes - common endings that people
@@ -53,13 +53,8 @@ NULL
 #' @importFrom triebeard trie longest_match
 #' @export
 suffix_extract <- function(domains){
-  
-  cleaned_suffixes <- gsub(x = urltools::suffix_dataset, pattern = "*.", replacement = "", fixed = TRUE)
-  is_wildcard <- cleaned_suffixes[which(grepl(x = urltools::suffix_dataset, pattern = "*.", fixed = TRUE))]
-  suff_trie <- triebeard::trie(keys = reverse_strings(cleaned_suffixes),
-                               values = cleaned_suffixes)
   rev_domains <- reverse_strings(domains)
-  matched_suffixes <- triebeard::longest_match(suff_trie, rev_domains)
-  has_wildcard <- matched_suffixes %in% is_wildcard
+  matched_suffixes <- triebeard::longest_match(urltools_env$suff_trie, rev_domains)
+  has_wildcard <- matched_suffixes %in% urltools_env$is_wildcard
   return(finalise_suffixes(domains, matched_suffixes, has_wildcard))
 }
