@@ -3,6 +3,13 @@ Version 1.5.0 [WIP]
 FEATURES
 
 * Using tries as a data structure (see https://github.com/Ironholds/triebeard), we've increased the speed of suffix_extract() (instead of taking twenty seconds to process a million domains, it now takes..one.)
+* A dataset of top-level domains (TLDs) is now available as data(tld_dataset)
+
+BUG FIXES
+
+DEVELOPMENT
+* The instantiation and processing of suffix and TLD datasets on load marginally increases
+the speed of both (if you're calling suffix/TLD related functions more than once a sessions)
 
 Version 1.4.0
 -------------------------------------------------------------------------

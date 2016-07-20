@@ -4,7 +4,7 @@
 \alias{suffix_extract}
 \title{extract the suffix from domain names}
 \usage{
-suffix_extract(domains)
+suffix_extract(domains, update_suffixes = FALSE)
 }
 \arguments{
 \item{domains}{a vector of damains, from \code{\link{domain}}
