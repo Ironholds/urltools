@@ -1,0 +1,18 @@
+# Sample .travis.yml for R projects
+
+language: r
+warnings_are_errors: false
+sudo: required
+
+env:
+ global:
+   - CRAN: http://cran.rstudio.com
+
+r_packages:
+   - testthat
+   - knitr
+   - Rcpp
+   - triebeard
+notifications:
+  email:
+    on_failure: change
