@@ -11,7 +11,7 @@
 #' @seealso \code{\link{suffix_extract}} for extracting suffixes from domain names.
 #'
 #' @usage data(suffix_dataset)
-#' @note Last updated 2015-05-06.
+#' @note Last updated 2016-07-20.
 #' @format A vector of 7430 elements.
 "suffix_dataset"
 

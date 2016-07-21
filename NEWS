@@ -76,6 +76,7 @@ BUG FIXES
 
 DEVELOPMENT
 * More internal documentation added to compiled code.
+* The suffix_dataset dataset was refreshed
 
 Version 1.2.0
 -------------------------------------------------------------------------

@@ -15,7 +15,7 @@ sorted by how many periods(".") appear in the suffix, to optimise it for
 \code{\link{suffix_extract}}.
 }
 \note{
-Last updated 2015-05-06.
+Last updated 2016-07-20.
 }
 \seealso{
 \code{\link{suffix_extract}} for extracting suffixes from domain names.
