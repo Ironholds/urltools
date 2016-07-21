@@ -58,3 +58,19 @@ suffix_extract <- function(domains){
   has_wildcard <- matched_suffixes %in% urltools_env$is_wildcard
   return(finalise_suffixes(domains, matched_suffixes, has_wildcard))
 }
+
+#' @title Dataset of top-level domains (TLDs)
+#' @description This dataset contains a registry of top-level domains, as retrieved from
+#' and defined by the \href{http://data.iana.org/TLD/tlds-alpha-by-domain.txt}{IANA}.
+#' 
+#' @docType data
+#' @keywords datasets
+#' @name tld_dataset
+#'
+#' @seealso \code{\link{suffix_extract}} for extracting suffixes from domain names.
+#'
+#' @usage data(tld_dataset)
+#' @note Last updated 2016-07-20.
+#' @format A vector of 1275 elements.
+"tld_dataset"
+}
