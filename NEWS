@@ -4,6 +4,8 @@ FEATURES
 
 * Using tries as a data structure (see https://github.com/Ironholds/triebeard), we've increased the speed of suffix_extract() (instead of taking twenty seconds to process a million domains, it now takes..one.)
 * A dataset of top-level domains (TLDs) is now available as data(tld_dataset)
+* suffix_refresh() has been reinstated, and can be used with suffix_extract() to ensure suffix
+extraction is done with the most up-to-date dataset version possible.
 
 BUG FIXES
 

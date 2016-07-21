@@ -4,7 +4,7 @@
 \name{suffix_dataset}
 \alias{suffix_dataset}
 \title{Dataset of public suffixes}
-\format{A vector of 7430 elements.}
+\format{A vector of 8020 elements.}
 \usage{
 data(suffix_dataset)
 }
@@ -18,7 +18,9 @@ sorted by how many periods(".") appear in the suffix, to optimise it for
 Last updated 2016-07-20.
 }
 \seealso{
-\code{\link{suffix_extract}} for extracting suffixes from domain names.
+\code{\link{suffix_extract}} for extracting suffixes from domain names,
+and \code{\link{suffix_refresh}} for getting a new, totally-up-to-date dataset
+version.
 }
 \keyword{datasets}
 

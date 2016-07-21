@@ -4,12 +4,17 @@
 \alias{suffix_extract}
 \title{extract the suffix from domain names}
 \usage{
-suffix_extract(domains, update_suffixes = FALSE)
+suffix_extract(domains, suffixes = NULL)
 }
 \arguments{
 \item{domains}{a vector of damains, from \code{\link{domain}}
 or \code{\link{url_parse}}. Alternately, full URLs can be provided
 and will then be run through \code{\link{domain}} internally.}
+
+\item{suffixes}{a dataset of suffixes. By default, this is NULL and the function
+relies on \code{\link{suffix_dataset}}. Optionally, if you want more updated
+suffix data, you can provide the result of \code{\link{suffix_refresh}} for
+this parameter.}
 }
 \value{
 a data.frame of four columns, "host" "subdomain", "domain" & "suffix".
@@ -38,8 +43,8 @@ suffix_extract(domain_name)
 domain_name <- domain("http://en.wikipedia.org")
 suffix_extract(domain_name)
 
-#Using internal parsing
-suffix_extract("http://en.wikipedia.org")
+#Relying on a fresh version of the suffix dataset
+suffix_extract(domain("http://en.wikipedia.org"), suffix_refresh())
 
 }
 \seealso{

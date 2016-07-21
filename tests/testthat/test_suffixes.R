@@ -62,3 +62,15 @@ test_that("Suffix extraction works when the domain matches a wildcard suffix and
   expect_equal(result$domain[1], "bar")
   expect_equal(result$suffix[1], "banana.bd")
 })
+
+
+test_that("Suffix extraction works with new suffixes",{
+  result <- suffix_extract("en.wikipedia.org", suffix_refresh())
+  expect_that(ncol(result), equals(4))
+  expect_that(names(result), equals(c("host","subdomain","domain","suffix")))
+  expect_that(nrow(result), equals(1))
+  
+  expect_that(result$subdomain[1], equals("en"))
+  expect_that(result$domain[1], equals("wikipedia"))
+  expect_that(result$suffix[1], equals("org"))
+})

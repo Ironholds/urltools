@@ -96,7 +96,7 @@ Fields that can be extracted or set are <code>scheme</code>, <code>domain</code>
 ### Suffix extraction
 
 Once we've extracted a domain from a URL with `domain` or `url_parse`, we can identify which bit is the domain name, and which
-bit is the "top-level domain" or suffix, thanks to code contributed by Jay Jacobs:
+bit is the suffix:
 
 ```{r, eval=FALSE}
 > url <- "https://en.wikipedia.org/wiki/Article"
@@ -108,7 +108,17 @@ bit is the "top-level domain" or suffix, thanks to code contributed by Jay Jacob
  $ host     : chr "en.wikipedia.org"
  $ subdomain: chr "en"
  $ domain   : chr "wikipedia"
- $ tld      : chr "org"
+ $ suffix      : chr "org"
+```
+
+This relies on an internal database of public suffixes, accessible at `suffix_dataset` - we recognise, though,
+that this dataset may get a bit out of date, so you can also pass the results of the `suffix_refresh` function,
+which retrieves an updated dataset, to `suffix_extract`:
+
+```{r, eval=FALSE}
+domain_name <- domain("https://en.wikipedia.org/wiki/Article")
+updated_suffixes <- suffix_refresh()
+suffix_extract(domain_name, updated_suffixes)
 ```
 
 ### Query manipulation
