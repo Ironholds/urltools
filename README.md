@@ -5,7 +5,7 @@ __Author:__ Oliver Keyes, Jay Jacobs<br/>
 __License:__ [MIT](http://opensource.org/licenses/MIT)<br/>
 __Status:__ Stable
 
-![downloads](http://cranlogs.r-pkg.org/badges/grand-total/urltools)
+[![Travis-CI Build Status](https://travis-ci.org/Ironholds/urltools.svg?branch=master)](https://travis-ci.org/Ironholds/urltools) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/urltools)
 
 ###Description
 
