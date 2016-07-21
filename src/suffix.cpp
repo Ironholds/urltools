@@ -109,3 +109,30 @@ CharacterVector tld_extract_(CharacterVector domains){
   }
   return output;
 }
+
+//[[Rcpp::export]]
+CharacterVector host_extract_(CharacterVector domains){
+  
+  unsigned int input_size = domains.size();
+  CharacterVector output(input_size);
+  std::string holding;
+  size_t fragment_location;
+  
+  for(unsigned int i = 0; i < input_size; i++){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
+    if(domains[i] == NA_STRING){
+      output[i] = NA_STRING;
+    } else {
+      holding = Rcpp::as<std::string>(domains[i]);
+      fragment_location = holding.find(".");
+      if(fragment_location == std::string::npos){
+        output[i] = NA_STRING;
+      } else {
+        output[i] = holding.substr(0, fragment_location);
+      }
+    }
+  }
+  return output;
+}

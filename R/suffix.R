@@ -180,6 +180,9 @@ tld_refresh <- function(){
 #'
 #'# Using a refreshed one
 #'tld_extract(domains, tld_refresh())
+#'
+#'@seealso \code{\link{suffix_extract}} for retrieving suffixes (distinct from TLDs).
+#'
 #'@export
 tld_extract <- function(domains, tlds = NULL){
   if(is.null(tlds)){
@@ -188,4 +191,29 @@ tld_extract <- function(domains, tlds = NULL){
   guessed_tlds <- tld_extract_(tolower(domains))
   guessed_tlds[!guessed_tlds %in% tlds] <- NA
   return(data.frame(domain = domains, tld = guessed_tlds, stringsAsFactors = FALSE))
+}
+
+#'@title Extract hosts
+#'@description \code{host_extract} extracts the host from
+#'a vector of domain names. A host isn't the same as a domain - it could be
+#'the subdomain, if there are one or more subdomains. The host of \code{en.wikipedia.org}
+#'is \code{en}, while the host of \code{wikipedia.org} is \code{wikipedia}.
+#'
+#'@param domains a vector of domains, retrieved through \code{\link{url_parse}} or
+#'\code{\link{domain}}.
+#'
+#'@return a data.frame of two columns: \code{domain}, with the original domain names,
+#'and \code{host}, the identified host from the domain.
+#'
+#'@examples
+#'# With subdomains
+#'has_subdomain <- domain("https://en.wikipedia.org/wiki/Main_Page")
+#'host_extract(has_subdomain)
+#'
+#'# Without
+#'no_subdomain <- domain("https://ironholds.org/projects/r_shiny/")
+#'host_extract(no_subdomain)
+#'@export
+host_extract <- function(domains){
+  return(data.frame(domain = domains, host = host_extract_(domains), stringsAsFactors = FALSE))
 }

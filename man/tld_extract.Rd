@@ -32,5 +32,9 @@ tld_extract(domains)
 
 # Using a refreshed one
 tld_extract(domains, tld_refresh())
+
+}
+\seealso{
+\code{\link{suffix_extract}} for retrieving suffixes (distinct from TLDs).
 }
 

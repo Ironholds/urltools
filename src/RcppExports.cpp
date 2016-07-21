@@ -102,6 +102,17 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// host_extract_
+CharacterVector host_extract_(CharacterVector domains);
+RcppExport SEXP urltools_host_extract_(SEXP domainsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< CharacterVector >::type domains(domainsSEXP);
+    __result = Rcpp::wrap(host_extract_(domains));
+    return __result;
+END_RCPP
+}
 // url_decode
 CharacterVector url_decode(CharacterVector urls);
 RcppExport SEXP urltools_url_decode(SEXP urlsSEXP) {

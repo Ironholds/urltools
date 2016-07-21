@@ -123,6 +123,13 @@ suffix_extract(domain_name, updated_suffixes)
 
 We can do the same thing with top-level domains, with precisely the same setup, except the functions and datasets are `tld_refresh`, `tld_extract` and `tld_dataset`.
 
+In the other direction we have `host_extract`, which retrieves, well, the host! If the URL has subdomains, it'll be the
+lowest-level subdomain. If it doesn't, it'll be the actual domain name, without the suffixes:
+
+```{r, eval=FALSE}
+domain_name <- domain("https://en.wikipedia.org/wiki/Article")
+host_extract(domain_name)
+```
 ### Query manipulation
 Once a URL is parsed, it's sometimes useful to get the value associated with a particular query parameter. As
 an example, take the URL `http://en.wikipedia.org/wiki/api.php?action=parse&pageid=1023&export=json`. What

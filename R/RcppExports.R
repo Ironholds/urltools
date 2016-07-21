@@ -105,6 +105,10 @@ tld_extract_ <- function(domains) {
     .Call('urltools_tld_extract_', PACKAGE = 'urltools', domains)
 }
 
+host_extract_ <- function(domains) {
+    .Call('urltools_host_extract_', PACKAGE = 'urltools', domains)
+}
+
 #'@title Encode or decode a URI
 #'@description encodes or decodes a URI/URL
 #'

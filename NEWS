@@ -8,6 +8,8 @@ FEATURES
 extraction is done with the most up-to-date dataset version possible.
 * tld_extract() and tld_refresh() mirrors the functionality of suffix_extract() and suffix_refresh()
 BUG FIXES
+* host_extract() lets you get the host (the lowest-level subdomain, or the domain itself if no subdomain
+is present) from the `domain` fragment of a parsed URL.
 
 DEVELOPMENT
 * The instantiation and processing of suffix and TLD datasets on load marginally increases
