@@ -6,7 +6,7 @@ FEATURES
 * A dataset of top-level domains (TLDs) is now available as data(tld_dataset)
 * suffix_refresh() has been reinstated, and can be used with suffix_extract() to ensure suffix
 extraction is done with the most up-to-date dataset version possible.
-
+* tld_extract() and tld_refresh() mirrors the functionality of suffix_extract() and suffix_refresh()
 BUG FIXES
 
 DEVELOPMENT

@@ -16,7 +16,8 @@ and defined by the \href{http://data.iana.org/TLD/tlds-alpha-by-domain.txt}{IANA
 Last updated 2016-07-20.
 }
 \seealso{
-\code{\link{suffix_extract}} for extracting suffixes from domain names.
+\code{\link{tld_extract}} for extracting TLDs from domain names,
+and \code{\link{tld_refresh}} to get an updated version of this dataset.
 }
 \keyword{datasets}
 

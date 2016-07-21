@@ -93,7 +93,7 @@ url
 Fields that can be extracted or set are <code>scheme</code>, <code>domain</code>, <code>port</code>, <code>path</code>,
 <code>parameters</code> and <code>fragment</code>.
 
-### Suffix extraction
+### Suffix and TLD extraction
 
 Once we've extracted a domain from a URL with `domain` or `url_parse`, we can identify which bit is the domain name, and which
 bit is the suffix:
@@ -120,6 +120,8 @@ domain_name <- domain("https://en.wikipedia.org/wiki/Article")
 updated_suffixes <- suffix_refresh()
 suffix_extract(domain_name, updated_suffixes)
 ```
+
+We can do the same thing with top-level domains, with precisely the same setup, except the functions and datasets are `tld_refresh`, `tld_extract` and `tld_dataset`.
 
 ### Query manipulation
 Once a URL is parsed, it's sometimes useful to get the value associated with a particular query parameter. As

@@ -16,7 +16,7 @@ This is used in \code{\link{suffix_extract}} to identify the top-level domain
 within a particular domain name.
 
 While updates to the dataset will be included in each new package release,
-there's going to be a gap between changes to TLDs and changes to the package.
+there's going to be a gap between changes to the suffixes list and changes to the package.
 Accordingly, the package also includes \code{suffix_refresh}, which generates
 and returns a \emph{fresh} version of the dataset. This can then be passed through
 to \code{\link{suffix_extract}}.

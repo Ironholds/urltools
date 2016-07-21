@@ -25,7 +25,7 @@
 #'within a particular domain name.
 #'
 #'While updates to the dataset will be included in each new package release,
-#'there's going to be a gap between changes to TLDs and changes to the package.
+#'there's going to be a gap between changes to the suffixes list and changes to the package.
 #'Accordingly, the package also includes \code{suffix_refresh}, which generates
 #'and returns a \emph{fresh} version of the dataset. This can then be passed through
 #'to \code{\link{suffix_extract}}.
@@ -118,19 +118,74 @@ suffix_extract <- function(domains, suffixes = NULL){
 #' @keywords datasets
 #' @name tld_dataset
 #'
-#' @seealso \code{\link{suffix_extract}} for extracting suffixes from domain names.
+#' @seealso \code{\link{tld_extract}} for extracting TLDs from domain names,
+#' and \code{\link{tld_refresh}} to get an updated version of this dataset.
 #'
 #' @usage data(tld_dataset)
 #' @note Last updated 2016-07-20.
 #' @format A vector of 1275 elements.
 "tld_dataset"
 
-get_tlds <- function(){
+#'@title Retrieve a TLD dataset
+#'
+#'@description \code{urltools} comes with an inbuilt
+#'dataset of top level domains (TLDs), \code{\link{tld_dataset}}.
+#'This is used in \code{\link{tld_extract}} to identify the top-level domain
+#'within a particular domain name.
+#'
+#'While updates to the dataset will be included in each new package release,
+#'there's going to be a gap between changes to TLDs and changes to the package.
+#'Accordingly, the package also includes \code{tld_refresh}, which generates
+#'and returns a \emph{fresh} version of the dataset. This can then be passed through
+#'to \code{\link{tld_extract}}.
+#'
+#'@return a dataset equivalent in format to \code{\link{tld_dataset}}.
+#'
+#'@seealso \code{\link{tld_extract}} to extract suffixes from domain names,
+#'or \code{\link{tld_dataset}} for the inbuilt, default version of the data.
+#'
+#'@examples
+#'\dontrun{
+#'new_tlds <- tld_refresh()
+#'}
+#'
+#'@export
+tld_refresh <- function(){
   raw_tlds <- readLines("http://data.iana.org/TLD/tlds-alpha-by-domain.txt", warn = FALSE)
   raw_tlds <- tolower(raw_tlds[!grepl(x = raw_tlds, pattern = "(#|--)")])
   return(raw_tlds)
 }
 
-tld_extract <- function(){
-  
+#'@title Extract TLDs
+#'@description \code{tld_extract} extracts the top-level domain (TLD) from
+#'a vector of domain names. This is distinct from the suffixes, extracted with
+#'\code{\link{suffix_extract}}; TLDs are \emph{top} level, while suffixes are just
+#'domains through which internet users can publicly register domains (the difference
+#'between \code{.org.uk} and \code{.uk}).
+#'
+#'@param domains a vector of domains, retrieved through \code{\link{url_parse}} or
+#'\code{\link{domain}}.
+#'
+#'@param tlds a dataset of TLDs. If NULL (the default), \code{tld_extract} relies
+#'on urltools' \code{\link{tld_dataset}}; otherwise, you can pass in the result of
+#'\code{\link{tld_refresh}}.
+#'
+#'@return a data.frame of two columns: \code{domain}, with the original domain names,
+#'and \code{tld}, the identified TLD from the domain.
+#'
+#'@examples
+#'# Using the inbuilt dataset
+#'domains <- domain("https://en.wikipedia.org/wiki/Main_Page")
+#'tld_extract(domains)
+#'
+#'# Using a refreshed one
+#'tld_extract(domains, tld_refresh())
+#'@export
+tld_extract <- function(domains, tlds = NULL){
+  if(is.null(tlds)){
+    tlds <- urltools::tld_dataset
+  }
+  guessed_tlds <- tld_extract_(tolower(domains))
+  guessed_tlds[!guessed_tlds %in% tlds] <- NA
+  return(data.frame(domain = domains, tld = guessed_tlds, stringsAsFactors = FALSE))
 }

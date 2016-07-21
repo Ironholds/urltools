@@ -91,6 +91,17 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// tld_extract_
+CharacterVector tld_extract_(CharacterVector domains);
+RcppExport SEXP urltools_tld_extract_(SEXP domainsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< CharacterVector >::type domains(domainsSEXP);
+    __result = Rcpp::wrap(tld_extract_(domains));
+    return __result;
+END_RCPP
+}
 // url_decode
 CharacterVector url_decode(CharacterVector urls);
 RcppExport SEXP urltools_url_decode(SEXP urlsSEXP) {

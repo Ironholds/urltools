@@ -31,6 +31,9 @@ DataFrame finalise_suffixes(CharacterVector full_domains, CharacterVector suffix
   std::string holding;
   size_t domain_location;
   for(unsigned int i = 0; i < input_size; i++){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
     if(suffixes[i] == NA_STRING || suffixes[i].size() == full_domains[i].size()){
       subdomains[i] = NA_STRING;
       domains[i] = NA_STRING;
@@ -78,4 +81,31 @@ DataFrame finalise_suffixes(CharacterVector full_domains, CharacterVector suffix
   return DataFrame::create(_["host"] = full_domains, _["subdomain"] = subdomains,
                            _["domain"] = domains, _["suffix"] = suffixes,
                            _["stringsAsFactors"] = false);
+}
+
+//[[Rcpp::export]]
+CharacterVector tld_extract_(CharacterVector domains){
+  
+  unsigned int input_size = domains.size();
+  CharacterVector output(input_size);
+  std::string holding;
+  size_t fragment_location;
+  
+  for(unsigned int i = 0; i < input_size; i++){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
+    if(domains[i] == NA_STRING){
+      output[i] = NA_STRING;
+    } else {
+      holding = Rcpp::as<std::string>(domains[i]);
+      fragment_location = holding.rfind(".");
+      if(fragment_location == std::string::npos || fragment_location == (holding.size() - 1)){
+        output[i] = NA_STRING;
+      } else {
+        output[i] = holding.substr(fragment_location+1);
+      }
+    }
+  }
+  return output;
 }
