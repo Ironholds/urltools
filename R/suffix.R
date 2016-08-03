@@ -2,7 +2,9 @@
 #' @description This dataset contains a registry of public suffixes, as retrieved from
 #' and defined by the \href{https://publicsuffix.org/}{public suffix list}. It is
 #' sorted by how many periods(".") appear in the suffix, to optimise it for
-#' \code{\link{suffix_extract}}.
+#' \code{\link{suffix_extract}}.  It is a data.frame with two columns, the first is
+#' the list of suffixes and the second is our best guess at the comment or owner 
+#' associated with the particular suffix. 
 #'
 #' @docType data
 #' @keywords datasets
@@ -13,8 +15,8 @@
 #' version.
 #'
 #' @usage data(suffix_dataset)
-#' @note Last updated 2016-07-20.
-#' @format A vector of 8020 elements.
+#' @note Last updated 2016-07-31.
+#' @format A data.frame of 8030 rows and 2 columns
 "suffix_dataset"
 
 #'@title Retrieve a public suffix dataset
@@ -52,7 +54,37 @@ suffix_refresh <- function(){
   connection <- url("https://www.publicsuffix.org/list/effective_tld_names.dat", method = "libcurl")
   results <- readLines(connection)
   close(connection)
-  suffix_dataset <- results[!grepl(x = results, pattern = "//", fixed = TRUE) & !results == ""]
+  
+  # making an assumption that sections are broken by blank lines
+  blank <- which(results == "")
+  # and gotta know where the comments are
+  comments <- grep(pattern = "^//", x=results)
+  
+  # if the file doesn't end on a blank line, stick an ending on there.
+  if (blank[length(blank)] < length(results)) {
+    blank <- c(blank, length(results)+1)
+  }
+  # now break up each section into a list
+  # grab right after the blank line and right before the next blank line.
+  suffix_dataset <- do.call(rbind, lapply(seq(length(blank) - 1), function(i) {
+    # these are the lines in the current block
+    lines <- seq(blank[i] + 1, blank[i + 1] - 1)
+    # assume there is nothing in the block
+    rez <- NULL
+    # the lines of text in this block
+    suff <- results[lines]
+    # of which these are the comments
+    iscomment <- lines %in% comments
+    # and check if we have any results 
+    # append the first comment at the top of the block only.
+    if(length(suff[!iscomment])) {
+      rez <- data.frame(suffixes = suff[!iscomment],
+                 comments = suff[which(iscomment)[1]], stringsAsFactors = FALSE)
+    }
+    rez
+  }))
+  ## this is the old way
+  #suffix_dataset <- results[!grepl(x = results, pattern = "//", fixed = TRUE) & !results == ""]
 
   #Return the user-friendly version
   return(suffix_dataset)
@@ -102,6 +134,14 @@ suffix_refresh <- function(){
 #' @export
 suffix_extract <- function(domains, suffixes = NULL){
   if(!is.null(suffixes)){
+    # check if suffixes is a data.frame, and stop if column not found
+    if(is.data.frame(suffixes)) {
+      if ("suffixes" %in% colnames(suffixes)) {
+        suffixes <- suffixes$suffixes
+      } else {
+        stop("Expected column named \"suffixes\" in suffixes data.frame")
+      }
+    }
     suffix_load(suffixes)
   }
   rev_domains <- reverse_strings(tolower(domains))

@@ -4,7 +4,7 @@
 \name{suffix_dataset}
 \alias{suffix_dataset}
 \title{Dataset of public suffixes}
-\format{A vector of 8020 elements.}
+\format{A data.frame of 8030 rows and 2 columns}
 \usage{
 data(suffix_dataset)
 }
@@ -12,10 +12,12 @@ data(suffix_dataset)
 This dataset contains a registry of public suffixes, as retrieved from
 and defined by the \href{https://publicsuffix.org/}{public suffix list}. It is
 sorted by how many periods(".") appear in the suffix, to optimise it for
-\code{\link{suffix_extract}}.
+\code{\link{suffix_extract}}.  It is a data.frame with two columns, the first is
+the list of suffixes and the second is our best guess at the comment or owner 
+associated with the particular suffix.
 }
 \note{
-Last updated 2016-07-20.
+Last updated 2016-07-31.
 }
 \seealso{
 \code{\link{suffix_extract}} for extracting suffixes from domain names,
