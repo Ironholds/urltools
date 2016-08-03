@@ -1,8 +1,8 @@
 Package: urltools
 Type: Package
 Title: Vectorised Tools for URL Handling and Parsing
-Version: 1.4.0
-Date: 2016-04-12
+Version: 1.5.0
+Date: 2016-08-03
 Author: Oliver Keyes [aut, cre], Jay Jacobs [aut, cre], Mark Greenaway [ctb],
     Bob Rudis [ctb]
 Maintainer: Oliver Keyes <ironholds@gmail.com>
