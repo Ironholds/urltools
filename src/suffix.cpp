@@ -37,6 +37,7 @@ DataFrame finalise_suffixes(CharacterVector full_domains, CharacterVector suffix
     if(suffixes[i] == NA_STRING || suffixes[i].size() == full_domains[i].size()){
       subdomains[i] = NA_STRING;
       domains[i] = NA_STRING;
+      suffixes[i] = NA_STRING;
     } else if(wildcard[i]) {
       holding = Rcpp::as<std::string>(full_domains[i]);
       holding = holding.substr(0, ((full_domains[i].size() - suffixes[i].size()) - 1));

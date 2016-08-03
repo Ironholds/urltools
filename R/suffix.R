@@ -104,7 +104,7 @@ suffix_extract <- function(domains, suffixes = NULL){
   if(!is.null(suffixes)){
     suffix_load(suffixes)
   }
-  rev_domains <- reverse_strings(domains)
+  rev_domains <- reverse_strings(tolower(domains))
   matched_suffixes <- triebeard::longest_match(urltools_env$suff_trie, rev_domains)
   has_wildcard <- matched_suffixes %in% urltools_env$is_wildcard
   return(finalise_suffixes(domains, matched_suffixes, has_wildcard))
