@@ -1,3 +1,13 @@
+Version 1.5.1 [WIP]
+-------------------------------------------------------------------------
+
+BUGS
+* Fixed a bug in which punycode TLDs were excluded from TLD extraction (thanks to
+  Alex Pinto for pointing that out) #51
+  
+DEVELOPMENT
+* Removed the non-portable -g compiler flag in response to CRAN feedback.
+
 Version 1.5.0
 -------------------------------------------------------------------------
 FEATURES

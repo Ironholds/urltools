@@ -81,7 +81,7 @@ suffix_refresh <- function(){
       rez <- data.frame(suffixes = suff[!iscomment],
                  comments = suff[which(iscomment)[1]], stringsAsFactors = FALSE)
     }
-    rez
+    return(rez)
   }))
   ## this is the old way
   #suffix_dataset <- results[!grepl(x = results, pattern = "//", fixed = TRUE) & !results == ""]
@@ -192,7 +192,7 @@ suffix_extract <- function(domains, suffixes = NULL){
 #'@export
 tld_refresh <- function(){
   raw_tlds <- readLines("http://data.iana.org/TLD/tlds-alpha-by-domain.txt", warn = FALSE)
-  raw_tlds <- tolower(raw_tlds[!grepl(x = raw_tlds, pattern = "(#|--)")])
+  raw_tlds <- tolower(raw_tlds[!grepl(x = raw_tlds, pattern = "#", fixed = TRUE)])
   return(raw_tlds)
 }
 
