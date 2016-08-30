@@ -20,7 +20,7 @@ set_component_ <- function(urls, component, new_value) {
 #'@param parameter_names a vector of parameter names
 #'
 #'@return a data.frame containing one column for each provided parameter name. Values that
-#'cannot be found within a particular URL are represented by an empty string.
+#'cannot be found within a particular URL are represented by an NA.
 #'
 #'@examples
 #'#A very simple example

@@ -5,7 +5,8 @@ test_that("Parameter parsing can handle multiple, non-existent and pre-trailing 
             "https://www.google.com:80/foo.php?api_params=parsable&this_parameter=selfreferencing&hiphop=awesome#foob",
             "https://www.google.com:80/foo.php?this_parameter=selfreferencing&hiphop=awesome")
   results <- param_get(urls, c("api_params","hiphop"))
-  expect_that(results[,1], equals(c("parsable","parsable","")))
+  expect_that(results[1:2,1], equals(c("parsable","parsable")))
+  expect_true(is.na(results[3,1]))
   
 })
 

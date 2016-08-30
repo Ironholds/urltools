@@ -31,13 +31,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // param_get
-List param_get(std::vector < std::string > urls, std::vector < std::string > parameter_names);
+List param_get(CharacterVector urls, CharacterVector parameter_names);
 RcppExport SEXP urltools_param_get(SEXP urlsSEXP, SEXP parameter_namesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type parameter_names(parameter_namesSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type parameter_names(parameter_namesSEXP);
     __result = Rcpp::wrap(param_get(urls, parameter_names));
     return __result;
 END_RCPP

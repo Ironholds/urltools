@@ -17,7 +17,7 @@ url_parameters(urls, parameter_names)
 }
 \value{
 a data.frame containing one column for each provided parameter name. Values that
-cannot be found within a particular URL are represented by an empty string.
+cannot be found within a particular URL are represented by an NA.
 }
 \description{
 URLs can have parameters, taking the form of \code{name=value}, chained together

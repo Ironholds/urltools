@@ -65,24 +65,29 @@ std::string parameter::remove_parameter_single(std::string url, std::vector < st
 }
 
 //Parameter retrieval
-std::vector < std::string > parameter::get_parameter(std::vector < std::string >& urls, std::string component){
+CharacterVector parameter::get_parameter(CharacterVector& urls, std::string component){
   std::size_t component_location;
   std::size_t next_location;
   unsigned int input_size = urls.size();
   int component_size = component.length();
-  std::vector < std::string > output(input_size);
+  CharacterVector output(input_size);
   component = component + "=";
-  
+  std::string holding;
   for(unsigned int i = 0; i < input_size; ++i){
-    component_location = urls[i].find(component);
-    if(component_location == std::string::npos){
-      output[i] = "";
+    if(urls[i] == NA_STRING){
+      output[i] = NA_STRING;
     } else {
-      next_location = urls[i].find_first_of("&#", component_location + component_size);
-      if(next_location == std::string::npos){
-        output[i] = urls[i].substr(component_location + component_size + 1);
+      holding = Rcpp::as<std::string>(urls[i]);
+      component_location = holding.find(component);
+      if(component_location == std::string::npos){
+        output[i] = NA_STRING;
       } else {
-        output[i] = urls[i].substr(component_location + component_size + 1, (next_location-(component_location + component_size + 1)));
+        next_location = holding.find_first_of("&#", component_location + component_size);
+        if(next_location == std::string::npos){
+          output[i] = holding.substr(component_location + component_size + 1);
+        } else {
+          output[i] = holding.substr(component_location + component_size + 1, (next_location-(component_location + component_size + 1)));
+        }
       }
     }
   }

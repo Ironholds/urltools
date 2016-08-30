@@ -14,7 +14,7 @@ using namespace Rcpp;
 //'@param parameter_names a vector of parameter names
 //'
 //'@return a data.frame containing one column for each provided parameter name. Values that
-//'cannot be found within a particular URL are represented by an empty string.
+//'cannot be found within a particular URL are represented by an NA.
 //'
 //'@examples
 //'#A very simple example
@@ -28,18 +28,17 @@ using namespace Rcpp;
 //'@rdname param_get
 //'@export
 //[[Rcpp::export]]
-List param_get(std::vector < std::string > urls, std::vector < std::string > parameter_names){
+List param_get(CharacterVector urls, CharacterVector parameter_names){
   parameter p_inst;
   List output;
   IntegerVector rownames = Rcpp::seq(1,urls.size());
   unsigned int column_count = parameter_names.size();
-  std::vector < std::string >&url_ref = urls;
-  
+
   for(unsigned int i = 0; i < column_count; ++i){
     if((i % 10000) == 0){
       Rcpp::checkUserInterrupt();
     }
-    output.push_back(p_inst.get_parameter(url_ref, parameter_names[i]));
+    output.push_back(p_inst.get_parameter(urls, Rcpp::as<std::string>(parameter_names[i])));
   }
   output.attr("class") = "data.frame";
   output.attr("names") = parameter_names;

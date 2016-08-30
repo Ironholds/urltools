@@ -59,7 +59,7 @@ public:
    * 
    * @return a vector of the values for that component.
    */
-  std::vector < std::string > get_parameter(std::vector < std::string >& urls, std::string component);
+  CharacterVector get_parameter(CharacterVector& urls, std::string component);
   
   
   /**
