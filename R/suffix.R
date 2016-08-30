@@ -147,7 +147,8 @@ suffix_extract <- function(domains, suffixes = NULL){
   rev_domains <- reverse_strings(tolower(domains))
   matched_suffixes <- triebeard::longest_match(urltools_env$suff_trie, rev_domains)
   has_wildcard <- matched_suffixes %in% urltools_env$is_wildcard
-  return(finalise_suffixes(domains, matched_suffixes, has_wildcard))
+  is_suffix = domains %in% urltools_env$cleaned_suffixes
+  return(finalise_suffixes(domains, matched_suffixes, has_wildcard, is_suffix))
 }
 
 #' @title Dataset of top-level domains (TLDs)

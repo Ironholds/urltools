@@ -5,6 +5,7 @@ BUGS
 * Fixed a bug in which punycode TLDs were excluded from TLD extraction (thanks to
   Alex Pinto for pointing that out) #51
 * param_get now returns NAs for missing values, rather than empty strings (thanks to Josh Izzard for the report) #49
+* suffix_extract now no longer goofs if the domain+suffix combo overlaps with a valid suffix (thanks to Maryam Khezrzadeh and Alex Pinto) #50
 
 DEVELOPMENT
 * Removed the non-portable -g compiler flag in response to CRAN feedback.

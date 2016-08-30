@@ -23,7 +23,8 @@ CharacterVector reverse_strings(CharacterVector strings){
 }
 
 //[[Rcpp::export]]
-DataFrame finalise_suffixes(CharacterVector full_domains, CharacterVector suffixes, LogicalVector wildcard){
+DataFrame finalise_suffixes(CharacterVector full_domains, CharacterVector suffixes,
+                            LogicalVector wildcard, LogicalVector is_suffix){
   
   unsigned int input_size = full_domains.size();
   CharacterVector subdomains(input_size);
@@ -34,47 +35,53 @@ DataFrame finalise_suffixes(CharacterVector full_domains, CharacterVector suffix
     if((i % 10000) == 0){
       Rcpp::checkUserInterrupt();
     }
-    if(suffixes[i] == NA_STRING || suffixes[i].size() == full_domains[i].size()){
+    if(is_suffix[i]){
       subdomains[i] = NA_STRING;
       domains[i] = NA_STRING;
-    } else if(wildcard[i]) {
-      holding = Rcpp::as<std::string>(full_domains[i]);
-      holding = holding.substr(0, ((full_domains[i].size() - suffixes[i].size()) - 1));
-      domain_location = holding.rfind(".");
-      if(domain_location == std::string::npos){
-        domains[i] = NA_STRING;
+      suffixes[i] = full_domains[i];
+    } else {
+      if(suffixes[i] == NA_STRING || suffixes[i].size() == full_domains[i].size()){
         subdomains[i] = NA_STRING;
-        suffixes[i] = holding + "." + suffixes[i];
-      } else {
-        suffixes[i] = holding.substr(domain_location+1) + "." + suffixes[i];
-        holding = holding.substr(0, domain_location);
+        domains[i] = NA_STRING;
+      } else if(wildcard[i]) {
+        holding = Rcpp::as<std::string>(full_domains[i]);
+        holding = holding.substr(0, ((full_domains[i].size() - suffixes[i].size()) - 1));
         domain_location = holding.rfind(".");
         if(domain_location == std::string::npos){
+          domains[i] = NA_STRING;
+          subdomains[i] = NA_STRING;
+          suffixes[i] = holding + "." + suffixes[i];
+        } else {
+          suffixes[i] = holding.substr(domain_location+1) + "." + suffixes[i];
+          holding = holding.substr(0, domain_location);
+          domain_location = holding.rfind(".");
+          if(domain_location == std::string::npos){
+            if(holding.size() == 0){
+              domains[i] = NA_STRING;
+            } else {
+              domains[i] = holding;
+            }
+            subdomains[i] = NA_STRING;
+          } else {
+            domains[i] = holding.substr(domain_location+1);
+            subdomains[i] = holding.substr(0, domain_location);
+          }
+        }
+      } else {
+        holding = Rcpp::as<std::string>(full_domains[i]);
+        holding = holding.substr(0, ((full_domains[i].size() - suffixes[i].size()) - 1));
+        domain_location = holding.rfind(".");
+        if(domain_location == std::string::npos){
+          subdomains[i] = NA_STRING;
           if(holding.size() == 0){
             domains[i] = NA_STRING;
           } else {
             domains[i] = holding;
           }
-          subdomains[i] = NA_STRING;
         } else {
-          domains[i] = holding.substr(domain_location+1);
           subdomains[i] = holding.substr(0, domain_location);
+          domains[i] = holding.substr(domain_location+1);
         }
-      }
-    } else {
-      holding = Rcpp::as<std::string>(full_domains[i]);
-      holding = holding.substr(0, ((full_domains[i].size() - suffixes[i].size()) - 1));
-      domain_location = holding.rfind(".");
-      if(domain_location == std::string::npos){
-        subdomains[i] = NA_STRING;
-        if(holding.size() == 0){
-          domains[i] = NA_STRING;
-        } else {
-          domains[i] = holding;
-        }
-      } else {
-        subdomains[i] = holding.substr(0, domain_location);
-        domains[i] = holding.substr(domain_location+1);
       }
     }
   }

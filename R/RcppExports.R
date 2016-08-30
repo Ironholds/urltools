@@ -97,8 +97,8 @@ reverse_strings <- function(strings) {
     .Call('urltools_reverse_strings', PACKAGE = 'urltools', strings)
 }
 
-finalise_suffixes <- function(full_domains, suffixes, wildcard) {
-    .Call('urltools_finalise_suffixes', PACKAGE = 'urltools', full_domains, suffixes, wildcard)
+finalise_suffixes <- function(full_domains, suffixes, wildcard, is_suffix) {
+    .Call('urltools_finalise_suffixes', PACKAGE = 'urltools', full_domains, suffixes, wildcard, is_suffix)
 }
 
 tld_extract_ <- function(domains) {

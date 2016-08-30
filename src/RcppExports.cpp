@@ -79,15 +79,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // finalise_suffixes
-DataFrame finalise_suffixes(CharacterVector full_domains, CharacterVector suffixes, LogicalVector wildcard);
-RcppExport SEXP urltools_finalise_suffixes(SEXP full_domainsSEXP, SEXP suffixesSEXP, SEXP wildcardSEXP) {
+DataFrame finalise_suffixes(CharacterVector full_domains, CharacterVector suffixes, LogicalVector wildcard, LogicalVector is_suffix);
+RcppExport SEXP urltools_finalise_suffixes(SEXP full_domainsSEXP, SEXP suffixesSEXP, SEXP wildcardSEXP, SEXP is_suffixSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< CharacterVector >::type full_domains(full_domainsSEXP);
     Rcpp::traits::input_parameter< CharacterVector >::type suffixes(suffixesSEXP);
     Rcpp::traits::input_parameter< LogicalVector >::type wildcard(wildcardSEXP);
-    __result = Rcpp::wrap(finalise_suffixes(full_domains, suffixes, wildcard));
+    Rcpp::traits::input_parameter< LogicalVector >::type is_suffix(is_suffixSEXP);
+    __result = Rcpp::wrap(finalise_suffixes(full_domains, suffixes, wildcard, is_suffix));
     return __result;
 END_RCPP
 }

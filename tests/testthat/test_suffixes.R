@@ -39,6 +39,13 @@ test_that("Suffix extraction works when the domain is the same as the suffix",{
   expect_equal(result$suffix[2], "googleapis.com")
 })
 
+test_that("Suffix extraction works where domains/suffixes overlap", {
+  result <- suffix_extract(domain("http://www.converse.com")) # could be se.com or .com
+  expect_equal(result$subdomain[1], "www")
+  expect_equal(result$domain[1], "converse")
+  expect_equal(result$suffix[1], "com")
+})
+
 test_that("Suffix extraction works when the domain matches a wildcard suffix",{
   result <- suffix_extract(c("banana.bd", "banana.boat.bd"))
   expect_that(ncol(result), equals(4))
