@@ -70,9 +70,33 @@ test_that("Suffix extraction works when the domain matches a wildcard suffix and
   expect_equal(result$suffix[1], "banana.bd")
 })
 
-
 test_that("Suffix extraction works with new suffixes",{
   result <- suffix_extract("en.wikipedia.org", suffix_refresh())
+  expect_that(ncol(result), equals(4))
+  expect_that(names(result), equals(c("host","subdomain","domain","suffix")))
+  expect_that(nrow(result), equals(1))
+  
+  expect_that(result$subdomain[1], equals("en"))
+  expect_that(result$domain[1], equals("wikipedia"))
+  expect_that(result$suffix[1], equals("org"))
+})
+
+test_that("Suffix extraction works with an arbitrary suffixes database (to ensure it is loading it)",{
+  result <- suffix_extract(c("is-this-a.bananaboat", "en.wikipedia.org"), data.frame(suffixes = "bananaboat"))
+  expect_that(ncol(result), equals(4))
+  expect_that(names(result), equals(c("host","subdomain","domain","suffix")))
+  expect_that(nrow(result), equals(2))
+  
+  expect_equal(result$subdomain[1], NA_character_)
+  expect_equal(result$domain[1], "is-this-a")
+  expect_equal(result$suffix[1], "bananaboat")
+  expect_equal(result$subdomain[2], NA_character_)
+  expect_equal(result$domain[2], NA_character_)
+  expect_equal(result$suffix[2], NA_character_)
+})
+
+test_that("Suffix extraction is back to normal using the internal database when it receives suffixes=NULL",{
+  result <- suffix_extract("en.wikipedia.org", NULL)
   expect_that(ncol(result), equals(4))
   expect_that(names(result), equals(c("host","subdomain","domain","suffix")))
   expect_that(nrow(result), equals(1))

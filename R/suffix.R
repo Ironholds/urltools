@@ -142,8 +142,9 @@ suffix_extract <- function(domains, suffixes = NULL){
         stop("Expected column named \"suffixes\" in suffixes data.frame")
       }
     }
-    suffix_load(suffixes)
   }
+  suffix_load(suffixes)
+
   rev_domains <- reverse_strings(tolower(domains))
   matched_suffixes <- triebeard::longest_match(urltools_env$suff_trie, rev_domains)
   has_wildcard <- matched_suffixes %in% urltools_env$is_wildcard
