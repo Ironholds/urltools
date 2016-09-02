@@ -27,6 +27,11 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   std::string holding;
   unsigned int output_offset = 0;
   
+  // Handle www
+  if(url.size() > 4 && url.substr(0,4) == "www."){
+    url = url.substr(4);
+  }
+  
   // Identify the port. If there is one, push everything
   // before that straight into the output, and the remainder
   // into the holding string. If not, the entire
