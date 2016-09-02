@@ -142,12 +142,17 @@ suffix_extract <- function(domains, suffixes = NULL){
         stop("Expected column named \"suffixes\" in suffixes data.frame")
       }
     }
-    suffix_load(suffixes)
+    holding <- suffix_load(suffixes)
+  } else {
+    holding <- list(suff_trie = urltools_env$suff_trie,
+                    is_wildcard = urltools_env$is_wildcard,
+                    cleaned_suffixes = urltools_env$cleaned_suffixes)
   }
+  
   rev_domains <- reverse_strings(tolower(domains))
-  matched_suffixes <- triebeard::longest_match(urltools_env$suff_trie, rev_domains)
-  has_wildcard <- matched_suffixes %in% urltools_env$is_wildcard
-  is_suffix = domains %in% urltools_env$cleaned_suffixes
+  matched_suffixes <- triebeard::longest_match(holding$suff_trie, rev_domains)
+  has_wildcard <- matched_suffixes %in% holding$is_wildcard
+  is_suffix <- domains %in% holding$cleaned_suffixes
   return(finalise_suffixes(domains, matched_suffixes, has_wildcard, is_suffix))
 }
 
