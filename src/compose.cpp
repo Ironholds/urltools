@@ -19,16 +19,15 @@ std::string compose::compose_single(String scheme, String domain, String port, S
   
   if(emptycheck(domain)){
     output += domain;
-    
-    if(emptycheck(port)){
-      output += ":";
-      output += port;
-    } else {
-      output += "/";
-    }
   }
   
+  if(emptycheck(port)){
+      output += ":";
+      output += port;
+    }
+  
   if(emptycheck(path)){
+    output += "/";
     output += path;
   }
   
