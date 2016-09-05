@@ -32,7 +32,7 @@ test_that("Parsing does not up and die and misplace the fragment",{
 })
 
 test_that("Composing works",{
-  url <- "http://foo.bar.baz/qux/"
+  url <- c("http://foo.bar.baz/qux/", "https://en.wikipedia.org:4000/wiki/api.php")
   amended_url <- url_compose(url_parse(url))
   expect_that(url, equals(amended_url))
 })
