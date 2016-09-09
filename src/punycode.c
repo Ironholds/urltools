@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2011 by Ben Noordhuis <info@bnoordhuis.nl>
+ * Modified 2016 by Drew Schmidt (assert() calls made more R/CRAN friendly)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +22,9 @@
  */
 #include "punycode.h"
 
-#include <assert.h>
+#include <R.h>
+#define Rassert(l) if(!(l)) error("internal error in %s at line %s\n", __FILE__, __LINE__)
+
 #include <stdint.h>
 #include <string.h>
 #include <ctype.h>
@@ -52,7 +55,8 @@ static uint32_t adapt_bias(uint32_t delta, unsigned n_points, int is_first) {
 }
 
 static char encode_digit(int c) {
-  assert(c >= 0 && c <= BASE - TMIN);
+  Rassert(c >= 0 && c <= BASE - TMIN);
+  
   if (c > 25) {
     return c + 22; /* '0'..'9' */
   }
@@ -143,7 +147,7 @@ size_t punycode_encode(const uint32_t *const src, const size_t srclen, char *con
 
     if ((m - n) > (SIZE_MAX - delta) / (h + 1)) {
       /* OVERFLOW */
-      assert(0 && "OVERFLOW");
+      Rassert(0 && "OVERFLOW");
       goto fail;
     }
 
@@ -154,7 +158,7 @@ size_t punycode_encode(const uint32_t *const src, const size_t srclen, char *con
       if (src[si] < n) {
         if (++delta == 0) {
           /* OVERFLOW */
-          assert(0 && "OVERFLOW");
+          Rassert(0 && "OVERFLOW");
           goto fail;
         }
       }
@@ -219,7 +223,7 @@ size_t punycode_decode(const char *const src, const size_t srclen, uint32_t *con
 
       if (digit > (SIZE_MAX - i) / w) {
         /* OVERFLOW */
-        assert(0 && "OVERFLOW");
+        Rassert(0 && "OVERFLOW");
         goto fail;
       }
 
@@ -241,7 +245,7 @@ size_t punycode_decode(const char *const src, const size_t srclen, uint32_t *con
 
       if (w > SIZE_MAX / (BASE - t)) {
         /* OVERFLOW */
-        assert(0 && "OVERFLOW");
+        Rassert(0 && "OVERFLOW");
         goto fail;
       }
 
@@ -252,7 +256,7 @@ size_t punycode_decode(const char *const src, const size_t srclen, uint32_t *con
 
     if (i / (di + 1) > SIZE_MAX - n) {
       /* OVERFLOW */
-      assert(0 && "OVERFLOW");
+      Rassert(0 && "OVERFLOW");
       goto fail;
     }
 
