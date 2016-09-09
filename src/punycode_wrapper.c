@@ -18,7 +18,10 @@ uint32_t ibuf[BUFLEN];
 static inline void clearbuf()
 {
   for (int i=0; i<BUFLEN; i++)
+  {
     buf[i] = '\0';
+    ibuf[i] = 0;
+  }
 }
 
 
