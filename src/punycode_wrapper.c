@@ -26,11 +26,9 @@ static inline void clearbuf()
 
 
 
-SEXP make_puny(SEXP s_)
+SEXP topuny(SEXP s_)
 {
   SEXP ret;
-  size_t nconv;
-  size_t buflen;
   const int len = LENGTH(s_);
 
   if (TYPEOF(s_) != STRSXP)
@@ -40,14 +38,18 @@ SEXP make_puny(SEXP s_)
 
   for (int i=0; i<len; i++)
   {
-    buflen = BUFLEN;
+    size_t buflen = BUFLEN;
+    size_t unilen = BUFLEN;
     const char *s = CHARPT(s_, i);
 
-    /*mbstowcs(ibuf, s, strlen(s));*/
-    size_t unilen = u8_toucs(ibuf, BUFLEN, s, strlen(s));
+    const int slen = strlen(s);
+    if (slen > BUFLEN)
+      error("string too big");
+
+    /*unilen = mbstowcs(ibuf, s, slen);*/
+    unilen = u8_toucs(ibuf, unilen, s, slen);
     
-    // FIXME nconv is number of conversions; if that info isn't useful, delete the var; if it is, return a list or something
-    nconv = punycode_encode(ibuf, unilen, buf, &buflen);
+    punycode_encode(ibuf, unilen, buf, &buflen);
 
     SET_STRING_ELT(ret, i, mkCharLen(buf, buflen));
   }
@@ -58,3 +60,39 @@ SEXP make_puny(SEXP s_)
   return ret;
 }
 
+
+
+SEXP unpuny(SEXP s_)
+{
+  SEXP ret;
+  const int len = LENGTH(s_);
+
+  if (TYPEOF(s_) != STRSXP)
+    error("strings only\n");
+
+  PROTECT(ret = allocVector(STRSXP, len));
+
+  for (int i=0; i<len; i++)
+  {
+    size_t buflen;
+    size_t unilen = BUFLEN;
+    const char *s = CHARPT(s_, i);
+
+    const int slen = strlen(s);
+    if (slen > BUFLEN)
+      error("string too big");
+
+    punycode_decode(s, slen, ibuf, &unilen);
+
+    /*buflen = wcstombs(buf, ibuf, unilen*sizeof(uint32_t));*/
+    buflen = u8_toutf8(buf, BUFLEN, ibuf, unilen);
+
+    SET_STRING_ELT(ret, i, mkCharLen(buf, buflen));
+    clearbuf();
+  }
+
+  clearbuf();
+
+  UNPROTECT(1);
+  return ret;
+}

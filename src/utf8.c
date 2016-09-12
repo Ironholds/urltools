@@ -122,3 +122,51 @@ size_t u8_toucs(uint32_t *dest, size_t sz, const char *src, size_t srcsz)
     return i;
 }
 
+
+
+/* srcsz = number of source characters
+   sz = size of dest buffer in bytes
+
+   returns # bytes stored in dest
+   the destination string will never be bigger than the source string.
+*/
+size_t u8_toutf8(char *dest, size_t sz, const uint32_t *src, size_t srcsz)
+{
+    uint32_t ch;
+    size_t i = 0;
+    char *dest0 = dest;
+    char *dest_end = dest + sz;
+
+    while (i < srcsz) {
+        ch = src[i];
+        if (ch < 0x80) {
+            if (dest >= dest_end)
+                break;
+            *dest++ = (char)ch;
+        }
+        else if (ch < 0x800) {
+            if (dest >= dest_end-1)
+                break;
+            *dest++ = (ch>>6) | 0xC0;
+            *dest++ = (ch & 0x3F) | 0x80;
+        }
+        else if (ch < 0x10000) {
+            if (dest >= dest_end-2)
+                break;
+            *dest++ = (ch>>12) | 0xE0;
+            *dest++ = ((ch>>6) & 0x3F) | 0x80;
+            *dest++ = (ch & 0x3F) | 0x80;
+        }
+        else if (ch < 0x110000) {
+            if (dest >= dest_end-3)
+                break;
+            *dest++ = (ch>>18) | 0xF0;
+            *dest++ = ((ch>>12) & 0x3F) | 0x80;
+            *dest++ = ((ch>>6) & 0x3F) | 0x80;
+            *dest++ = (ch & 0x3F) | 0x80;
+        }
+        i++;
+    }
+    return (dest-dest0);
+}
+

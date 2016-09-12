@@ -1,6 +1,7 @@
 library(urltools)
 
 
+# Original inputs
 input <- c(
   "bücher",
   "세계의모든사람들이한국어를이해한다면얼마나좋을까",
@@ -9,7 +10,9 @@ input <- c(
 )
 input <- enc2utf8(input)
 
-test <- urltools:::make_puny(input)
+
+# test encoding
+test <- urltools:::topuny(input)
 truth <- c(
   "bcher-kva",
   "989aomsvi5e83db1d2a355cv1e0vak1dwrv93d5xbh15a0dt30a5jpsd879ccm6fea98c",
@@ -18,3 +21,12 @@ truth <- c(
 )
 
 stopifnot(identical(test, truth))
+
+
+# test decoding
+test <- urltools:::unpuny(test)
+test <- enc2utf8(test)
+test
+
+stopifnot(identical(input, test))
+
