@@ -88,7 +88,6 @@ SEXP unpuny(SEXP s_)
     buflen = u8_toutf8(buf, BUFLEN, ibuf, unilen);
 
     SET_STRING_ELT(ret, i, mkCharLen(buf, buflen));
-    clearbuf();
   }
 
   clearbuf();
