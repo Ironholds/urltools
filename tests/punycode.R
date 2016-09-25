@@ -27,5 +27,5 @@ stopifnot(identical(test, truth))
 test <- urltools:::unpuny(test)
 test <- enc2utf8(test)
 
-#stopifnot(identical(input, test))
+stopifnot(identical(input, test))
 

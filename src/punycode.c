@@ -1,275 +1,289 @@
-/**
- * Copyright (C) 2011 by Ben Noordhuis <info@bnoordhuis.nl>
- * Modified 2016 by Drew Schmidt (assert() calls made more R/CRAN friendly)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+/*
+punycode.c from RFC 3492
+http://www.nicemice.net/idn/
+Adam M. Costello
+http://www.nicemice.net/amc/
+
+This is ANSI C code (C89) implementing Punycode (RFC 3492).
+
+
+C. Disclaimer and license
+
+    Regarding this entire document or any portion of it (including
+    the pseudocode and C code), the author makes no guarantees and
+    is not responsible for any damage resulting from its use.  The
+    author grants irrevocable permission to anyone to use, modify,
+    and distribute it in any way that does not diminish the rights
+    of anyone else to use, modify, and distribute it, provided that
+    redistributed derivative works do not contain misleading author or
+    version information.  Derivative works need not be licensed under
+    similar terms.
+*/
+
 #include "punycode.h"
 
-#include <R.h>
-#define Rassert(l) if(!(l)) error("internal error in %s at line %s\n", __FILE__, __LINE__)
+/**********************************************************/
+/* Implementation (would normally go in its own .c file): */
 
-#include <stdint.h>
 #include <string.h>
-#include <ctype.h>
 
-#define min(a, b) ((a) < (b) ? (a) : (b))
+/*** Bootstring parameters for Punycode ***/
 
-/* punycode parameters, see http://tools.ietf.org/html/rfc3492#section-5 */
-#define BASE 36
-#define TMIN 1
-#define TMAX 26
-#define SKEW 38
-#define DAMP 700
-#define INITIAL_N 128
-#define INITIAL_BIAS 72
+enum { base = 36, tmin = 1, tmax = 26, skew = 38, damp = 700,
+       initial_bias = 72, initial_n = 0x80, delimiter = 0x2D };
 
-static uint32_t adapt_bias(uint32_t delta, unsigned n_points, int is_first) {
-  uint32_t k;
+/* basic(cp) tests whether cp is a basic code point: */
+#define basic(cp) ((punycode_uint)(cp) < 0x80)
 
-  delta /= is_first ? DAMP : 2;
-  delta += delta / n_points;
+/* delim(cp) tests whether cp is a delimiter: */
+#define delim(cp) ((cp) == delimiter)
 
-  /* while delta > 455: delta /= 35 */
-  for (k = 0; delta > ((BASE - TMIN) * TMAX) / 2; k += BASE) {
-    delta /= (BASE - TMIN);
-  }
+/* decode_digit(cp) returns the numeric value of a basic code */
+/* point (for use in representing integers) in the range 0 to */
+/* base-1, or base if cp is does not represent a value.       */
 
-  return k + (((BASE - TMIN + 1) * delta) / (delta + SKEW));
+static punycode_uint decode_digit(punycode_uint cp)
+{
+  return  cp - 48 < 10 ? cp - 22 :  cp - 65 < 26 ? cp - 65 :
+          cp - 97 < 26 ? cp - 97 :  base;
 }
 
-static char encode_digit(int c) {
-  Rassert(c >= 0 && c <= BASE - TMIN);
-  
-  if (c > 25) {
-    return c + 22; /* '0'..'9' */
-  }
-  else {
-    return c + 'a'; /* 'a'..'z' */
-  }
+/* encode_digit(d,flag) returns the basic code point whose value      */
+/* (when used for representing integers) is d, which needs to be in   */
+/* the range 0 to base-1.  The lowercase form is used unless flag is  */
+/* nonzero, in which case the uppercase form is used.  The behavior   */
+/* is undefined if flag is nonzero and digit d has no uppercase form. */
+
+static char encode_digit(punycode_uint d, int flag)
+{
+  return d + 22 + 75 * (d < 26) - ((flag != 0) << 5);
+  /*  0..25 map to ASCII a..z or A..Z */
+  /* 26..35 map to ASCII 0..9         */
 }
 
-/* Encode as a generalized variable-length integer. Returns number of bytes written. */
-static size_t encode_var_int(const size_t bias, const size_t delta, char *const dst, size_t dstlen) {
-  size_t i, k, q, t;
+/* flagged(bcp) tests whether a basic code point is flagged */
+/* (uppercase).  The behavior is undefined if bcp is not a  */
+/* basic code point.                                        */
 
-  i = 0;
-  k = BASE;
-  q = delta;
+#define flagged(bcp) ((punycode_uint)(bcp) - 65 < 26)
 
-  while (i < dstlen) {
-    if (k <= bias) {
-      t = TMIN;
-    }
-    else if (k >= bias + TMAX) {
-      t = TMAX;
-    }
-    else {
-      t = k - bias;
-    }
+/* encode_basic(bcp,flag) forces a basic code point to lowercase */
+/* if flag is zero, uppercase if flag is nonzero, and returns    */
+/* the resulting code point.  The code point is unchanged if it  */
+/* is caseless.  The behavior is undefined if bcp is not a basic */
+/* code point.                                                   */
 
-    if (q < t) {
-      break;
-    }
-
-    dst[i++] = encode_digit(t + (q - t) % (BASE - t));
-
-    q = (q - t) / (BASE - t);
-    k += BASE;
-  }
-
-  if (i < dstlen) {
-    dst[i++] = encode_digit(q);
-  }
-
-  return i;
+static char encode_basic(punycode_uint bcp, int flag)
+{
+  bcp -= (bcp - 97 < 26) << 5;
+  return bcp + ((!flag && (bcp - 65 < 26)) << 5);
 }
 
-static size_t decode_digit(uint32_t v) {
-  if (isdigit(v)) {
-    return 22 + (v - '0');
+/*** Platform-specific constants ***/
+
+/* maxint is the maximum value of a punycode_uint variable: */
+static const punycode_uint maxint = (punycode_uint) -1;
+/* Because maxint is unsigned, -1 becomes the maximum value. */
+
+/*** Bias adaptation function ***/
+
+static punycode_uint adapt(
+  punycode_uint delta, punycode_uint numpoints, int firsttime )
+{
+  punycode_uint k;
+
+  delta = firsttime ? delta / damp : delta >> 1;
+  /* delta >> 1 is a faster way of doing delta / 2 */
+  delta += delta / numpoints;
+
+  for (k = 0;  delta > ((base - tmin) * tmax) / 2;  k += base) {
+    delta /= base - tmin;
   }
-  if (islower(v)) {
-    return v - 'a';
-  }
-  if (isupper(v)) {
-    return v - 'A';
-  }
-  return SIZE_MAX;
+
+  return k + (base - tmin + 1) * delta / (delta + skew);
 }
 
-size_t punycode_encode(const uint32_t *const src, const size_t srclen, char *const dst, size_t *const dstlen) {
-  size_t b, h;
-  size_t delta, bias;
-  size_t m, n;
-  size_t si, di;
+/*** Main encode function ***/
 
-  for (si = 0, di = 0; si < srclen && di < *dstlen; si++) {
-    if (src[si] < 128) {
-      dst[di++] = src[si];
+enum punycode_status punycode_encode(
+  punycode_uint input_length,
+  const punycode_uint input[],
+  const unsigned char case_flags[],
+  punycode_uint *output_length,
+  char output[] )
+{
+  punycode_uint n, delta, h, b, out, max_out, bias, j, m, q, k, t;
+
+  /* Initialize the state: */
+
+  n = initial_n;
+  delta = out = 0;
+  max_out = *output_length;
+  bias = initial_bias;
+
+  /* Handle the basic code points: */
+
+  for (j = 0;  j < input_length;  ++j) {
+    if (basic(input[j])) {
+      if (max_out - out < 2) return punycode_big_output;
+      output[out++] =
+        case_flags ? encode_basic(input[j], case_flags[j]) : (char)input[j];
     }
+    /* else if (input[j] < n) return punycode_bad_input; */
+    /* (not needed for Punycode with unsigned code points) */
   }
 
-  b = h = di;
+  h = b = out;
 
-  /* Write out delimiter if any basic code points were processed. */
-  if (di > 0 && di < *dstlen) {
-    dst[di++] = '-';
-  }
+  /* h is the number of code points that have been handled, b is the  */
+  /* number of basic code points, and out is the number of characters */
+  /* that have been output.                                           */
 
-  n = INITIAL_N;
-  bias = INITIAL_BIAS;
-  delta = 0;
+  if (b > 0) output[out++] = delimiter;
 
-  for (; h < srclen && di < *dstlen; n++, delta++) {
-    /* Find next smallest non-basic code point. */
-    for (m = SIZE_MAX, si = 0; si < srclen; si++) {
-      if (src[si] >= n && src[si] < m) {
-        m = src[si];
-      }
+  /* Main encoding loop: */
+
+  while (h < input_length) {
+    /* All non-basic code points < n have been     */
+    /* handled already.  Find the next larger one: */
+
+    for (m = maxint, j = 0;  j < input_length;  ++j) {
+      /* if (basic(input[j])) continue; */
+      /* (not needed for Punycode) */
+      if (input[j] >= n && input[j] < m) m = input[j];
     }
 
-    if ((m - n) > (SIZE_MAX - delta) / (h + 1)) {
-      /* OVERFLOW */
-      Rassert(0 && "OVERFLOW");
-      goto fail;
-    }
+    /* Increase delta enough to advance the decoder's    */
+    /* <n,i> state to <m,0>, but guard against overflow: */
 
+    if (m - n > (maxint - delta) / (h + 1)) return punycode_overflow;
     delta += (m - n) * (h + 1);
     n = m;
 
-    for (si = 0; si < srclen; si++) {
-      if (src[si] < n) {
-        if (++delta == 0) {
-          /* OVERFLOW */
-          Rassert(0 && "OVERFLOW");
-          goto fail;
-        }
+    for (j = 0;  j < input_length;  ++j) {
+      /* Punycode does not need to check whether input[j] is basic: */
+      if (input[j] < n /* || basic(input[j]) */ ) {
+        if (++delta == 0) return punycode_overflow;
       }
-      else if (src[si] == n) {
-        di += encode_var_int(bias, delta, &dst[di], *dstlen - di);
-        bias = adapt_bias(delta, h + 1, h == b);
+
+      if (input[j] == n) {
+        /* Represent delta as a generalized variable-length integer: */
+
+        for (q = delta, k = base;  ;  k += base) {
+          if (out >= max_out) return punycode_big_output;
+          t = k <= bias /* + tmin */ ? tmin :     /* +tmin not needed */
+              k >= bias + tmax ? tmax : k - bias;
+          if (q < t) break;
+          output[out++] = encode_digit(t + (q - t) % (base - t), 0);
+          q = (q - t) / (base - t);
+        }
+
+        output[out++] = encode_digit(q, case_flags && case_flags[j]);
+        bias = adapt(delta, h + 1, h == b);
         delta = 0;
-        h++;
+        ++h;
       }
     }
+
+    ++delta, ++n;
   }
 
-fail:
-  /* Tell the caller how many bytes were written to the output buffer. */
-  *dstlen = di;
-
-  /* Return how many Unicode code points were converted. */
-  return si;
+  *output_length = out;
+  return punycode_success;
 }
 
-size_t punycode_decode(const char *const src, const size_t srclen, uint32_t *const dst, size_t *const dstlen) {
-  const char *p;
-  size_t b, n, t;
-  size_t i, k, w;
-  size_t si, di;
-  size_t digit;
-  size_t org_i;
-  size_t bias;
+/*** Main decode function ***/
 
-  /* Ensure that the input contains only ASCII characters. */
-  for (si = 0; si < srclen; si++) {
-    if (src[si] & 0x80) {
-      *dstlen = 0;
-      return 0;
+enum punycode_status punycode_decode(
+  punycode_uint input_length,
+  const char input[],
+  punycode_uint *output_length,
+  punycode_uint output[],
+  unsigned char case_flags[] )
+{
+  punycode_uint n, out, i, max_out, bias,
+                 b, j, in, oldi, w, k, digit, t;
+
+  if (!input_length) {
+    return punycode_bad_input;
+  }
+
+  /* Initialize the state: */
+
+  n = initial_n;
+  out = i = 0;
+  max_out = *output_length;
+  bias = initial_bias;
+
+  /* Handle the basic code points:  Let b be the number of input code */
+  /* points before the last delimiter, or 0 if there is none, then    */
+  /* copy the first b code points to the output.                      */
+
+  for (b = 0, j = input_length - 1 ;  j > 0;  --j) {
+    if (delim(input[j])) {
+      b = j;
+      break;
     }
   }
+  if (b > max_out) return punycode_big_output;
 
-  /* Reverse-search for delimiter in input. */
-  for (p = src + srclen - 1; p > src && *p != '-'; p--);
-  b = p - src;
-
-  /* Copy basic code points to output. */
-  di = min(b, *dstlen);
-
-  for (i = 0; i < di; i++) {
-    dst[i] = src[i];
+  for (j = 0;  j < b;  ++j) {
+    if (case_flags) case_flags[out] = flagged(input[j]);
+    if (!basic(input[j])) return punycode_bad_input;
+    output[out++] = input[j];
   }
 
-  i = 0;
-  n = INITIAL_N;
-  bias = INITIAL_BIAS;
+  /* Main decoding loop:  Start just after the last delimiter if any  */
+  /* basic code points were copied; start at the beginning otherwise. */
 
-  for (si = b + (b > 0); si < srclen && di < *dstlen; di++) {
-    org_i = i;
+  for (in = b > 0 ? b + 1 : 0;  in < input_length;  ++out) {
 
-    for (w = 1, k = BASE; di < *dstlen; k += BASE) {
-      digit = decode_digit(src[si++]);
+    /* in is the index of the next character to be consumed, and */
+    /* out is the number of code points in the output array.     */
 
-      if (digit == SIZE_MAX) {
-        goto fail;
-      }
+    /* Decode a generalized variable-length integer into delta,  */
+    /* which gets added to i.  The overflow checking is easier   */
+    /* if we increase i as we go, then subtract off its starting */
+    /* value at the end to obtain delta.                         */
 
-      if (digit > (SIZE_MAX - i) / w) {
-        /* OVERFLOW */
-        Rassert(0 && "OVERFLOW");
-        goto fail;
-      }
-
+    for (oldi = i, w = 1, k = base;  ;  k += base) {
+      if (in >= input_length) return punycode_bad_input;
+      digit = decode_digit(input[in++]);
+      if (digit >= base) return punycode_bad_input;
+      if (digit > (maxint - i) / w) return punycode_overflow;
       i += digit * w;
-
-      if (k <= bias) {
-        t = TMIN;
-      }
-      else if (k >= bias + TMAX) {
-        t = TMAX;
-      }
-      else {
-        t = k - bias;
-      }
-
-      if (digit < t) {
-        break;
-      }
-
-      if (w > SIZE_MAX / (BASE - t)) {
-        /* OVERFLOW */
-        Rassert(0 && "OVERFLOW");
-        goto fail;
-      }
-
-      w *= BASE - t;
+      t = k <= bias /* + tmin */ ? tmin :     /* +tmin not needed */
+          k >= bias + tmax ? tmax : k - bias;
+      if (digit < t) break;
+      if (w > maxint / (base - t)) return punycode_overflow;
+      w *= (base - t);
     }
 
-    bias = adapt_bias(i - org_i, di + 1, org_i == 0);
+    bias = adapt(i - oldi, out + 1, oldi == 0);
 
-    if (i / (di + 1) > SIZE_MAX - n) {
-      /* OVERFLOW */
-      Rassert(0 && "OVERFLOW");
-      goto fail;
+    /* i was supposed to wrap around from out+1 to 0,   */
+    /* incrementing n each time, so we'll fix that now: */
+
+    if (i / (out + 1) > maxint - n) return punycode_overflow;
+    n += i / (out + 1);
+    i %= (out + 1);
+
+    /* Insert n at position i of the output: */
+
+    /* not needed for Punycode: */
+    /* if (decode_digit(n) <= base) return punycode_invalid_input; */
+    if (out >= max_out) return punycode_big_output;
+
+    if (case_flags) {
+      memmove(case_flags + i + 1, case_flags + i, out - i);
+      /* Case of last character determines uppercase flag: */
+      case_flags[i] = flagged(input[in - 1]);
     }
 
-    n += i / (di + 1);
-    i %= (di + 1);
-
-    memmove(dst + i + 1, dst + i, (di - i) * sizeof(uint32_t));
-    dst[i++] = n;
+    memmove(output + i + 1, output + i, (out - i) * sizeof *output);
+    output[i++] = n;
   }
 
-fail:
-  /* Tell the caller how many bytes were written to the output buffer. */
-  *dstlen = di;
-
-  return si;
+  *output_length = out;
+  return punycode_success;
 }
