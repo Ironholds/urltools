@@ -70,7 +70,7 @@ SEXP topuny(SEXP s_)
     
     CHECKLEN(s, slen);
     
-    /*unilen = mbstowcs(ibuf, s, slen);*/
+    // unilen = mbstowcs(ibuf, s, slen);
     unilen = u8_toucs(ibuf, unilen, s, slen);
     
     enum punycode_status st = punycode_encode(unilen, ibuf, NULL, &buflen, buf);
@@ -108,10 +108,10 @@ SEXP unpuny(SEXP s_)
     enum punycode_status st = punycode_decode(slen, s, &unilen, ibuf, NULL);
     CHECKSTATUS(st);
     
-    /*buflen = wcstombs(buf, ibuf, unilen*sizeof(uint32_t));*/
+    // buflen = wcstombs(buf, ibuf, BUFLEN);
     buflen = u8_toutf8(buf, BUFLEN, ibuf, unilen);
     
-    SET_STRING_ELT(ret, i, mkCharLen(buf, buflen));
+    SET_STRING_ELT(ret, i, mkCharLenCE(buf, buflen, CE_UTF8));
   }
   
   clearbuf();
