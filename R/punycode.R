@@ -9,7 +9,20 @@
 #' @return
 #' A string or vector of strings.
 #' 
-#' @references Punycode RFC \url{http://www.faqs.org/rfcs/rfc3492.html}
+#' @references
+#' Punycode RFC \url{http://www.faqs.org/rfcs/rfc3492.html}
+#' Implementation \url{https://dxr.mozilla.org/mozilla-central/source/netwerk/dns/punycode.c}
+#' 
+#' @examples
+#' \dontrun{
+#' library(urltools)
+#' str <- "bücher"
+#' (p <- topuny(str))
+#' ## [1] "bcher-kva"
+#' 
+#' unpuny(p)
+#' ## [1] "bücher"
+#' }
 #' 
 #' @name punycode
 #' @rdname punycode
