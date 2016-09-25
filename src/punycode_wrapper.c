@@ -9,11 +9,37 @@
 
 #define CHARPT(x,i) (CHAR(STRING_ELT(x,i)))
 
+// Storage buffers
+#define BUFLEN 2048
+static char buf[BUFLEN];
+static uint32_t ibuf[BUFLEN];
 
+#define CHECKINPUT(x) if (TYPEOF(x) != STRSXP) \
+  error("input must be a string\n");
 
-#define BUFLEN 1024
-char buf[BUFLEN];
-uint32_t ibuf[BUFLEN];
+#define CHECKLEN(s,slen) if (slen > BUFLEN) \
+  error("input string=%s too big; must have no more than %d chars\n", s, BUFLEN)
+
+static inline char* punycode_errcode_lookup(enum punycode_status st)
+{
+  char *ret;
+  if (st == punycode_bad_input)
+    ret = "input is invalid";
+  else if (st == punycode_big_output)
+    ret = "output would exceed the space provided";
+  else if (st == punycode_overflow)
+    ret = "input needs wider integers to process";
+  else
+  {
+    ret = (char*) R_alloc(30, 1);
+    sprintf(ret, "unknown error with code %d", st);
+  }
+  
+  return ret;
+}
+
+#define CHECKSTATUS(st) if (st != punycode_success) \
+  error("Internal error: %s\n", punycode_errcode_lookup(st));
 
 static inline void clearbuf()
 {
@@ -31,8 +57,7 @@ SEXP topuny(SEXP s_)
   SEXP ret;
   const int len = LENGTH(s_);
   
-  if (TYPEOF(s_) != STRSXP)
-    error("strings only\n");
+  CHECKINPUT(s_);
   
   PROTECT(ret = allocVector(STRSXP, len));
   
@@ -41,16 +66,15 @@ SEXP topuny(SEXP s_)
     punycode_uint buflen = BUFLEN;
     punycode_uint unilen = BUFLEN;
     const char *s = CHARPT(s_, i);
-    
     const int slen = strlen(s);
-    if (slen > BUFLEN)
-      error("string too big");
+    
+    CHECKLEN(s, slen);
     
     /*unilen = mbstowcs(ibuf, s, slen);*/
     unilen = u8_toucs(ibuf, unilen, s, slen);
     
-    // punycode_encode(ibuf, unilen, buf, &buflen);
-    punycode_encode(unilen, ibuf, NULL, &buflen, buf);
+    enum punycode_status st = punycode_encode(unilen, ibuf, NULL, &buflen, buf);
+    CHECKSTATUS(st);
     
     SET_STRING_ELT(ret, i, mkCharLen(buf, buflen));
   }
@@ -68,8 +92,7 @@ SEXP unpuny(SEXP s_)
   SEXP ret;
   const int len = LENGTH(s_);
   
-  if (TYPEOF(s_) != STRSXP)
-    error("strings only\n");
+  CHECKINPUT(s_);
   
   PROTECT(ret = allocVector(STRSXP, len));
   
@@ -78,13 +101,12 @@ SEXP unpuny(SEXP s_)
     punycode_uint buflen;
     punycode_uint unilen = BUFLEN;
     const char *s = CHARPT(s_, i);
-    
     const int slen = strlen(s);
-    if (slen > BUFLEN)
-      error("string too big");
     
-    // punycode_decode(s, slen, ibuf, &unilen);
-    punycode_decode(slen, s, &unilen, ibuf, NULL);
+    CHECKLEN(s, slen);
+    
+    enum punycode_status st = punycode_decode(slen, s, &unilen, ibuf, NULL);
+    CHECKSTATUS(st);
     
     /*buflen = wcstombs(buf, ibuf, unilen*sizeof(uint32_t));*/
     buflen = u8_toutf8(buf, BUFLEN, ibuf, unilen);
@@ -97,3 +119,4 @@ SEXP unpuny(SEXP s_)
   UNPROTECT(1);
   return ret;
 }
+
