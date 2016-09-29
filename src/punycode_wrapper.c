@@ -73,7 +73,7 @@ SEXP topuny(SEXP s_)
       
       CHECKLEN(s, slen);
       
-      if(strcspn(s, ascii)){
+      if(strspn(s, ascii) != slen){
         // unilen = mbstowcs(ibuf, s, slen);
         unilen = u8_toucs(ibuf, unilen, s, slen);
         
