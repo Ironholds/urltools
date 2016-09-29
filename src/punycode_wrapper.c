@@ -39,9 +39,6 @@ static inline char* punycode_errcode_lookup(enum punycode_status st)
   return ret;
 }
 
-#define CHECKSTATUS(st) if (st != punycode_success) \
-  error("Internal error: %s\n", punycode_errcode_lookup(st));
-
 static inline void clearbuf()
 {
   for (int i=0; i<BUFLEN; i++)
@@ -53,16 +50,18 @@ static inline void clearbuf()
 
 
 
-SEXP topuny(SEXP s_)
-{
+SEXP topuny(SEXP s_){
   SEXP ret;
   const int len = LENGTH(s_);
   
   CHECKINPUT(s_);
-  
   PROTECT(ret = allocVector(STRSXP, len));
   
   for (int i=0; i<len; i++) {
+    
+    if(i % 10000 == 0){
+      R_CheckUserInterrupt();
+    }
     if(STRING_ELT(s_, i) == NA_STRING){
       SET_STRING_ELT(ret, i, NA_STRING);
     } else {
@@ -74,13 +73,18 @@ SEXP topuny(SEXP s_)
       CHECKLEN(s, slen);
       
       if(strspn(s, ascii) != slen){
-        // unilen = mbstowcs(ibuf, s, slen);
         unilen = u8_toucs(ibuf, unilen, s, slen);
         
         enum punycode_status st = punycode_encode(unilen, ibuf, NULL, &buflen, buf);
-        CHECKSTATUS(st);
         
-        SET_STRING_ELT(ret, i, mkCharLen(buf, buflen));
+        if(st != punycode_success){
+          warning("Error in converting element %d: %s\n", i+1,
+                  punycode_errcode_lookup(st));
+          SET_STRING_ELT(ret, i, NA_STRING);
+        } else {
+          SET_STRING_ELT(ret, i, mkCharLen(buf, buflen));
+        }
+
       } else {
         SET_STRING_ELT(ret, i, STRING_ELT(s_, i));
       }
@@ -105,8 +109,12 @@ SEXP unpuny(SEXP s_)
   
   PROTECT(ret = allocVector(STRSXP, len));
   
-  for (int i=0; i<len; i++)
-  {
+  for (int i = 0; i < len; i++) {
+    
+    if(i % 10000 == 0){
+      R_CheckUserInterrupt();
+    }
+    
     if(STRING_ELT(s_, i) == NA_STRING){
       SET_STRING_ELT(ret, i, NA_STRING);
     } else {
@@ -118,12 +126,16 @@ SEXP unpuny(SEXP s_)
       CHECKLEN(s, slen);
       
       enum punycode_status st = punycode_decode(slen, s, &unilen, ibuf, NULL);
-      CHECKSTATUS(st);
       
-      // buflen = wcstombs(buf, ibuf, BUFLEN);
-      buflen = u8_toutf8(buf, BUFLEN, ibuf, unilen);
-      
-      SET_STRING_ELT(ret, i, mkCharLenCE(buf, buflen, CE_UTF8));
+      if(st != punycode_success){
+        warning("Error in converting element %d: %s\n", i+1,
+                punycode_errcode_lookup(st));
+        SET_STRING_ELT(ret, i, NA_STRING);
+      } else {
+        buflen = u8_toutf8(buf, BUFLEN, ibuf, unilen);
+        SET_STRING_ELT(ret, i, mkCharLenCE(buf, buflen, CE_UTF8));
+      }
+
     }
   }
   
