@@ -53,9 +53,10 @@ CharacterVector compose::compose_multiple(DataFrame parsed_urls){
   CharacterVector parameters = parsed_urls["parameter"];
   CharacterVector fragments = parsed_urls["fragment"];
   
-  CharacterVector output(schemes.size());
+  unsigned int input_size = schemes.size();
+  CharacterVector output(input_size);
   
-  for(unsigned int i = 0; i < schemes.size(); i++){
+  for(unsigned int i = 0; i < input_size; i++){
     if((i % 10000) == 0){
       Rcpp::checkUserInterrupt();
     }
