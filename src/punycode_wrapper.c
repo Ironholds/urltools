@@ -13,7 +13,7 @@
 #define BUFLEN 2048
 static char buf[BUFLEN];
 static uint32_t ibuf[BUFLEN];
-static char* ascii = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890_";
+static char* ascii = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890_ ";
 
 #define CHECKINPUT(x) if (TYPEOF(x) != STRSXP) \
   error("input must be a string\n");
