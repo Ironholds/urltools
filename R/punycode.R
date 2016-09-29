@@ -30,14 +30,14 @@ NULL
 
 #' @rdname punycode
 #' @export
-topuny <- function(s)
+puny_encode <- function(s)
 {
   .Call("topuny", s, PACKAGE="urltools")
 }
 
 #' @rdname punycode
 #' @export
-unpuny <- function(s)
+puny_decode <- function(s)
 {
   .Call("unpuny", s, PACKAGE="urltools")
 }
