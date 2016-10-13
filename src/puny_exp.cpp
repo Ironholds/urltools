@@ -4,6 +4,9 @@ extern "C"{
 #include "utf8.h"
 }
 using namespace Rcpp;
+#define R_NO_REMAP
+#include <R.h>
+#include <Rinternals.h>
 
 #define BUFLENT 2048
 static char buf[BUFLENT];
@@ -51,33 +54,63 @@ void split_url(std::string x, url& output){
   }
 }
 
+std::string check_result(enum punycode_status& st, std::string& x){
+  std::string ret = "Error with the URL " + x + ":";
+  if (st == punycode_bad_input){
+    ret += "input is invalid";
+  } else if (st == punycode_big_output){
+    ret += "output would exceed the space provided";
+  } else if (st == punycode_overflow){
+    ret += "input needs wider integers to process";
+  } else {
+    return "";
+  }
+  return ret;
+};
+
 String encode_single(std::string x){
   
+  clearbuf();
   url holding;
-  Rcpp::warning(("."));
   split_url(x, holding);
-  std::string output = holding.path;
+  std::string output = holding.protocol;
   
   for(unsigned int i = 0; i < holding.split_url.size(); i++){
-    Rcpp::warning(("."));
+    // Check if it's ASCII-only fragment - if so, nowt to do here.
     if(holding.split_url[i].find_first_not_of(ascii) == std::string::npos){
-      output += holding.split_url[i] + ".";
+      output += holding.split_url[i];
+      if(i < (holding.split_url.size() - 1)){
+        output += ".";
+      }
     } else {
-      punycode_uint buflen;
+      
+      // Prep for conversion
+      punycode_uint buflen = BUFLENT;
       punycode_uint unilen = BUFLENT;
       const char *s = holding.split_url[i].c_str();
       const int slen = strlen(s);
-      Rcpp::warning(("."));
-      punycode_decode(slen, s, &unilen, ibuf, NULL);
-      buflen = u8_toutf8(buf, BUFLENT, ibuf, unilen);
-      output += std::string(reinterpret_cast<char*>(buf), buflen) + ".";
-      Rcpp::warning(output);
+      
+      // Do the conversion
+      unilen = u8_toucs(ibuf, unilen, s, slen);
+      enum punycode_status st = punycode_encode(unilen, ibuf, NULL, &buflen, buf);
+      
+      // Check it worked
+      std::string ret = check_result(st, x);
+      if(ret.size()){
+        return NA_STRING;
+        Rcpp::warning(ret);
+      }
+      
+      std::string encoded = Rcpp::as<std::string>(Rf_mkCharLenCE(buf, buflen, CE_UTF8));
+      if(encoded != holding.split_url[i]){
+        encoded = "xn--" + encoded;
+      }
+      output += encoded;
+      if(i < (holding.split_url.size() - 1)){
+        output += ".";
+      }
     }
-
   }
-  Rcpp::warning(("."));
-  output.erase(output.size()-1,1);
-  Rcpp::warning(("."));
   output += holding.path;
   return output;
 }
