@@ -67,6 +67,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// encode_vector
+CharacterVector encode_vector(CharacterVector x);
+RcppExport SEXP urltools_encode_vector(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(encode_vector(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // reverse_strings
 CharacterVector reverse_strings(CharacterVector strings);
 RcppExport SEXP urltools_reverse_strings(SEXP stringsSEXP) {
