@@ -93,8 +93,12 @@ param_remove <- function(urls, keys) {
     .Call('urltools_param_remove', PACKAGE = 'urltools', urls, keys)
 }
 
-encode_vector <- function(x) {
-    .Call('urltools_encode_vector', PACKAGE = 'urltools', x)
+puny_encode <- function(x) {
+    .Call('urltools_puny_encode', PACKAGE = 'urltools', x)
+}
+
+puny_decode <- function(x) {
+    .Call('urltools_puny_decode', PACKAGE = 'urltools', x)
 }
 
 reverse_strings <- function(strings) {

@@ -70,7 +70,6 @@ std::string check_result(enum punycode_status& st, std::string& x){
 
 String encode_single(std::string x){
   
-  clearbuf();
   url holding;
   split_url(x, holding);
   std::string output = holding.protocol;
@@ -97,8 +96,8 @@ String encode_single(std::string x){
       // Check it worked
       std::string ret = check_result(st, x);
       if(ret.size()){
-        return NA_STRING;
         Rcpp::warning(ret);
+        return NA_STRING;
       }
       
       std::string encoded = Rcpp::as<std::string>(Rf_mkCharLenCE(buf, buflen, CE_UTF8));
@@ -116,7 +115,7 @@ String encode_single(std::string x){
 }
 
 //[[Rcpp::export]]
-CharacterVector encode_vector(CharacterVector x){
+CharacterVector puny_encode(CharacterVector x){
   
   unsigned int input_size = x.size();
   CharacterVector output(input_size);
@@ -135,5 +134,68 @@ CharacterVector encode_vector(CharacterVector x){
   }
   
   clearbuf();
+  return output;
+}
+
+String decode_single(std::string x){
+  url holding;
+  split_url(x, holding);
+  std::string output = holding.protocol;
+  
+  for(unsigned int i = 0; i < holding.split_url.size(); i++){
+    // Check if it's ASCII-only fragment - if so, nowt to do here.
+    if(holding.split_url[i].size() < 4 || holding.split_url[i].substr(0,4) != "xn--"){
+      output += holding.split_url[i];
+      if(i < (holding.split_url.size() - 1)){
+        output += ".";
+      }
+    } else {
+      
+      // Prep for conversion
+      punycode_uint buflen;
+      punycode_uint unilen = BUFLENT;
+      const char *s = holding.split_url[i].substr(4).c_str();
+      const int slen = strlen(s);
+      
+      // Do the conversion
+      enum punycode_status st = punycode_decode(slen, s, &unilen, ibuf, NULL);
+      
+      // Check it worked
+      std::string ret = check_result(st, x);
+      if(ret.size()){
+        Rcpp::warning(ret);
+        return NA_STRING;
+      }
+      buflen = u8_toutf8(buf, BUFLENT, ibuf, unilen);
+      std::string encoded = Rcpp::as<std::string>(Rf_mkCharLenCE(buf, buflen, CE_UTF8));
+      output += encoded;
+      if(i < (holding.split_url.size() - 1)){
+        output += ".";
+      }
+    }
+  }
+  output += holding.path;
+  return output;
+}
+
+//[[Rcpp::export]]
+CharacterVector puny_decode(CharacterVector x){
+  
+  unsigned int input_size = x.size();
+  CharacterVector output(input_size);
+  
+  for(unsigned int i = 0; i < input_size; i++){
+    
+    if(i % 10000 == 0){
+      Rcpp::checkUserInterrupt();
+    }
+    
+    if(x[i] == NA_STRING){
+      output[i] = NA_STRING;
+    } else {
+      output[i] = decode_single(Rcpp::as<std::string>(x[i]));
+    }
+  }
+  
   return output;
 }

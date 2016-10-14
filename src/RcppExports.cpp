@@ -67,14 +67,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// encode_vector
-CharacterVector encode_vector(CharacterVector x);
-RcppExport SEXP urltools_encode_vector(SEXP xSEXP) {
+// puny_encode
+CharacterVector puny_encode(CharacterVector x);
+RcppExport SEXP urltools_puny_encode(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< CharacterVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(encode_vector(x));
+    rcpp_result_gen = Rcpp::wrap(puny_encode(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// puny_decode
+CharacterVector puny_decode(CharacterVector x);
+RcppExport SEXP urltools_puny_decode(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(puny_decode(x));
     return rcpp_result_gen;
 END_RCPP
 }
