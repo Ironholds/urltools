@@ -50,6 +50,8 @@ url_encode("https://en.wikipedia.org/wiki/Article")
 As you can see, <code>url\_decode</code> simply excludes out-of-range characters from consideration, while <code>url\_encode</code> detects characters that make up part of the URLs scheme, and leaves them unencoded. Both are extremely fast; with `urltools`, you can
 decode a vector of 1,000,000 URLs in 0.9 seconds.
 
+Alongside these, we have functions for encoding and decoding the 'punycode' format of URLs - ones that are designed to be internationalised and have unicode characters in them. These also take one argument, a vector of URLs, and can be found at `puny_encode` and `puny_decode` respectively.
+
 ### URL parsing
 
 Once you've got your nicely decoded (or encoded) URLs, it's time to do something with them - and, most of the time,
