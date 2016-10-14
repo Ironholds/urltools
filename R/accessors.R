@@ -21,7 +21,7 @@
 #'scheme(example_url) <- "https"
 #'
 #'# NA out the URL
-#'scheme(example_url) <- NA
+#'scheme(example_url) <- NA_character_
 #'@import methods
 #'@export
 scheme <- function(x){

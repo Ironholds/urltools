@@ -28,7 +28,7 @@ scheme(example_url)
 scheme(example_url) <- "https"
 
 # NA out the URL
-scheme(example_url) <- NA
+scheme(example_url) <- NA_character_
 }
 \seealso{
 \code{\link{domain}}, \code{\link{port}}, \code{\link{path}},
