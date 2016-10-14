@@ -60,7 +60,7 @@ url_decode("\%gIL")
 }
 }
 \seealso{
-Bob Rudis's \href{https://github.com/hrbrmstr/punycode}{Punycode} package on GitHub, for handling
-punycode in URLs.
+\code{\link{puny_decode}} and \code{\link{puny_encode}}, for punycode decoding
+and encoding.
 }
 

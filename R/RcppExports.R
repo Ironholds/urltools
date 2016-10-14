@@ -93,10 +93,35 @@ param_remove <- function(urls, keys) {
     .Call('urltools_param_remove', PACKAGE = 'urltools', urls, keys)
 }
 
+#'@title Encode or Decode Internationalised Domains
+#'@description \code{puny_encode} and \code{puny_decode} implement
+#'the encoding standard for internationalised (non-ASCII) domains and
+#'subdomains. You can use them to encode UTF-8 domain names, or decode
+#'encoded names (which start "xn--"), or both.
+#'
+#'@param x a vector of URLs. These should be URL decoded using \code{\link{url_decode}}.
+#'
+#'@return a CharacterVector containing encoded or decoded versions of the entries in \code{x}.
+#'Invalid URLs (ones that are \code{NA}, or ones that do not successfully map to an actual
+#'decoded or encoded version) will be returned as \code{NA}.
+#'
+#'@examples
+#'# Encode a URL
+#'puny_encode("https://www.bücher.com/foo")
+#'
+#'# Decode the result, back to the original
+#'puny_decode("https://www.xn--bcher-kva.com/foo")
+#'
+#'@seealso \code{\link{url_decode}} and \code{\link{url_encode}} for percent-encoding.
+#'
+#'@rdname puny
+#'@export
 puny_encode <- function(x) {
     .Call('urltools_puny_encode', PACKAGE = 'urltools', x)
 }
 
+#'@rdname puny
+#'@export
 puny_decode <- function(x) {
     .Call('urltools_puny_decode', PACKAGE = 'urltools', x)
 }
@@ -154,8 +179,8 @@ host_extract_ <- function(domains) {
 #'
 #'@return a character vector containing the encoded (or decoded) versions of "urls".
 #'
-#'@seealso Bob Rudis's \href{https://github.com/hrbrmstr/punycode}{Punycode} package on GitHub, for handling
-#'punycode in URLs.
+#'@seealso \code{\link{puny_decode}} and \code{\link{puny_encode}}, for punycode decoding
+#'and encoding.
 #'
 #'@examples
 #'
