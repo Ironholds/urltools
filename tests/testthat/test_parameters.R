@@ -25,6 +25,20 @@ test_that("Setting parameter values works", {
                 "https://en.wikipedia.org/wiki/api.php?foo=bar&baz=quorn")
 })
 
+test_that("Setting parameter values quietly fails with NA components", {
+  url <- "https://en.wikipedia.org/api.php?action=query"
+  expect_identical(url, param_set(url, "action", NA_character_))
+  expect_true(is.na(param_set(NA_character_, "action", "foo")))
+  expect_identical(url, param_set(url, NA_character_, "pageinfo"))
+})
+
+
+test_that("Removing parameter entries quietly fails with NA components", {
+  url <- "https://en.wikipedia.org/api.php?action=query"
+  expect_identical(url, param_remove(url, "action"))
+  expect_true(is.na(param_remove(NA_character_, "action")))
+})
+
 test_that("Removing parameter keys works", {
   expect_true(param_remove("https://en.wikipedia.org/api.php?baz=qux", "baz") ==
                 "https://en.wikipedia.org/api.php")

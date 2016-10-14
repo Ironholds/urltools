@@ -33,19 +33,19 @@ private:
    * associated - or did, and /had that key/, but was associating a
    * different value with it.
    */
-  std::string set_parameter(std::string url, std::string& component, std::string& value);
+  std::string set_parameter(std::string url, std::string& component, std::string value);
   
   /**
    * Reemove a range of key/value parameters
    * 
    * @param url a URL.
    * 
-   * @param params a reference to a vector of keys.
+   * @param params a vector of keys.
    * 
    * @return a string containing the URL but absent the keys and values that were specified.
    * 
    */
-  std::string remove_parameter_single(std::string url, std::vector < std::string >& params);
+  std::string remove_parameter_single(std::string url, CharacterVector params);
   
 public:
   
@@ -73,8 +73,8 @@ public:
    * 
    * @return the initial URLs vector, with the aforementioned string modifications.
    */
-  std::vector < std::string > set_parameter_vectorised(std::vector < std::string > urls, std::string component,
-                                                       std::vector < std::string > value);
+  CharacterVector set_parameter_vectorised(CharacterVector urls, String component,
+                                           CharacterVector value);
   
   /**
    * Reemove a range of key/value parameters from a vector of strings.
@@ -86,7 +86,8 @@ public:
    * @return the initial URLs vector, with the aforementioned string modifications.
    * 
    */
-  std::vector < std::string > remove_parameter_vectorised(std::vector < std::string > urls, std::vector < std::string > params);
+  CharacterVector remove_parameter_vectorised(CharacterVector urls,
+                                              CharacterVector params);
 };
 
 #endif

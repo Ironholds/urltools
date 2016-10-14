@@ -43,26 +43,26 @@ BEGIN_RCPP
 END_RCPP
 }
 // param_set
-std::vector < std::string > param_set(std::vector < std::string > urls, std::string key, std::vector < std::string > value);
+CharacterVector param_set(CharacterVector urls, String key, CharacterVector value);
 RcppExport SEXP urltools_param_set(SEXP urlsSEXP, SEXP keySEXP, SEXP valueSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type key(keySEXP);
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type value(valueSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< String >::type key(keySEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type value(valueSEXP);
     rcpp_result_gen = Rcpp::wrap(param_set(urls, key, value));
     return rcpp_result_gen;
 END_RCPP
 }
 // param_remove
-std::vector < std::string > param_remove(std::vector < std::string > urls, std::vector < std::string > keys);
+CharacterVector param_remove(CharacterVector urls, CharacterVector keys);
 RcppExport SEXP urltools_param_remove(SEXP urlsSEXP, SEXP keysSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type urls(urlsSEXP);
-    Rcpp::traits::input_parameter< std::vector < std::string > >::type keys(keysSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type keys(keysSEXP);
     rcpp_result_gen = Rcpp::wrap(param_remove(urls, keys));
     return rcpp_result_gen;
 END_RCPP

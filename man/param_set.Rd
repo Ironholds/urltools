@@ -17,7 +17,9 @@ if it doesn't exist within the URL).}
 or a vector the same length as \code{urls}}
 }
 \value{
-the original vector of URLs, but with modified/inserted key-value pairs.
+the original vector of URLs, but with modified/inserted key-value pairs. If the
+URL is \code{NA}, the returned value will be - if the key or value are, no insertion
+will be made.
 }
 \description{
 URLs often have queries associated with them, particularly URLs for

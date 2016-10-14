@@ -14,6 +14,8 @@ have to have been otherwise processed.}
 }
 \value{
 the original URLs but with the key/value pairs specified by \code{keys} removed.
+If the original URL is \code{NA}, \code{NA} will be returned; if a specified key is \code{NA},
+nothing will be done with it.
 }
 \description{
 URLs often have queries associated with them, particularly URLs for

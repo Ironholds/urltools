@@ -52,7 +52,9 @@ param_get <- function(urls, parameter_names) {
 #'@param value a value to associate with the key. This can be a single string,
 #'or a vector the same length as \code{urls}
 #'
-#'@return the original vector of URLs, but with modified/inserted key-value pairs.
+#'@return the original vector of URLs, but with modified/inserted key-value pairs. If the
+#'URL is \code{NA}, the returned value will be - if the key or value are, no insertion
+#'will be made.
 #'
 #'@examples
 #'# Set a URL parameter where there's already a key for that
@@ -80,6 +82,8 @@ param_set <- function(urls, key, value) {
 #'@param keys a vector of parameter keys to remove.
 #'
 #'@return the original URLs but with the key/value pairs specified by \code{keys} removed.
+#'If the original URL is \code{NA}, \code{NA} will be returned; if a specified key is \code{NA},
+#'nothing will be done with it.
 #'
 #'@seealso \code{\link{param_set}} to modify values associated with keys, or \code{\link{param_get}}
 #'to retrieve those values.

@@ -13,8 +13,7 @@ std::vector < std::string > parameter::get_query_string(std::string url){
   return output;
 }
 
-
-std::string parameter::set_parameter(std::string url, std::string& component, std::string& value){
+std::string parameter::set_parameter(std::string url, std::string& component, std::string value){
   
   std::vector < std::string > holding = get_query_string(url);
   if(holding.size() == 1){
@@ -39,7 +38,7 @@ std::string parameter::set_parameter(std::string url, std::string& component, st
   
 }
 
-std::string parameter::remove_parameter_single(std::string url, std::vector < std::string >& params){
+std::string parameter::remove_parameter_single(std::string url, CharacterVector params){
   
   std::vector < std::string > parsed_url = get_query_string(url);
   if(parsed_url.size() == 1){
@@ -47,11 +46,13 @@ std::string parameter::remove_parameter_single(std::string url, std::vector < st
   }
   
   for(unsigned int i = 0; i < params.size(); i++){
-    size_t param_location = parsed_url[1].find(params[i]);
-    while(param_location != std::string::npos){
-      size_t end_location = parsed_url[1].find("&", param_location);
-      parsed_url[1].erase(param_location, end_location);
-      param_location = parsed_url[i].find(params[i], param_location);
+    if(params[i] != NA_STRING){
+      size_t param_location = parsed_url[1].find(params[i]);
+      while(param_location != std::string::npos){
+        size_t end_location = parsed_url[1].find("&", param_location);
+        parsed_url[1].erase(param_location, end_location);
+        param_location = parsed_url[i].find(params[i], param_location);
+      }
     }
   }
   
@@ -94,48 +95,62 @@ CharacterVector parameter::get_parameter(CharacterVector& urls, std::string comp
   return output;
 }
 
-std::vector < std::string > parameter::set_parameter_vectorised(std::vector < std::string > urls, std::string component,
-                                                                std::vector < std::string > value){
+CharacterVector parameter::set_parameter_vectorised(CharacterVector urls, String component,
+                                                    CharacterVector value){
   
   unsigned int input_size = urls.size();
-  std::string& component_ref = component;
-  if(value.size() == input_size){
-    for(unsigned int i = 0; i < input_size; i++){
-      if((i % 10000) == 0){
-        Rcpp::checkUserInterrupt();
+  if(component != NA_STRING){
+    std::string component_ref = component.get_cstring();
+    if(value.size() == input_size){
+      for(unsigned int i = 0; i < input_size; i++){
+        if((i % 10000) == 0){
+          Rcpp::checkUserInterrupt();
+        }
+        if(urls[i] != NA_STRING && value[i] != NA_STRING){
+          urls[i] = set_parameter(Rcpp::as<std::string>(urls[i]), component_ref,
+                                  Rcpp::as<std::string>(value[i]));
+        }
       }
-      urls[i] = set_parameter(urls[i], component_ref, value[i]);
-    }
-  } else if(value.size() == 1){
-    std::string& value_ref = value[0];
-    for(unsigned int i = 0; i < input_size; i++){
-      if((i % 10000) == 0){
-        Rcpp::checkUserInterrupt();
+    } else if(value.size() == 1){
+      if(value[0] != NA_STRING){
+        std::string value_ref = Rcpp::as<std::string>(value[0]);
+        for(unsigned int i = 0; i < input_size; i++){
+          if((i % 10000) == 0){
+            Rcpp::checkUserInterrupt();
+          }
+          if(urls[i] != NA_STRING){
+            urls[i] = set_parameter(Rcpp::as<std::string>(urls[i]), component_ref, value_ref);
+          }
+        }
       }
-      urls[i] = set_parameter(urls[i], component_ref, value_ref);
+      
+    } else {
+      throw std::range_error("'value' must be the same length as 'urls', or of length 1");
     }
-  } else {
-    throw std::range_error("'value' must be the same length as 'urls', or of length 1");
   }
-  
+
   return urls;
 }
 
-std::vector < std::string > parameter::remove_parameter_vectorised(std::vector < std::string > urls,
-                                                                   std::vector < std::string > params){
+CharacterVector parameter::remove_parameter_vectorised(CharacterVector urls,
+                                                       CharacterVector params){
   
   // Generate easily find-able params.
   for(unsigned int i = 0; i < params.size(); i++){
-    params[i] = params[i] + "=";
+    if(params[i] != NA_STRING){
+      params[i] += "=";
+    }
   }
-  std::vector < std::string >& param_ref = params;
-  
+
   // For each URL, remove those parameters.
   for(unsigned int i = 0; i < urls.size(); i++){
     if((i % 10000) == 0){
       Rcpp::checkUserInterrupt();
     }
-    urls[i] = remove_parameter_single(urls[i], param_ref);
+    if(urls[i] != NA_STRING){
+      urls[i] = remove_parameter_single(Rcpp::as<std::string>(urls[i]), params);
+      
+    }
   }
   
   // Return
