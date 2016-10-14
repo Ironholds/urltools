@@ -100,7 +100,7 @@ String encode_single(std::string x){
         return NA_STRING;
       }
       
-      std::string encoded = std::string(&buf[0], buflen);
+      std::string encoded = Rcpp::as<std::string>(Rf_mkCharLenCE(buf, buflen, CE_UTF8));
       if(encoded != holding.split_url[i]){
         encoded = "xn--" + encoded;
       }
@@ -190,7 +190,7 @@ String decode_single(std::string x){
         return NA_STRING;
       }
       buflen = u8_toutf8(buf, BUFLENT, ibuf, unilen);
-      std::string encoded = std::string(&buf[0], buflen);
+      std::string encoded = Rcpp::as<std::string>(Rf_mkCharLenCE(buf, buflen, CE_UTF8));
       output += encoded;
       if(i < (holding.split_url.size() - 1)){
         output += ".";
@@ -208,7 +208,7 @@ CharacterVector puny_decode(CharacterVector x){
   
   unsigned int input_size = x.size();
   CharacterVector output(input_size);
-  
+
   for(unsigned int i = 0; i < input_size; i++){
     
     if(i % 10000 == 0){

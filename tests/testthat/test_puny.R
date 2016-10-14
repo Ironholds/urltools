@@ -1,17 +1,17 @@
 context("Check punycode handling")
 
 testthat::test_that("Simple punycode domain encoding works", {
-  testthat::expect_identical(puny_encode("https://www.bücher.com/foo"),
+  testthat::expect_identical(puny_encode(enc2utf8("https://www.b\u00FCcher.com/foo")),
                              "https://www.xn--bcher-kva.com/foo")
 })
 
 testthat::test_that("Punycode domain encoding works with fragmentary paths", {
-  testthat::expect_identical(puny_encode("https://www.bücher.com/"),
+  testthat::expect_identical(puny_encode(enc2utf8("https://www.b\u00FCcher.com/")),
                              "https://www.xn--bcher-kva.com/")
 })
 
 testthat::test_that("Punycode domain encoding works with ports", {
-  testthat::expect_identical(puny_encode("https://www.bücher.com:80"),
+  testthat::expect_identical(puny_encode(enc2utf8("https://www.b\u00FCcher.com:80")),
                              "https://www.xn--bcher-kva.com:80")
 })
 
@@ -21,17 +21,17 @@ testthat::test_that("Punycode domain encoding returns an NA on NAs", {
 
 testthat::test_that("Simple punycode domain decoding works", {
   testthat::expect_identical(puny_decode("https://www.xn--bcher-kva.com/foo"),
-                             "https://www.bücher.com/foo")
+                             enc2utf8("https://www.b\u00FCcher.com/foo"))
 })
 
 testthat::test_that("Punycode domain decoding works with fragmentary paths", {
   testthat::expect_identical(puny_decode("https://www.xn--bcher-kva.com/"),
-                             "https://www.bücher.com/")
+                             enc2utf8("https://www.b\u00FCcher.com/"))
 })
 
 testthat::test_that("Punycode domain decoding works with ports", {
   testthat::expect_identical(puny_decode("https://www.xn--bcher-kva.com:80"),
-                             "https://www.bücher.com:80")
+                             enc2utf8("https://www.b\u00FCcher.com:80"))
 })
 
 testthat::test_that("Punycode domain decoding returns an NA on NAs", {
