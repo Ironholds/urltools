@@ -35,3 +35,25 @@ test_that("Check elements can be set", {
   fragment(url) <- "beginning"
   testthat::expect_equal(fragment(url), "beginning")
 })
+
+test_that("Check elements can be set with NAs", {
+  url <- "https://www.google.com:80/"
+  scheme(url) <- "http"
+  testthat::expect_equal(scheme(url), "http")
+  domain(url) <- "www.wikipedia.org"
+  testthat::expect_equal(domain(url), "www.wikipedia.org")
+  port(url) <- "23"
+  testthat::expect_equal(port(url), "23")
+  path(url) <- "bar.php"
+  testthat::expect_equal(path(url), "bar.php")
+  parameters(url) <- "api_params=manic"
+  testthat::expect_equal(parameters(url), "api_params=manic")
+  fragment(url) <- "beginning"
+  testthat::expect_equal(fragment(url), "beginning")
+})
+
+test_that("Assigning NA with get will NA a URL", {
+  url <- "https://www.google.com:80/"
+  port(url) <- NA_character_
+  testthat::expect_true(is.na(url))
+})

@@ -149,18 +149,43 @@ String parsing::get_component(std::string url, int component){
 //Component modification
 String parsing::set_component(std::string url, int component, String new_value){
   
-  std::string url_cp = url;
   if(new_value == NA_STRING){
-    return url_cp;
+    return NA_STRING;
   }
+  std::string output;
   CharacterVector parsed_url = url_to_vector(url);
-  if(parsed_url[component] == NA_STRING){
-    return url_cp;
+  parsed_url[component] = new_value;
+  
+  if(parsed_url[0] != NA_STRING){
+    output += parsed_url[0];
+    output += "://";
   }
   
-  std::string element = Rcpp::as<std::string>(parsed_url[component]);
-  url_cp.replace(url_cp.find(element), element.size(), new_value);
-  return url_cp;
+  if(parsed_url[1] != NA_STRING){
+    output += parsed_url[1];
+  }
+  
+  if(parsed_url[2] != NA_STRING){
+    output += ":";
+    output += parsed_url[2];
+  }
+  
+  if(parsed_url[3] != NA_STRING){
+    output += "/";
+    output += parsed_url[3];
+  }
+  
+  if(parsed_url[4] != NA_STRING){
+    output += "?";
+    output += parsed_url[4];
+  }
+  
+  if(parsed_url[5] != NA_STRING){
+    output += "#";
+    output += parsed_url[5];
+  }
+  
+  return output;
 }
 
 DataFrame parsing::parse_to_df(CharacterVector& urls_ptr){

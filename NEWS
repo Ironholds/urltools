@@ -5,6 +5,7 @@ Version 1.6.0 [WIP]
 FEATURES
 * Fully punycode encoding and decoding support, thanks to Drew Schmidt.
 * param_get, param_set and param_remove are all fully capable of handling NA values.
+* component setting functions can now assign even when the previous value was NA.
 
 Version 1.5.2
 -------------------------------------------------------------------------
