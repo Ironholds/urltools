@@ -3,11 +3,12 @@ Type: Package
 Title: Vectorised Tools for URL Handling and Parsing
 Version: 1.5.3
 Date: 2016-09-01
-Author: Oliver Keyes [aut, cre], Jay Jacobs [aut, cre], Mark Greenaway [ctb],
-    Bob Rudis [ctb], Alex Pinto [ctb], Maryam Khezrzadeh [ctb]
+Author: Oliver Keyes [aut, cre], Jay Jacobs [aut, cre], Drew Schmidt [aut],
+    Mark Greenaway [ctb], Bob Rudis [ctb], Alex Pinto [ctb], Maryam Khezrzadeh [ctb], 
+    Adam M. Costello [cph], Jeff Bezanson [cph]
 Maintainer: Oliver Keyes <ironholds@gmail.com>
-Description: A toolkit for handling URLs that so far includes functions for URL
-    encoding and decoding, parsing, and parameter extraction. All functions are
+Description: A toolkit for all URL-handling needs, including encoding and decoding,
+    parsing, parameter extraction and modification. All functions are
     designed to be both fast and entirely vectorised. It is intended to be
     useful for people dealing with web-related datasets, such as server-side
     logs, although may be useful for other situations involving large sets of

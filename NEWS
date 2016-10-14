@@ -3,6 +3,7 @@ Version 1.6.0 [WIP]
 -------------------------------------------------------------------------
 
 FEATURES
+* Fully punycode encoding and decoding support, thanks to Drew Schmidt.
 
 Version 1.5.2
 -------------------------------------------------------------------------
