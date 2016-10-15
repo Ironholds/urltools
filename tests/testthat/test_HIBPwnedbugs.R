@@ -12,3 +12,15 @@ test_that("Values are correctly disposed from memory",{
   expect_equal(memfn("blah"),paste0(baseurl,"?q=blah"))
   expect_equal(memfn(),baseurl)
 })
+
+test_that("Parameters correctly add to output",{
+  outfn<-function(d=FALSE){
+    URL<-"https://test.com"
+    if(d) URL<- urltools::param_set(URL,"q",urltools::url_encode(d))
+    return(URL)
+  }
+  
+  baseurl<-"https://test.com"
+  expect_equal(outfn(),baseurl)
+  expect_equal(outfn(TRUE),paste0(baseurl,"?q=TRUE"))
+})
