@@ -99,6 +99,8 @@ CharacterVector parameter::set_parameter_vectorised(CharacterVector urls, String
                                                     CharacterVector value){
   
   unsigned int input_size = urls.size();
+  CharacterVector output(input_size);
+  
   if(component != NA_STRING){
     std::string component_ref = component.get_cstring();
     if(value.size() == input_size){
@@ -107,8 +109,8 @@ CharacterVector parameter::set_parameter_vectorised(CharacterVector urls, String
           Rcpp::checkUserInterrupt();
         }
         if(urls[i] != NA_STRING && value[i] != NA_STRING){
-          urls[i] = set_parameter(Rcpp::as<std::string>(urls[i]), component_ref,
-                                  Rcpp::as<std::string>(value[i]));
+          output[i] = set_parameter(Rcpp::as<std::string>(urls[i]), component_ref,
+                                    Rcpp::as<std::string>(value[i]));
         }
       }
     } else if(value.size() == 1){
@@ -119,7 +121,7 @@ CharacterVector parameter::set_parameter_vectorised(CharacterVector urls, String
             Rcpp::checkUserInterrupt();
           }
           if(urls[i] != NA_STRING){
-            urls[i] = set_parameter(Rcpp::as<std::string>(urls[i]), component_ref, value_ref);
+            output[i] = set_parameter(Rcpp::as<std::string>(urls[i]), component_ref, value_ref);
           }
         }
       }
@@ -135,10 +137,13 @@ CharacterVector parameter::set_parameter_vectorised(CharacterVector urls, String
 CharacterVector parameter::remove_parameter_vectorised(CharacterVector urls,
                                                        CharacterVector params){
   
+  unsigned int input_size = urls.size();
+  CharacterVector output(input_size);
+  CharacterVector p_copy = params;
   // Generate easily find-able params.
-  for(unsigned int i = 0; i < params.size(); i++){
-    if(params[i] != NA_STRING){
-      params[i] += "=";
+  for(unsigned int i = 0; i < p_copy.size(); i++){
+    if(p_copy[i] != NA_STRING){
+      p_copy[i] += "=";
     }
   }
 
@@ -148,7 +153,7 @@ CharacterVector parameter::remove_parameter_vectorised(CharacterVector urls,
       Rcpp::checkUserInterrupt();
     }
     if(urls[i] != NA_STRING){
-      urls[i] = remove_parameter_single(Rcpp::as<std::string>(urls[i]), params);
+      urls[i] = remove_parameter_single(Rcpp::as<std::string>(urls[i]), p_copy);
       
     }
   }
