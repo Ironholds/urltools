@@ -19,7 +19,7 @@ test_that("Parameters correctly add to output",{
   outfn <- function(d = FALSE){
     url <- "https://test.com"
     if(d){
-      URL <- urltools::param_set(URL, "q", urltools::url_encode(d))
+      url <- urltools::param_set(URL, "q", urltools::url_encode(d))
     }
     return(url)
   }
