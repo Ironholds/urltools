@@ -9,7 +9,7 @@ test_that("Values are correctly disposed from memory",{
     return(url)
   }
   
-  baseurl < -"https://test.com"
+  baseurl <- "https://test.com"
   expect_equal(memfn(), baseurl)
   expect_equal(memfn("blah"), paste0(baseurl, "?q=blah"))
   expect_equal(memfn(), baseurl)
@@ -19,7 +19,7 @@ test_that("Parameters correctly add to output",{
   outfn <- function(d = FALSE){
     url <- "https://test.com"
     if(d){
-      url <- urltools::param_set(URL, "q", urltools::url_encode(d))
+      url <- urltools::param_set(url, "q", urltools::url_encode(d))
     }
     return(url)
   }
