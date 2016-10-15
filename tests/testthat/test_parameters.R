@@ -35,7 +35,7 @@ test_that("Setting parameter values quietly fails with NA components", {
 
 test_that("Removing parameter entries quietly fails with NA components", {
   url <- "https://en.wikipedia.org/api.php?action=query"
-  expect_identical(url, param_remove(url, "action"))
+  expect_identical(url, param_remove(url, "foo"))
   expect_true(is.na(param_remove(NA_character_, "action")))
 })
 

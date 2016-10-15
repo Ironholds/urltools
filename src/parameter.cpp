@@ -47,7 +47,7 @@ std::string parameter::remove_parameter_single(std::string url, CharacterVector 
   
   for(unsigned int i = 0; i < params.size(); i++){
     if(params[i] != NA_STRING){
-      size_t param_location = parsed_url[1].find(params[i]);
+      size_t param_location = parsed_url[1].find(Rcpp::as<std::string>(params[i]));
       while(param_location != std::string::npos){
         size_t end_location = parsed_url[1].find("&", param_location);
         parsed_url[1].erase(param_location, end_location);
@@ -111,6 +111,10 @@ CharacterVector parameter::set_parameter_vectorised(CharacterVector urls, String
         if(urls[i] != NA_STRING && value[i] != NA_STRING){
           output[i] = set_parameter(Rcpp::as<std::string>(urls[i]), component_ref,
                                     Rcpp::as<std::string>(value[i]));
+        } else if(value[i] == NA_STRING){
+          output[i] = urls[i];
+        } else {
+          output[i] = NA_STRING;
         }
       }
     } else if(value.size() == 1){
@@ -122,16 +126,22 @@ CharacterVector parameter::set_parameter_vectorised(CharacterVector urls, String
           }
           if(urls[i] != NA_STRING){
             output[i] = set_parameter(Rcpp::as<std::string>(urls[i]), component_ref, value_ref);
+          } else {
+            output[i] = NA_STRING;
           }
         }
+      } else {
+        return urls;
       }
       
     } else {
       throw std::range_error("'value' must be the same length as 'urls', or of length 1");
     }
+  } else {
+    return urls;
   }
 
-  return urls;
+  return output;
 }
 
 CharacterVector parameter::remove_parameter_vectorised(CharacterVector urls,
@@ -153,11 +163,13 @@ CharacterVector parameter::remove_parameter_vectorised(CharacterVector urls,
       Rcpp::checkUserInterrupt();
     }
     if(urls[i] != NA_STRING){
-      urls[i] = remove_parameter_single(Rcpp::as<std::string>(urls[i]), p_copy);
+      output[i] = remove_parameter_single(Rcpp::as<std::string>(urls[i]), p_copy);
       
+    } else {
+      output[i] = NA_STRING;
     }
   }
   
   // Return
-  return urls;
+  return output;
 }
