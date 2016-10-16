@@ -2,11 +2,11 @@ context("Avoid regressions around proxy objects")
 
 test_that("Values are correctly disposed from memory",{
   memfn <- function(d = NULL){
-    url <- "https://test.com"
+    test_url <- "https://test.com"
     if(!is.null(d)){
-      url <- urltools::param_set(url, "q" , urltools::url_encode(d))
+      test_url <- urltools::param_set(test_url, "q" , urltools::url_encode(d))
      }
-    return(url)
+    return(test_url)
   }
   
   baseurl <- "https://test.com"
@@ -17,11 +17,11 @@ test_that("Values are correctly disposed from memory",{
 
 test_that("Parameters correctly add to output",{
   outfn <- function(d = FALSE){
-    url <- "https://test.com"
+    test_url <- "https://test.com"
     if(d){
-      url <- urltools::param_set(url, "q", urltools::url_encode(d))
+      test_url <- urltools::param_set(test_url, "q", urltools::url_encode(d))
     }
-    return(url)
+    return(test_url)
   }
   
   baseurl <- "https://test.com"
