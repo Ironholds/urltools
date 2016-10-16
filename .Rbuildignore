@@ -3,3 +3,4 @@
 ^CONDUCT\.md$
 presentations/*
 .travis.yml
+revdep/*
