@@ -1,5 +1,13 @@
 #include "parsing.h"
 
+std::string parsing::string_tolower(std::string str){
+  unsigned int input_size = str.size();
+  for(unsigned int i = 0; i < input_size; i++){
+    str[i] = tolower(str[i]);
+  }
+  return str;
+}
+
 std::string parsing::scheme(std::string& url){
   std::string output;
   std::size_t protocol = url.find("://");
@@ -13,19 +21,17 @@ std::string parsing::scheme(std::string& url){
   return output;
 }
 
-std::string parsing::string_tolower(std::string str){
-  unsigned int input_size = str.size();
-  for(unsigned int i = 0; i < input_size; i++){
-    str[i] = tolower(str[i]);
-  }
-  return str;
-}
-
 std::vector < std::string > parsing::domain_and_port(std::string& url){
   
   std::vector < std::string > output(2);
   std::string holding;
   unsigned int output_offset = 0;
+  
+  // Check for the presence of user authentication info. If it exists, dump it.
+  std::size_t auth = url.find("@");
+  if(auth != std::string::npos){
+    url = url.substr(auth+1);
+  }
   
   // Identify the port. If there is one, push everything
   // before that straight into the output, and the remainder

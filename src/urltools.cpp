@@ -139,6 +139,9 @@ CharacterVector url_encode(CharacterVector urls){
 //'perfectly suitable for the intended purpose (decomposition in the context of automated
 //'HTTP requests from R), but not for large-scale analysis.
 //'
+//'Note that user authentication/identification information is not extracted;
+//'this can be found with \code{\link{get_credentials}}.
+//'
 //'@return a data.frame consisting of the columns scheme, domain, port, path, query
 //'and fragment. See the '\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for
 //'definitions. If an element cannot be identified, it is represented by an empty string.

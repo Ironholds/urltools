@@ -1,7 +1,14 @@
-
-Version 1.6.0 [WIP]
+Version 1.7.0 [WIP]
 -------------------------------------------------------------------------
 
+FEATURES
+* get_credentials() and strip_credentials() retrieve and remove user authentication info
+from URLs, as appropriate (#64)
+BUGS
+* url_parse now handles URLs with user auth/ident information in them, stripping it out (#64)
+
+Version 1.6.0
+-------------------------------------------------------------------------
 FEATURES
 * Fully punycode encoding and decoding support, thanks to Drew Schmidt.
 * param_get, param_set and param_remove are all fully capable of handling NA values.
@@ -12,6 +19,7 @@ Version 1.5.2
 
 BUGS
 * Custom suffix lists were not working properly.
+
 Version 1.5.1
 -------------------------------------------------------------------------
 

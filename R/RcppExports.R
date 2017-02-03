@@ -9,6 +9,34 @@ set_component_ <- function(urls, component, new_value) {
     .Call('urltools_set_component_', PACKAGE = 'urltools', urls, component, new_value)
 }
 
+#'@title Get or remove user authentication credentials
+#'@description authentication credentials appear before the domain
+#'name and look like \emph{user:password}. Sometimes you want the removed,
+#'or retrieved; \code{strip_credentials} and \code{get_credentials} do
+#'precisely that
+#'
+#'@aliases creds
+#'@rdname creds
+#'
+#'@param urls a URL, or vector of URLs
+#'
+#'@examples
+#'# Remove credentials
+#'strip_credentials("http://foo:bar@97.77.104.22:3128")
+#'
+#'# Get credentials
+#'get_credentials("http://foo:bar@97.77.104.22:3128")
+#'@export
+strip_credentials <- function(urls) {
+    .Call('urltools_strip_credentials', PACKAGE = 'urltools', urls)
+}
+
+#'@rdname creds
+#'@export
+get_credentials <- function(urls) {
+    .Call('urltools_get_credentials', PACKAGE = 'urltools', urls)
+}
+
 #'@title get the values of a URL's parameters
 #'@description URLs can have parameters, taking the form of \code{name=value}, chained together
 #'with \code{&} symbols. \code{param_get}, when provided with a vector of URLs and a vector
@@ -220,6 +248,9 @@ url_encode <- function(urls) {
 #'implementation is entirely in R, uses regular expressions, and is not vectorised. It's
 #'perfectly suitable for the intended purpose (decomposition in the context of automated
 #'HTTP requests from R), but not for large-scale analysis.
+#'
+#'Note that user authentication/identification information is not extracted;
+#'this can be found with \code{\link{get_credentials}}.
 #'
 #'@return a data.frame consisting of the columns scheme, domain, port, path, query
 #'and fragment. See the '\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for

@@ -30,6 +30,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// strip_credentials
+CharacterVector strip_credentials(CharacterVector urls);
+RcppExport SEXP urltools_strip_credentials(SEXP urlsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    rcpp_result_gen = Rcpp::wrap(strip_credentials(urls));
+    return rcpp_result_gen;
+END_RCPP
+}
+// get_credentials
+DataFrame get_credentials(CharacterVector urls);
+RcppExport SEXP urltools_get_credentials(SEXP urlsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_credentials(urls));
+    return rcpp_result_gen;
+END_RCPP
+}
 // param_get
 List param_get(CharacterVector urls, CharacterVector parameter_names);
 RcppExport SEXP urltools_param_get(SEXP urlsSEXP, SEXP parameter_namesSEXP) {
