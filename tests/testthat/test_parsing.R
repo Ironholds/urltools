@@ -71,3 +71,9 @@ test_that("URLs with user credentials drop said credentials when parsing", {
   out <- urltools::url_parse("http://foo:bar@97.77.104.22:3128")
   testthat::expect_identical(out$domain, "97.77.104.22")
 })
+
+test_that("IPv6 URLs can be handled", {
+  url <- url_parse("tcp://[2607:5300:61:44f::]:8333")
+  expect_true(url$domain[1] == "2607:5300:61:44f::")
+  expect_true(url$port[1] == "8333")
+})

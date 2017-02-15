@@ -33,6 +33,19 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
     url = url.substr(auth+1);
   }
   
+  // ID IPv6(?)
+  if(url.size() && url[0] == '['){
+    std::size_t ipv6_end = url.find("]");
+    if(ipv6_end != std::string::npos){
+      output[0] = url.substr(1,(ipv6_end-1));
+      if(ipv6_end == url.size()-1){
+        url = "";
+        return output;
+      }
+      url = url.substr(ipv6_end+1);
+    }
+  }
+  
   // Identify the port. If there is one, push everything
   // before that straight into the output, and the remainder
   // into the holding string. If not, the entire
@@ -40,7 +53,7 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   std::size_t port = url.find(":");
   
   if(port != std::string::npos && url.find("/") >= port){
-    output[0] = url.substr(0,port);
+    output[0] += url.substr(0,port);
     holding = url.substr(port+1);
     output_offset++;
   } else {
