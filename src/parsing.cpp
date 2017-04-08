@@ -28,7 +28,14 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   unsigned int output_offset = 0;
   
   // Check for the presence of user authentication info. If it exists, dump it.
-  std::size_t auth = url.find("@");
+  // Use a query-check here because some people put @ info in params, baaah
+  std::size_t f_param = url.find("?");
+  std::size_t auth;
+  if(f_param != std::string::npos){
+    auth = url.substr(0, f_param).find("@");
+  } else {
+    auth = url.find("@");
+  }
   if(auth != std::string::npos){
     url = url.substr(auth+1);
   }
