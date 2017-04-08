@@ -63,4 +63,3 @@ url_decode("\%gIL")
 \code{\link{puny_decode}} and \code{\link{puny_encode}}, for punycode decoding
 and encoding.
 }
-

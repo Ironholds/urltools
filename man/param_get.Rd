@@ -35,4 +35,3 @@ parameter_values <- param_get(url, c("this_parameter","hiphop"))
 \code{\link{url_parse}} for decomposing URLs into their constituent parts and
 \code{\link{param_set}} for inserting or modifying key/value pairs within a query string.
 }
-

@@ -6,7 +6,7 @@
 #' web-related datasets, such as server-side logs.
 #' 
 #' @seealso the \href{https://CRAN.R-project.org/package=urltools/vignettes/urltools.html}{package vignette}.
-#' @useDynLib urltools
+#' @useDynLib urltools, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
 #' @docType package
 #' @aliases urltools urltools-package

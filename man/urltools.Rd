@@ -4,6 +4,7 @@
 \name{urltools}
 \alias{urltools}
 \alias{urltools-package}
+\alias{urltools-package}
 \title{Tools for handling URLs}
 \description{
 This package provides functions for URL encoding and decoding,
@@ -14,4 +15,3 @@ web-related datasets, such as server-side logs.
 \seealso{
 the \href{https://CRAN.R-project.org/package=urltools/vignettes/urltools.html}{package vignette}.
 }
-

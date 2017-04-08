@@ -31,4 +31,3 @@ new_suffixes <- suffix_refresh()
 \code{\link{suffix_extract}} to extract suffixes from domain names,
 or \code{\link{suffix_dataset}} for the inbuilt, default version of the data.
 }
-

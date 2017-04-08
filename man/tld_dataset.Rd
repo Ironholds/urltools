@@ -20,4 +20,3 @@ Last updated 2016-07-20.
 and \code{\link{tld_refresh}} to get an updated version of this dataset.
 }
 \keyword{datasets}
-

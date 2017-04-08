@@ -39,4 +39,3 @@ param_set("https://en.wikipedia.org/api.php?list=props", "action", "pageinfo")
 \code{\link{param_get}} to retrieve the values associated with multiple keys in
 a vector of URLs, and \code{\link{param_remove}} to strip key/value pairs from a URL entirely.
 }
-

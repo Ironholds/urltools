@@ -31,4 +31,3 @@ domain(example_url) <- "en.wikipedia.org"
 \code{\link{scheme}}, \code{\link{port}}, \code{\link{path}},
 \code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 }
-

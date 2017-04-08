@@ -31,4 +31,3 @@ path(example_url) <- "bin/windows/"
 \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
 \code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 }
-

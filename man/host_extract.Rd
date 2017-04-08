@@ -29,4 +29,3 @@ host_extract(has_subdomain)
 no_subdomain <- domain("https://ironholds.org/projects/r_shiny/")
 host_extract(no_subdomain)
 }
-

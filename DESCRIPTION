@@ -27,6 +27,6 @@ Suggests:
 URL: https://github.com/Ironholds/urltools/
 BugReports: https://github.com/Ironholds/urltools/issues
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Encoding: UTF-8
 Depends: R (>= 2.10)

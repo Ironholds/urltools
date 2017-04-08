@@ -31,4 +31,3 @@ fragment(example_url) <- "production"
 \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
 \code{\link{path}} and \code{\link{parameters}} for other accessors.
 }
-

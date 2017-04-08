@@ -31,4 +31,3 @@ new_tlds <- tld_refresh()
 \code{\link{tld_extract}} to extract suffixes from domain names,
 or \code{\link{tld_dataset}} for the inbuilt, default version of the data.
 }
-

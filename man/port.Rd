@@ -31,4 +31,3 @@ port(example_url) <- "12"
 \code{\link{scheme}}, \code{\link{domain}}, \code{\link{path}},
 \code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 }
-

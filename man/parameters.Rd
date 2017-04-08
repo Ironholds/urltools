@@ -32,4 +32,3 @@ parameters(example_url) <- "debug=false"
 \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
 \code{\link{path}} and \code{\link{fragment}} for other accessors.
 }
-

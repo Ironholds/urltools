@@ -31,4 +31,3 @@ param_remove(urls = "https://en.wikipedia.org/wiki/api.php?action=list&type=quer
 \code{\link{param_set}} to modify values associated with keys, or \code{\link{param_get}}
 to retrieve those values.
 }
-

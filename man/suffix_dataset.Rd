@@ -25,4 +25,3 @@ and \code{\link{suffix_refresh}} for getting a new, totally-up-to-date dataset
 version.
 }
 \keyword{datasets}
-

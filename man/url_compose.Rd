@@ -27,4 +27,3 @@ url_compose(url_parse(url))
 \code{\link{scheme}} and other accessors, which you may want to
 run URLs through before composing them to modify individual values.
 }
-

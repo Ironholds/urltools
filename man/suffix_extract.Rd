@@ -50,4 +50,3 @@ suffix_extract(domain("http://en.wikipedia.org"), suffix_refresh())
 \seealso{
 \code{\link{suffix_dataset}} for the dataset of suffixes.
 }
-

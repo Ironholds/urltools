@@ -34,4 +34,3 @@ scheme(example_url) <- NA_character_
 \code{\link{domain}}, \code{\link{port}}, \code{\link{path}},
 \code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 }
-
