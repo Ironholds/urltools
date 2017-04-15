@@ -1,8 +1,8 @@
 #include "parameter.h"
 
-std::vector < std::string > parameter::get_query_string(std::string url){
+std::deque < std::string > parameter::get_query_string(std::string url){
   
-  std::vector < std::string > output;
+  std::deque < std::string > output;
   size_t query_location = url.find("?");
   if(query_location == std::string::npos){
     output.push_back(url);
@@ -15,7 +15,7 @@ std::vector < std::string > parameter::get_query_string(std::string url){
 
 std::string parameter::set_parameter(std::string url, std::string& component, std::string value){
   
-  std::vector < std::string > holding = get_query_string(url);
+  std::deque < std::string > holding = get_query_string(url);
   if(holding.size() == 1){
     return holding[0] + ("?" + component + "=" + value);
   }
@@ -40,7 +40,7 @@ std::string parameter::set_parameter(std::string url, std::string& component, st
 
 std::string parameter::remove_parameter_single(std::string url, CharacterVector params){
   
-  std::vector < std::string > parsed_url = get_query_string(url);
+  std::deque < std::string > parsed_url = get_query_string(url);
   if(parsed_url.size() == 1){
     return url;
   }

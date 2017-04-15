@@ -14,10 +14,10 @@ private:
    * 
    * @param url a URL.
    * 
-   * @return a vector either of length 1, indicating that no
+   * @return a deque either of length 1, indicating that no
    * query was found, or 2, indicating that one was.
    */
-  std::vector < std::string > get_query_string(std::string url);
+  std::deque < std::string > get_query_string(std::string url);
   
   /**
    * Set the value of a single key=value parameter.

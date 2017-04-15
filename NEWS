@@ -4,6 +4,7 @@ Version 1.7.0 [WIP]
 FEATURES
 * get_credentials() and strip_credentials() retrieve and remove user authentication info
 from URLs, as appropriate (#64)
+* A small performance improvement to parameter-related functions.
 
 BUGS
 * url_parse now handles URLs with user auth/ident information in them, stripping it out (#64)
