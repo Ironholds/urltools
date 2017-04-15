@@ -65,31 +65,51 @@ std::string parameter::remove_parameter_single(std::string url, CharacterVector 
   return (parsed_url[0] + parsed_url[1]);
 }
 
+String parameter::get_parameter_single(std::string url, std::string& component){
+  
+  // Extract actual query string
+  std::deque < std::string > parsed_entry = get_query_string(url);
+  if(parsed_entry.size() < 2){
+    return NA_STRING;
+  }
+  std::string holding = parsed_entry[1];
+  int component_size;
+  
+  // ID where the location is
+  size_t first_find = holding.find(component);
+  if(first_find == std::string::npos){
+    return NA_STRING;
+  }
+  if(holding[first_find-1] != '&' & holding[first_find-1] != '?'){
+    first_find = holding.find("&" + component);
+    component_size = (component.size() + 1);
+    if(first_find == std::string::npos){
+      return NA_STRING;
+    }
+  } else {
+    component_size = component.size();
+  }
+  
+  
+  size_t next_location = holding.find_first_of("&#", first_find + component_size);
+  if(next_location == std::string::npos){
+    return holding.substr(first_find + component_size);
+  }
+  return holding.substr(first_find + component_size, (next_location-(first_find + component_size)));
+  
+}
+
 //Parameter retrieval
 CharacterVector parameter::get_parameter(CharacterVector& urls, std::string component){
-  std::size_t component_location;
-  std::size_t next_location;
   unsigned int input_size = urls.size();
-  int component_size = component.length();
   CharacterVector output(input_size);
   component = component + "=";
-  std::string holding;
+  
   for(unsigned int i = 0; i < input_size; ++i){
     if(urls[i] == NA_STRING){
       output[i] = NA_STRING;
     } else {
-      holding = Rcpp::as<std::string>(urls[i]);
-      component_location = holding.find(component);
-      if(component_location == std::string::npos){
-        output[i] = NA_STRING;
-      } else {
-        next_location = holding.find_first_of("&#", component_location + component_size);
-        if(next_location == std::string::npos){
-          output[i] = holding.substr(component_location + component_size + 1);
-        } else {
-          output[i] = holding.substr(component_location + component_size + 1, (next_location-(component_location + component_size + 1)));
-        }
-      }
+      output[i] = get_parameter_single(Rcpp::as<std::string>(urls[i]), component);
     }
   }
   return output;

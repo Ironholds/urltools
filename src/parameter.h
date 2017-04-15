@@ -35,6 +35,7 @@ private:
    */
   std::string set_parameter(std::string url, std::string& component, std::string value);
   
+  String get_parameter_single(std::string url, std::string& component);
   /**
    * Reemove a range of key/value parameters
    * 
