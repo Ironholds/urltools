@@ -1,4 +1,4 @@
-##urltools
+## urltools
 A package for elegantly handling and parsing URLs from within R.
 
 __Author:__ Oliver Keyes, Jay Jacobs<br/>
@@ -7,7 +7,7 @@ __Status:__ Stable
 
 [![Travis-CI Build Status](https://travis-ci.org/Ironholds/urltools.svg?branch=master)](https://travis-ci.org/Ironholds/urltools) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/urltools)
 
-###Description
+### Description
 
 URLs in R are often treated as nothing more than part of data retrieval -
 they're used for making connections and reading data. With web analytics
@@ -24,7 +24,7 @@ crucial for large datasets. For more information, see the [urltools vignette](ht
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md).
 By participating in this project you agree to abide by its terms.
 
-###Installation
+### Installation
 
 The latest CRAN version can be obtained via:
 
@@ -34,6 +34,6 @@ To get the development version:
 
     devtools::install_github("ironholds/urltools")
 
-###Dependencies
+### Dependencies
 * R. Doy.
 * [Rcpp](https://cran.r-project.org/package=Rcpp)
