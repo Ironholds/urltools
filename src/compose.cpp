@@ -26,8 +26,8 @@ std::string compose::compose_single(String scheme, String domain, String port, S
       output += port;
     }
   
+  output += "/";
   if(emptycheck(path)){
-    output += "/";
     output += path;
   }
   
