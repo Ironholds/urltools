@@ -163,7 +163,7 @@ CharacterVector puny_encode(CharacterVector x){
 String decode_single(std::string x){
   url holding;
   split_url(x, holding);
-  std::string output = holding.protocol;
+  String output(holding.protocol, CE_UTF8);
   
   for(unsigned int i = 0; i < holding.split_url.size(); i++){
     // Check if it's ASCII-only fragment - if so, nowt to do here.
@@ -190,8 +190,7 @@ String decode_single(std::string x){
         return NA_STRING;
       }
       buflen = u8_toutf8(buf, BUFLENT, ibuf, unilen);
-      std::string encoded = Rcpp::as<std::string>(Rf_mkCharLenCE(buf, buflen, CE_UTF8));
-      output += encoded;
+      output += buf;
       if(i < (holding.split_url.size() - 1)){
         output += ".";
       }
