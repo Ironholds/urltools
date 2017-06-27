@@ -10,6 +10,7 @@ BUGS
 * url_parse now handles URLs with user auth/ident information in them, stripping it out (#64)
 * url_parse now handles URLs that are IPv6 addresses (#65)
 * url_parse now handles URLs with @ characters in query fragments
+* url_compose now handles URLs with query strings but no paths (#71)
 
 Version 1.6.0
 -------------------------------------------------------------------------
