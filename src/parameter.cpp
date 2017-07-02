@@ -20,7 +20,16 @@ std::string parameter::set_parameter(std::string url, std::string& component, st
     return holding[0] + ("?" + component + "=" + value);
   }
   
-  size_t component_location = holding[1].find((component + "="));
+  size_t component_location = std::string::npos, q_loc, amp_loc;
+  q_loc = holding[1].find(("?" + component + "="));
+  if(q_loc == std::string::npos){
+    amp_loc = holding[1].find(("&" + component + "="));
+    if(amp_loc != std::string::npos){
+      component_location = amp_loc + 1;
+    }
+  } else {
+    component_location = q_loc + 1;
+  }
   
   if(component_location == std::string::npos){
     holding[1] = (holding[1] + "&" + component + "=" + value);

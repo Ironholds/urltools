@@ -32,7 +32,13 @@ test_that("Setting parameter values quietly fails with NA components", {
   expect_identical(url, param_set(url, NA_character_, "pageinfo"))
 })
 
-
+test_that("Setting parameter values works with partially-duplicative keys", {
+  url <- "https://en.wikipedia.org/api.php"
+  url <- param_set(url, "foo", "bar")
+  url <- param_set(url, "oo", "baz")
+  testthat::expect_equal(url,
+                         "https://en.wikipedia.org/api.php?foo=bar&oo=baz")
+})
 test_that("Removing parameter entries quietly fails with NA components", {
   url <- "https://en.wikipedia.org/api.php?action=query"
   expect_identical(url, param_remove(url, "foo"))
