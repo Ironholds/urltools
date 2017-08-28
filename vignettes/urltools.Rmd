@@ -3,7 +3,7 @@
 %\VignetteIndexEntry{urltools}
 -->
 
-##Elegant URL handling with urltools
+## Elegant URL handling with urltools
 
 URLs are treated, by base R, as nothing more than components of a data retrieval process: they exist
 to create connections to retrieve datasets. This is an essential feature for the language to have,
