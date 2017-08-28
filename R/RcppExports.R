@@ -2,11 +2,11 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 get_component_ <- function(urls, component) {
-    .Call(urltools_get_component_, urls, component)
+    .Call(`_urltools_get_component_`, urls, component)
 }
 
 set_component_ <- function(urls, component, new_value) {
-    .Call(urltools_set_component_, urls, component, new_value)
+    .Call(`_urltools_set_component_`, urls, component, new_value)
 }
 
 #'@title Get or remove user authentication credentials
@@ -28,13 +28,13 @@ set_component_ <- function(urls, component, new_value) {
 #'get_credentials("http://foo:bar@97.77.104.22:3128")
 #'@export
 strip_credentials <- function(urls) {
-    .Call(urltools_strip_credentials, urls)
+    .Call(`_urltools_strip_credentials`, urls)
 }
 
 #'@rdname creds
 #'@export
 get_credentials <- function(urls) {
-    .Call(urltools_get_credentials, urls)
+    .Call(`_urltools_get_credentials`, urls)
 }
 
 #'@title get the values of a URL's parameters
@@ -62,7 +62,7 @@ get_credentials <- function(urls) {
 #'@rdname param_get
 #'@export
 param_get <- function(urls, parameter_names) {
-    .Call(urltools_param_get, urls, parameter_names)
+    .Call(`_urltools_param_get`, urls, parameter_names)
 }
 
 #'@title Set the value associated with a parameter in a URL's query.
@@ -96,7 +96,7 @@ param_get <- function(urls, parameter_names) {
 #'
 #'@export
 param_set <- function(urls, key, value) {
-    .Call(urltools_param_set, urls, key, value)
+    .Call(`_urltools_param_set`, urls, key, value)
 }
 
 #'@title Remove key-value pairs from query strings
@@ -122,7 +122,7 @@ param_set <- function(urls, key, value) {
 #'             keys = c("action","format"))
 #'@export
 param_remove <- function(urls, keys) {
-    .Call(urltools_param_remove, urls, keys)
+    .Call(`_urltools_param_remove`, urls, keys)
 }
 
 #'@title Encode or Decode Internationalised Domains
@@ -149,29 +149,29 @@ param_remove <- function(urls, keys) {
 #'@rdname puny
 #'@export
 puny_encode <- function(x) {
-    .Call(urltools_puny_encode, x)
+    .Call(`_urltools_puny_encode`, x)
 }
 
 #'@rdname puny
 #'@export
 puny_decode <- function(x) {
-    .Call(urltools_puny_decode, x)
+    .Call(`_urltools_puny_decode`, x)
 }
 
 reverse_strings <- function(strings) {
-    .Call(urltools_reverse_strings, strings)
+    .Call(`_urltools_reverse_strings`, strings)
 }
 
 finalise_suffixes <- function(full_domains, suffixes, wildcard, is_suffix) {
-    .Call(urltools_finalise_suffixes, full_domains, suffixes, wildcard, is_suffix)
+    .Call(`_urltools_finalise_suffixes`, full_domains, suffixes, wildcard, is_suffix)
 }
 
 tld_extract_ <- function(domains) {
-    .Call(urltools_tld_extract_, domains)
+    .Call(`_urltools_tld_extract_`, domains)
 }
 
 host_extract_ <- function(domains) {
-    .Call(urltools_host_extract_, domains)
+    .Call(`_urltools_host_extract_`, domains)
 }
 
 #'@title Encode or decode a URI
@@ -227,13 +227,13 @@ host_extract_ <- function(domains) {
 #'@rdname encoder
 #'@export
 url_decode <- function(urls) {
-    .Call(urltools_url_decode, urls)
+    .Call(`_urltools_url_decode`, urls)
 }
 
 #'@rdname encoder
 #'@export
 url_encode <- function(urls) {
-    .Call(urltools_url_encode, urls)
+    .Call(`_urltools_url_encode`, urls)
 }
 
 #'@title split URLs into their component parts
@@ -264,7 +264,7 @@ url_encode <- function(urls) {
 #'
 #'@export
 url_parse <- function(urls) {
-    .Call(urltools_url_parse, urls)
+    .Call(`_urltools_url_parse`, urls)
 }
 
 #'@title Recompose Parsed URLs
@@ -288,6 +288,6 @@ url_parse <- function(urls) {
 #'
 #'@export
 url_compose <- function(parsed_urls) {
-    .Call(urltools_url_compose, parsed_urls)
+    .Call(`_urltools_url_compose`, parsed_urls)
 }
 

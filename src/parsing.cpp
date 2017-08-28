@@ -11,7 +11,8 @@ std::string parsing::string_tolower(std::string str){
 std::string parsing::scheme(std::string& url){
   std::string output;
   std::size_t protocol = url.find("://");
-  if((protocol == std::string::npos) | (protocol > 6)){
+  std::size_t definite_end = url.find(".");
+  if((protocol == std::string::npos) || protocol > definite_end){
     //If that's not present, or isn't present at the /beginning/, unknown
     output = "";
   } else {
