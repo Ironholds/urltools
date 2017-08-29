@@ -13,6 +13,7 @@ BUGS
 * url_parse now handles URLs with @ characters in query fragments
 * url_compose now handles URLs with query strings but no paths (#71)
 * param_set() can now handle parameters with overlapping names
+* url_parse now handles URLs with >6 character schemes (#81)
 
 Version 1.6.0
 -------------------------------------------------------------------------
