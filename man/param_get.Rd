@@ -5,12 +5,13 @@
 \alias{url_parameter}
 \title{get the values of a URL's parameters}
 \usage{
-param_get(urls, parameter_names)
+param_get(urls, parameter_names = NULL)
 }
 \arguments{
 \item{urls}{a vector of URLs}
 
-\item{parameter_names}{a vector of parameter names}
+\item{parameter_names}{a vector of parameter names. If \code{NULL} (default), will extract
+all parameters that are present.}
 }
 \value{
 a data.frame containing one column for each provided parameter name. Values that

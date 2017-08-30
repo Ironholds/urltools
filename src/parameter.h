@@ -47,6 +47,8 @@ private:
    * 
    */
   std::string remove_parameter_single(std::string url, CharacterVector params);
+
+  std::deque< std::string > get_parameter_names_single(std::string url);
   
 public:
   
@@ -61,7 +63,15 @@ public:
    * @return a vector of the values for that component.
    */
   CharacterVector get_parameter(CharacterVector& urls, std::string component);
-  
+
+  /**
+   * Scan a list of URLS for parameter names used.
+   *
+   * @param A reference to a character vector of urls
+   *
+   * @return a vector of unique parameter names.
+   */
+  CharacterVector get_parameter_names(CharacterVector &urls);
   
   /**
    * Set the value of a single key=value parameter for a vector of strings.
