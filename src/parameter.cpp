@@ -74,6 +74,83 @@ std::string parameter::remove_parameter_single(std::string url, CharacterVector 
   return (parsed_url[0] + parsed_url[1]);
 }
 
+// scan for next & separator that is not &amp;
+size_t find_ampersand(std::string query, size_t pos = 0) {
+  while (true) {
+    size_t amp = query.find_first_of("&#", pos);
+    if (amp == std::string::npos) {
+      pos = amp;
+      break;
+    }
+    if (query[amp] == '#') {
+      pos = std::string::npos;
+      break;
+    }
+
+    if (query.compare(amp, 5, "&amp;") == 0) {
+      pos = amp + 1;
+      continue;
+    }
+    pos = amp;
+    break;
+  }
+
+  return pos;
+}
+
+std::deque < std::string > parameter::get_parameter_names_single(std::string url){
+  std::deque < std::string > parsed_entry = get_query_string(url);
+  std::deque < std::string > out;
+  if(parsed_entry.size() < 2){
+    return out;
+  }
+  std::string query = parsed_entry[1];
+  size_t amp = 0;
+  size_t eq;
+  while(amp != std::string::npos) {
+    eq = query.find("=", amp);
+    size_t next_amp = find_ampersand(query, amp+1);
+    if (eq == std::string::npos) {
+      amp = next_amp;
+      continue;
+    }
+    if (next_amp != std::string::npos && eq > next_amp) {
+      amp = next_amp;
+      continue;
+    }
+    out.push_back(query.substr(amp+1, eq-amp-1));
+    amp = next_amp;
+  }
+
+  return out;
+}
+
+CharacterVector parameter::get_parameter_names(CharacterVector &urls) {
+  std::set < std::string > names;
+  for (int i = 0; i < urls.length(); i++) {
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
+    if (urls[i] == R_NaString) {
+      continue;
+    }
+    std::string str = (std::string) urls[i];
+    std::deque < std::string > labels = get_parameter_names_single(str);
+    for (int j = 0; j < labels.size(); j++) {
+      names.insert(labels[j]);
+    }
+  }
+
+  CharacterVector out(names.size());
+  int ii = 0;
+  for (std::set< std::string >::iterator i = names.begin();
+       i != names.end();
+       ii++, i++) {
+    out[ii] = *i;
+  }
+  return out;
+};
+
 String parameter::get_parameter_single(std::string url, std::string& component){
   
   // Extract actual query string
@@ -99,11 +176,17 @@ String parameter::get_parameter_single(std::string url, std::string& component){
     component_size = component.size();
   }
   
+  size_t next_location = find_ampersand(holding, first_find + 1);
+
+  if(next_location == std::string::npos) {
+    // check for fragment
+    next_location = holding.find("#", first_find + component_size);
+  }
   
-  size_t next_location = holding.find_first_of("&#", first_find + component_size);
-  if(next_location == std::string::npos){
+  if (next_location == std::string::npos) {
     return holding.substr(first_find + component_size);
   }
+
   return holding.substr(first_find + component_size, (next_location-(first_find + component_size)));
   
 }

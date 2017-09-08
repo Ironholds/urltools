@@ -45,7 +45,8 @@ get_credentials <- function(urls) {
 #'
 #'@param urls a vector of URLs
 #'
-#'@param parameter_names a vector of parameter names
+#'@param parameter_names a vector of parameter names. If \code{NULL} (default), will extract
+#'all parameters that are present.
 #'
 #'@return a data.frame containing one column for each provided parameter name. Values that
 #'cannot be found within a particular URL are represented by an NA.
@@ -61,7 +62,7 @@ get_credentials <- function(urls) {
 #'@aliases param_get url_parameter
 #'@rdname param_get
 #'@export
-param_get <- function(urls, parameter_names) {
+param_get <- function(urls, parameter_names = NULL) {
     .Call(`_urltools_param_get`, urls, parameter_names)
 }
 

@@ -6,6 +6,7 @@ FEATURES
 from URLs, as appropriate (#64)
 * A small performance improvement to parameter-related functions.
 * The long-deprecated url_parameters has been removed
+* param_get() can retrieve all available parameters.
 
 BUGS
 * url_parse now handles URLs with user auth/ident information in them, stripping it out (#64)
@@ -14,6 +15,7 @@ BUGS
 * url_compose now handles URLs with query strings but no paths (#71)
 * param_set() can now handle parameters with overlapping names
 * url_parse now handles URLs with >6 character schemes (#81)
+* param_get() skips the URL fragment and handles values containing "&amp;".
 
 Version 1.6.0
 -------------------------------------------------------------------------
