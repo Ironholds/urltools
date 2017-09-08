@@ -2,7 +2,6 @@
 #include "parameter.h"
 using namespace Rcpp;
 
-
 //'@title get the values of a URL's parameters
 //'@description URLs can have parameters, taking the form of \code{name=value}, chained together
 //'with \code{&} symbols. \code{param_get}, when provided with a vector of URLs and a vector
@@ -11,7 +10,8 @@ using namespace Rcpp;
 //'
 //'@param urls a vector of URLs
 //'
-//'@param parameter_names a vector of parameter names
+//'@param parameter_names a vector of parameter names. If \code{NULL} (default), will extract
+//'all parameters that are present.
 //'
 //'@return a data.frame containing one column for each provided parameter name. Values that
 //'cannot be found within a particular URL are represented by an NA.
@@ -28,20 +28,26 @@ using namespace Rcpp;
 //'@rdname param_get
 //'@export
 //[[Rcpp::export]]
-List param_get(CharacterVector urls, CharacterVector parameter_names){
+List param_get(CharacterVector urls, Nullable<CharacterVector> parameter_names = R_NilValue){
+  CharacterVector param_names;
   parameter p_inst;
+  if (parameter_names.isNull()) {
+    param_names = p_inst.get_parameter_names(urls);
+  } else {
+    param_names = parameter_names.get();
+  }
   List output;
   IntegerVector rownames = Rcpp::seq(1,urls.size());
-  unsigned int column_count = parameter_names.size();
+  unsigned int column_count = param_names.size();
 
   for(unsigned int i = 0; i < column_count; ++i){
     if((i % 10000) == 0){
       Rcpp::checkUserInterrupt();
     }
-    output.push_back(p_inst.get_parameter(urls, Rcpp::as<std::string>(parameter_names[i])));
+    output.push_back(p_inst.get_parameter(urls, Rcpp::as<std::string>(param_names[i])));
   }
   output.attr("class") = "data.frame";
-  output.attr("names") = parameter_names;
+  output.attr("names") = param_names;
   output.attr("row.names") = rownames;
   return output;
 }
