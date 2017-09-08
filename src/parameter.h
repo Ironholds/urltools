@@ -4,7 +4,7 @@
 #define __PARAM_INCLUDED__
 
 
-class parameter: public parsing {
+class parameter {
   
 private:
   

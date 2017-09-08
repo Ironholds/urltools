@@ -64,6 +64,7 @@ CharacterVector url_decode(CharacterVector urls){
   int input_size = urls.size();
   CharacterVector output(input_size);
   encoding enc_inst;
+  
   //Decode each string in turn.
   for (int i = 0; i < input_size; ++i){
     if((i % 10000) == 0){
@@ -156,8 +157,7 @@ CharacterVector url_encode(CharacterVector urls){
 //[[Rcpp::export]]
 DataFrame url_parse(CharacterVector urls){
   CharacterVector& urls_ptr = urls;
-  parsing p_inst;
-  return p_inst.parse_to_df(urls_ptr);
+  return parsing::parse_to_df(urls_ptr);
 }
 
 //'@title Recompose Parsed URLs
