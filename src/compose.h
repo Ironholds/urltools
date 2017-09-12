@@ -5,11 +5,9 @@ using namespace Rcpp;
 #define __COMPOSE_INCLUDED__
 
 /**
- * A class for recomposing parsed URLs
+ * A namespace for recomposing parsed URLs
  */
-class compose {
-  
-private:
+namespace compose {
   
   /**
    * A function for briefly checking if a component is empty before doing anything
@@ -42,8 +40,6 @@ private:
    */
   std::string compose_single(String scheme, String domain, String port, String path,
                              String parameter, String fragment);
-  
-public:
   
   /**
    * A function for recomposing a vector of URLs

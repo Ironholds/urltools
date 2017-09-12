@@ -2,6 +2,7 @@
 #include "encoding.h"
 #include "compose.h"
 #include "parsing.h"
+#include "parameter.h"
 
 using namespace Rcpp;
 
@@ -63,8 +64,7 @@ CharacterVector url_decode(CharacterVector urls){
   //Measure size, create output object
   int input_size = urls.size();
   CharacterVector output(input_size);
-  encoding enc_inst;
-  
+
   //Decode each string in turn.
   for (int i = 0; i < input_size; ++i){
     if((i % 10000) == 0){
@@ -73,7 +73,7 @@ CharacterVector url_decode(CharacterVector urls){
     if(urls[i] == NA_STRING){
       output[i] = NA_STRING;
     } else {
-      output[i] = enc_inst.internal_url_decode(Rcpp::as<std::string>(urls[i]));
+      output[i] = encoding::internal_url_decode(Rcpp::as<std::string>(urls[i]));
     }
   }
   
@@ -92,7 +92,6 @@ CharacterVector url_encode(CharacterVector urls){
   std::string holding;
   size_t scheme_start;
   size_t first_slash;
-  encoding enc_inst;
 
   //For each string..
   for (int i = 0; i < input_size; ++i){
@@ -110,14 +109,14 @@ CharacterVector url_encode(CharacterVector urls){
       //Extract the protocol. If you can't find it, just encode the entire thing.
       scheme_start = holding.find("://");
       if(scheme_start == std::string::npos){
-        output[i] = enc_inst.internal_url_encode(holding);
+        output[i] = encoding::internal_url_encode(holding);
       } else {
         //Otherwise, split out the protocol and encode !protocol.
         first_slash = holding.find("/", scheme_start+3);
         if(first_slash == std::string::npos){
-          output[i] = holding.substr(0,scheme_start+3) + enc_inst.internal_url_encode(holding.substr(scheme_start+3));
+          output[i] = holding.substr(0,scheme_start+3) + encoding::internal_url_encode(holding.substr(scheme_start+3));
         } else {
-          output[i] = holding.substr(0,first_slash+1) + enc_inst.internal_url_encode(holding.substr(first_slash+1));
+          output[i] = holding.substr(0,first_slash+1) + encoding::internal_url_encode(holding.substr(first_slash+1));
         }
       }
     }
@@ -182,6 +181,6 @@ DataFrame url_parse(CharacterVector urls){
 //'@export
 //[[Rcpp::export]]
 CharacterVector url_compose(DataFrame parsed_urls){
-  compose c_inst;
-  return c_inst.compose_multiple(parsed_urls);
+  return compose::compose_multiple(parsed_urls);
 }
+

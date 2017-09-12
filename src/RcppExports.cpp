@@ -52,43 +52,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// param_get
-List param_get(CharacterVector urls, Nullable<CharacterVector> parameter_names);
-RcppExport SEXP _urltools_param_get(SEXP urlsSEXP, SEXP parameter_namesSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
-    Rcpp::traits::input_parameter< Nullable<CharacterVector> >::type parameter_names(parameter_namesSEXP);
-    rcpp_result_gen = Rcpp::wrap(param_get(urls, parameter_names));
-    return rcpp_result_gen;
-END_RCPP
-}
-// param_set
-CharacterVector param_set(CharacterVector urls, String key, CharacterVector value);
-RcppExport SEXP _urltools_param_set(SEXP urlsSEXP, SEXP keySEXP, SEXP valueSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
-    Rcpp::traits::input_parameter< String >::type key(keySEXP);
-    Rcpp::traits::input_parameter< CharacterVector >::type value(valueSEXP);
-    rcpp_result_gen = Rcpp::wrap(param_set(urls, key, value));
-    return rcpp_result_gen;
-END_RCPP
-}
-// param_remove
-CharacterVector param_remove(CharacterVector urls, CharacterVector keys);
-RcppExport SEXP _urltools_param_remove(SEXP urlsSEXP, SEXP keysSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
-    Rcpp::traits::input_parameter< CharacterVector >::type keys(keysSEXP);
-    rcpp_result_gen = Rcpp::wrap(param_remove(urls, keys));
-    return rcpp_result_gen;
-END_RCPP
-}
 // puny_encode
 CharacterVector puny_encode(CharacterVector x);
 RcppExport SEXP _urltools_puny_encode(SEXP xSEXP) {
@@ -202,15 +165,49 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// param_get
+List param_get(CharacterVector urls, Nullable<CharacterVector> parameter_names);
+RcppExport SEXP _urltools_param_get(SEXP urlsSEXP, SEXP parameter_namesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< Nullable<CharacterVector> >::type parameter_names(parameter_namesSEXP);
+    rcpp_result_gen = Rcpp::wrap(param_get(urls, parameter_names));
+    return rcpp_result_gen;
+END_RCPP
+}
+// param_set
+CharacterVector param_set(CharacterVector urls, String key, CharacterVector value);
+RcppExport SEXP _urltools_param_set(SEXP urlsSEXP, SEXP keySEXP, SEXP valueSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< String >::type key(keySEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type value(valueSEXP);
+    rcpp_result_gen = Rcpp::wrap(param_set(urls, key, value));
+    return rcpp_result_gen;
+END_RCPP
+}
+// param_remove
+CharacterVector param_remove(CharacterVector urls, CharacterVector keys);
+RcppExport SEXP _urltools_param_remove(SEXP urlsSEXP, SEXP keysSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type keys(keysSEXP);
+    rcpp_result_gen = Rcpp::wrap(param_remove(urls, keys));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_urltools_get_component_", (DL_FUNC) &_urltools_get_component_, 2},
     {"_urltools_set_component_", (DL_FUNC) &_urltools_set_component_, 3},
     {"_urltools_strip_credentials", (DL_FUNC) &_urltools_strip_credentials, 1},
     {"_urltools_get_credentials", (DL_FUNC) &_urltools_get_credentials, 1},
-    {"_urltools_param_get", (DL_FUNC) &_urltools_param_get, 2},
-    {"_urltools_param_set", (DL_FUNC) &_urltools_param_set, 3},
-    {"_urltools_param_remove", (DL_FUNC) &_urltools_param_remove, 2},
     {"_urltools_puny_encode", (DL_FUNC) &_urltools_puny_encode, 1},
     {"_urltools_puny_decode", (DL_FUNC) &_urltools_puny_decode, 1},
     {"_urltools_reverse_strings", (DL_FUNC) &_urltools_reverse_strings, 1},
@@ -221,6 +218,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_urltools_url_encode", (DL_FUNC) &_urltools_url_encode, 1},
     {"_urltools_url_parse", (DL_FUNC) &_urltools_url_parse, 1},
     {"_urltools_url_compose", (DL_FUNC) &_urltools_url_compose, 1},
+    {"_urltools_param_get", (DL_FUNC) &_urltools_param_get, 2},
+    {"_urltools_param_set", (DL_FUNC) &_urltools_param_set, 3},
+    {"_urltools_param_remove", (DL_FUNC) &_urltools_param_remove, 2},
     {NULL, NULL, 0}
 };
 

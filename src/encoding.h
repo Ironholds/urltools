@@ -5,13 +5,11 @@ using namespace Rcpp;
 #define __ENCODING_INCLUDED__
 
 /**
- * A class for applying percent-encoding to
+ * A namespace for applying percent-encoding to
  * arbitrary strings - optimised for URLs, obviously.
  */
-class encoding{
-  
-  private:
-  
+namespace encoding{
+
     /**
      * A function for taking a hexadecimal element and converting
      * it to the equivalent non-hex value. Used in internal_url_decode
@@ -36,8 +34,6 @@ class encoding{
      */
     std::string to_hex(char x);
 
-  public:
-  
     /**
      * A function for decoding URLs. calls from_hex, and is
      * in turn called by url_decode in urltools.cpp.
