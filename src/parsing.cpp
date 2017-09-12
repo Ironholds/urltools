@@ -263,3 +263,68 @@ DataFrame parsing::parse_to_df(CharacterVector& urls_ptr){
                            _["fragment"] = fragments,
                            _["stringsAsFactors"] = false);
 }
+
+//'@title split URLs into their component parts
+//'@description \code{url_parse} takes a vector of URLs and splits each one into its component
+//'parts, as recognised by RfC 3986.
+//'
+//'@param urls a vector of URLs
+//'
+//'@details It's useful to be able to take a URL and split it out into its component parts - 
+//'for the purpose of hostname extraction, for example, or analysing API calls. This functionality
+//'is not provided in base R, although it is provided in \code{\link[httr]{parse_url}}; that
+//'implementation is entirely in R, uses regular expressions, and is not vectorised. It's
+//'perfectly suitable for the intended purpose (decomposition in the context of automated
+//'HTTP requests from R), but not for large-scale analysis.
+//'
+//'Note that user authentication/identification information is not extracted;
+//'this can be found with \code{\link{get_credentials}}.
+//'
+//'@return a data.frame consisting of the columns scheme, domain, port, path, query
+//'and fragment. See the '\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for
+//'definitions. If an element cannot be identified, it is represented by an empty string.
+//'
+//'@examples
+//'url_parse("https://en.wikipedia.org/wiki/Article")
+//'
+//'@seealso \code{\link{param_get}} for extracting values associated with particular keys in a URL's
+//'query string, and \code{\link{url_compose}}, which is \code{url_parse} in reverse.
+//'
+//'@export
+//[[Rcpp::export]]
+DataFrame url_parse(CharacterVector urls){
+  CharacterVector& urls_ptr = urls;
+  return parsing::parse_to_df(urls_ptr);
+}
+
+//[[Rcpp::export]]
+CharacterVector get_component_(CharacterVector urls, int component){
+  unsigned int input_size = urls.size();
+  CharacterVector output(input_size);
+  for (unsigned int i = 0; i < input_size; ++i){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
+    if(urls[i] != NA_STRING){
+      output[i] = parsing::get_component(Rcpp::as<std::string>(urls[i]), component);
+    } else {
+      output[i] = NA_STRING;
+    }
+  }
+  return output;
+}
+
+//[[Rcpp::export]]
+CharacterVector set_component_(CharacterVector urls, int component,
+                               String new_value){
+  unsigned int input_size = urls.size();
+  CharacterVector output(input_size);
+  for (unsigned int i = 0; i < input_size; ++i){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
+    
+    output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, new_value);
+  }
+  return output;
+}

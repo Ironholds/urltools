@@ -34,6 +34,6 @@ url_parse("https://en.wikipedia.org/wiki/Article")
 
 }
 \seealso{
-\code{\link{url_parameters}} for extracting values associated with particular keys in a URL's
+\code{\link{param_get}} for extracting values associated with particular keys in a URL's
 query string, and \code{\link{url_compose}}, which is \code{url_parse} in reverse.
 }

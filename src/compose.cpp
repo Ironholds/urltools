@@ -66,3 +66,28 @@ CharacterVector compose::compose_multiple(DataFrame parsed_urls){
   
   return output;
 }
+
+//'@title Recompose Parsed URLs
+//'
+//'@description Sometimes you want to take a vector of URLs, parse them, perform
+//'some operations and then rebuild them. \code{url_compose} takes a data.frame produced
+//'by \code{\link{url_parse}} and rebuilds it into a vector of full URLs (or: URLs as full
+//'as the vector initially thrown into url_parse).
+//'
+//'This is currently a `beta` feature; please do report bugs if you find them.
+//'
+//'@param parsed_urls a data.frame sourced from \code{\link{url_parse}}
+//'
+//'@seealso \code{\link{scheme}} and other accessors, which you may want to
+//'run URLs through before composing them to modify individual values.
+//'
+//'@examples
+//'#Parse a URL and compose it
+//'url <- "http://en.wikipedia.org"
+//'url_compose(url_parse(url))
+//'
+//'@export
+//[[Rcpp::export]]
+CharacterVector url_compose(DataFrame parsed_urls){
+  return compose::compose_multiple(parsed_urls);
+}

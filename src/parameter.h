@@ -4,9 +4,7 @@
 #define __PARAM_INCLUDED__
 
 
-class parameter {
-  
-private:
+namespace parameter {
   
   /**
    * Split out a URL query from the actual body. Used
@@ -49,8 +47,6 @@ private:
   std::string remove_parameter_single(std::string url, CharacterVector params);
 
   std::deque< std::string > get_parameter_names_single(std::string url);
-  
-public:
   
   /**
    * Component retrieval specifically for parameters.

@@ -20,6 +20,9 @@ BUGS
 * url_parse now handles URLs with >6 character schemes (#81)
 * param_get() skips the URL fragment and handles values containing "&amp;".
 
+DEVELOPMENT
+* Internal API simplified.
+
 Version 1.6.0
 -------------------------------------------------------------------------
 FEATURES
