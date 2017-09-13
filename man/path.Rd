@@ -12,7 +12,8 @@ path(x) <- value
 \arguments{
 \item{x}{a URL, or vector of URLs}
 
-\item{value}{a replacement value for x's path}
+\item{value}{a replacement value for x's path. If NULL, the path
+will be removed entirely.}
 }
 \description{
 as in the lubridate package, individual components of a URL
@@ -20,12 +21,15 @@ can be both extracted or set using the relevant function call - see the
 examples.
 }
 \examples{
-#Get a component
+# Get the path
 example_url <- "http://cran.r-project.org:80/submit.html"
 path(example_url)
 
-#Set a component
+# Set the path
 path(example_url) <- "bin/windows/"
+
+# Remove the path
+path(example_url) <- NULL
 }
 \seealso{
 \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},

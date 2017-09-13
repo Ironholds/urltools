@@ -32,6 +32,9 @@ scheme <- function(x){
 #'@rdname scheme
 #'@export
 setGeneric("scheme<-", useAsDefault = function(x, value){
+  if(is.null(value)){
+    return(rm_component_(x, 0))
+  }
   return(set_component_(x, 0, value))
 })
 
@@ -64,6 +67,9 @@ domain <- function(x){
 #'@rdname domain
 #'@export
 setGeneric("domain<-", useAsDefault = function(x, value){
+  if(is.null(value)){
+    return(rm_component_(x, 1))
+  }
   return(set_component_(x, 1, value))
 })
 
@@ -77,18 +83,22 @@ setGeneric("domain<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's port.
+#'@param value a replacement value for x's port. If NULL, the port
+#'will be entirely removed.
 #'
 #'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{path}},
 #'\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 #'
 #'@examples
-#'#Get a component
+#'# Get the port
 #'example_url <- "http://cran.r-project.org:80/submit.html"
 #'port(example_url)
 #'
-#'#Set a component
+#'# Set the port
 #'port(example_url) <- "12"
+#'
+#'# Remove the port
+#'port(example_url) <- NULL
 #'@export
 port <- function(x){
   return(get_component_(x,2))
@@ -97,6 +107,9 @@ port <- function(x){
 #'@rdname port
 #'@export
 setGeneric("port<-", useAsDefault = function(x, value){
+  if(is.null(value)){
+    return(rm_component_(x, 2))
+  }
   return(set_component_(x, 2, value))
 })
 
@@ -109,18 +122,22 @@ setGeneric("port<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's path
+#'@param value a replacement value for x's path. If NULL, the path
+#'will be removed entirely.
 #'
 #'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
 #'\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
 #'
 #'@examples
-#'#Get a component
+#'# Get the path
 #'example_url <- "http://cran.r-project.org:80/submit.html"
 #'path(example_url)
 #'
-#'#Set a component
+#'# Set the path
 #'path(example_url) <- "bin/windows/"
+#'
+#'# Remove the path
+#'path(example_url) <- NULL
 #'@export
 path <- function(x){
   return(get_component_(x,3))
@@ -129,6 +146,9 @@ path <- function(x){
 #'@rdname path
 #'@export
 setGeneric("path<-", useAsDefault = function(x, value){
+  if(is.null(value)){
+    return(rm_component_(x, 3))
+  }
   return(set_component_(x, 3, value))
 })
 
@@ -142,19 +162,22 @@ setGeneric("path<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's parameters.
+#'@param value a replacement value for x's parameters. If NULL, the
+#'parameters will be removed entirely.
 #'
 #'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
 #'\code{\link{path}} and \code{\link{fragment}} for other accessors.
 #'
 #'@examples
-#'#Get a component
+#'# Get the parameters
 #'example_url <- "http://en.wikipedia.org/wiki/Aaron_Halfaker?debug=true"
 #'parameters(example_url)
-#'#[1] "debug=true"
 #'
-#'#Set a component
+#'# Set the parameters
 #'parameters(example_url) <- "debug=false"
+#'
+#'# Remove the parameters
+#'parameters(example_url) <- NULL
 #'@export
 parameters <- function(x){
   return(get_component_(x,4))
@@ -163,6 +186,9 @@ parameters <- function(x){
 #'@rdname parameters
 #'@export
 setGeneric("parameters<-", useAsDefault = function(x, value){
+  if(is.null(value)){
+    return(rm_component_(x, 4))
+  }
   return(set_component_(x, 4, value))
 })
 
@@ -175,7 +201,8 @@ setGeneric("parameters<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's fragment.
+#'@param value a replacement value for x's fragment. If NULL, the
+#'fragment will be removed entirely.
 #'
 #'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
 #'\code{\link{path}} and \code{\link{parameters}} for other accessors.
@@ -187,6 +214,9 @@ setGeneric("parameters<-", useAsDefault = function(x, value){
 #'
 #'#Set a component
 #'fragment(example_url) <- "production"
+#'
+#'#Remove a component
+#'fragment(example_url) <- NULL
 #'@export
 #'@rdname fragment
 #'@export
@@ -198,5 +228,8 @@ fragment <- function(x){
 #'@rdname fragment
 #'@export
 setGeneric("fragment<-", useAsDefault = function(x, value){
+  if(is.null(value)){
+    return(rm_component_(x, 5))
+  }
   return(set_component_(x, 5, value))
 })

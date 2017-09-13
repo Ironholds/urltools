@@ -12,7 +12,8 @@ parameters(x) <- value
 \arguments{
 \item{x}{a URL, or vector of URLs}
 
-\item{value}{a replacement value for x's parameters.}
+\item{value}{a replacement value for x's parameters. If NULL, the
+parameters will be removed entirely.}
 }
 \description{
 as in the lubridate package, individual components of a URL
@@ -20,13 +21,15 @@ can be both extracted or set using the relevant function call - see the
 examples.
 }
 \examples{
-#Get a component
+# Get the parameters
 example_url <- "http://en.wikipedia.org/wiki/Aaron_Halfaker?debug=true"
 parameters(example_url)
-#[1] "debug=true"
 
-#Set a component
+# Set the parameters
 parameters(example_url) <- "debug=false"
+
+# Remove the parameters
+parameters(example_url) <- NULL
 }
 \seealso{
 \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},

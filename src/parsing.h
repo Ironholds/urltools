@@ -114,12 +114,15 @@ namespace parsing {
    * 
    * @param new_value the value to insert into url[component].
    * 
-   * @param delim a delimiter, used in cases where there's no existing value.
+   * @param rm whether the intent is to remove the component
+   * (in which case new_value must be an NA_STRING)
+   * 
    * @see get_component, which allows for retrieval.
    * 
    * @return a string consisting of the modified URL.
    */
-  String set_component(std::string url, int component, String new_value);
+  String set_component(std::string url, int component, String new_value,
+                       bool rm);
   
   /**
    * Decompose a vector of URLs and turn it into a data.frame.

@@ -133,6 +133,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rm_component_
+CharacterVector rm_component_(CharacterVector urls, int component);
+RcppExport SEXP _urltools_rm_component_(SEXP urlsSEXP, SEXP componentSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< int >::type component(componentSEXP);
+    rcpp_result_gen = Rcpp::wrap(rm_component_(urls, component));
+    return rcpp_result_gen;
+END_RCPP
+}
 // puny_encode
 CharacterVector puny_encode(CharacterVector x);
 RcppExport SEXP _urltools_puny_encode(SEXP xSEXP) {
@@ -215,6 +227,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_urltools_url_parse", (DL_FUNC) &_urltools_url_parse, 1},
     {"_urltools_get_component_", (DL_FUNC) &_urltools_get_component_, 2},
     {"_urltools_set_component_", (DL_FUNC) &_urltools_set_component_, 3},
+    {"_urltools_rm_component_", (DL_FUNC) &_urltools_rm_component_, 2},
     {"_urltools_puny_encode", (DL_FUNC) &_urltools_puny_encode, 1},
     {"_urltools_puny_decode", (DL_FUNC) &_urltools_puny_decode, 1},
     {"_urltools_reverse_strings", (DL_FUNC) &_urltools_reverse_strings, 1},

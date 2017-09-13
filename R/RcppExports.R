@@ -243,6 +243,10 @@ set_component_ <- function(urls, component, new_value) {
     .Call(`_urltools_set_component_`, urls, component, new_value)
 }
 
+rm_component_ <- function(urls, component) {
+    .Call(`_urltools_rm_component_`, urls, component)
+}
+
 #'@title Encode or Decode Internationalised Domains
 #'@description \code{puny_encode} and \code{puny_decode} implement
 #'the encoding standard for internationalised (non-ASCII) domains and

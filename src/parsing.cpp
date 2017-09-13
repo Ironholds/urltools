@@ -174,9 +174,10 @@ String parsing::get_component(std::string url, int component){
 }
 
 //Component modification
-String parsing::set_component(std::string url, int component, String new_value){
+String parsing::set_component(std::string url, int component, String new_value,
+                              bool rm){
   
-  if(new_value == NA_STRING){
+  if(new_value == NA_STRING && !rm){
     return NA_STRING;
   }
   std::string output;
@@ -324,7 +325,25 @@ CharacterVector set_component_(CharacterVector urls, int component,
       Rcpp::checkUserInterrupt();
     }
     
-    output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, new_value);
+    output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, new_value, false);
+  }
+  return output;
+}
+
+//[[Rcpp::export]]
+CharacterVector rm_component_(CharacterVector urls, int component){
+  
+  if(component < 2){
+    Rcpp::stop("Scheme and domain are required components");
+  }
+  unsigned int input_size = urls.size();
+  CharacterVector output(input_size);
+  for (unsigned int i = 0; i < input_size; ++i){
+    if((i % 10000) == 0){
+      Rcpp::checkUserInterrupt();
+    }
+    
+    output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, NA_STRING, true);
   }
   return output;
 }

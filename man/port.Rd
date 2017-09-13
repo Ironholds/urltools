@@ -12,7 +12,8 @@ port(x) <- value
 \arguments{
 \item{x}{a URL, or vector of URLs}
 
-\item{value}{a replacement value for x's port.}
+\item{value}{a replacement value for x's port. If NULL, the port
+will be entirely removed.}
 }
 \description{
 as in the lubridate package, individual components of a URL
@@ -20,12 +21,15 @@ can be both extracted or set using the relevant function call - see the
 examples.
 }
 \examples{
-#Get a component
+# Get the port
 example_url <- "http://cran.r-project.org:80/submit.html"
 port(example_url)
 
-#Set a component
+# Set the port
 port(example_url) <- "12"
+
+# Remove the port
+port(example_url) <- NULL
 }
 \seealso{
 \code{\link{scheme}}, \code{\link{domain}}, \code{\link{path}},

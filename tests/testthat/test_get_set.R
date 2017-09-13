@@ -57,3 +57,29 @@ test_that("Assigning NA with get will NA a URL", {
   port(url) <- NA_character_
   testthat::expect_true(is.na(url))
 })
+
+test_that("Removing components with a NULL works", {
+  url <- "https://www.google.com:80/foo.php?api_params=turnip#ending"
+  fragment(url) <- NULL
+  testthat::expect_equal(url,
+                         "https://www.google.com:80/foo.php?api_params=turnip")
+  parameters(url) <- NULL
+  testthat::expect_equal(url,
+                         "https://www.google.com:80/foo.php")
+  path(url) <- NULL
+  testthat::expect_equal(url,
+                         "https://www.google.com:80")
+  port(url) <- NULL
+  testthat::expect_equal(url, "https://www.google.com")
+})
+
+test_that("Removing non-removable components throws an error", {
+  
+  url <- "https://en.wikipedia.org/foo.php"
+  testthat::expect_error({
+    scheme(url) <- NULL
+  })
+  testthat::expect_error({
+    domain(url) <- NULL
+  })
+})
