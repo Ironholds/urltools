@@ -12,8 +12,8 @@ parameters(x) <- value
 \arguments{
 \item{x}{a URL, or vector of URLs}
 
-\item{value}{a replacement value for x's parameters. If NULL, the
-parameters will be removed entirely.}
+\item{value}{a replacement value (or vector of replacement values)
+for x's parameters. If NULL, the parameters will be removed entirely.}
 }
 \description{
 as in the lubridate package, individual components of a URL

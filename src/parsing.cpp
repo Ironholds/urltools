@@ -317,16 +317,173 @@ CharacterVector get_component_(CharacterVector urls, int component){
 
 //[[Rcpp::export]]
 CharacterVector set_component_(CharacterVector urls, int component,
-                               String new_value){
+                               CharacterVector new_value){
   unsigned int input_size = urls.size();
   CharacterVector output(input_size);
-  for (unsigned int i = 0; i < input_size; ++i){
-    if((i % 10000) == 0){
-      Rcpp::checkUserInterrupt();
+  
+  if(new_value.size() == 1){
+    for (unsigned int i = 0; i < input_size; ++i){
+      if((i % 10000) == 0){
+        Rcpp::checkUserInterrupt();
+      }
+      
+      output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, new_value[0], false);
     }
-    
-    output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, new_value, false);
+  } else if(new_value.size() == input_size){
+    for (unsigned int i = 0; i < input_size; ++i){
+      if((i % 10000) == 0){
+        Rcpp::checkUserInterrupt();
+      }
+      
+      output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, new_value[i], false);
+    }
+  } else {
+    Rcpp::stop("The number of new values must either be 1, or match the number of URLs");
   }
+
+  return output;
+}
+
+//[[Rcpp::export]]
+CharacterVector set_component_r(CharacterVector urls, int component,
+                                CharacterVector new_value,
+                                std::string comparator){
+  
+  // Output object
+  unsigned int input_size = urls.size();
+  CharacterVector output(input_size);
+  
+  // Comparator checking objects
+  std::string holding;
+  String to_use;
+  unsigned int holding_size;
+  unsigned int comparator_length = comparator.size();
+  
+  // Otherwise, if we've got a single value, iterate
+  if(new_value.size() == 1){
+    if(new_value[0] == NA_STRING){
+      to_use = new_value[0];
+    } else {
+      holding = new_value[0];
+      holding_size = holding.size();
+      if(holding_size < comparator_length){
+        to_use = holding;
+      } else {
+        if(holding.substr((holding_size - comparator_length), comparator_length) == comparator){
+          to_use = holding.substr(0, (holding_size - comparator_length));
+        } else {
+          to_use = holding;
+        }
+      }
+    }
+    for(unsigned int i = 0; i < input_size; i++){
+      if((i % 10000) == 0){
+        Rcpp::checkUserInterrupt();
+      }
+        
+      output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, to_use, false);
+    }
+    // If we've got multiple values, it's just a rejigging of the same
+  } else if(new_value.size() == input_size){
+    
+    for(unsigned int i = 0; i < input_size; i++){
+      if((i % 10000) == 0){
+        Rcpp::checkUserInterrupt();
+      }
+      
+      if(new_value[i] == NA_STRING){
+        to_use = new_value[i];
+      } else {
+        holding = new_value[i];
+        holding_size = holding.size();
+        if(holding_size < comparator_length){
+          to_use = holding;
+        } else {
+          if(holding.substr((holding_size - comparator_length), comparator_length) == comparator){
+            to_use = holding.substr(0, (holding_size - comparator_length));
+          } else {
+            to_use = holding;
+          }
+        }
+      }
+      output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, to_use, false);
+    }
+  } else {
+    Rcpp::stop("The number of new values must either be 1, or match the number of URLs");
+  }
+  
+  return output;
+  
+}
+
+//[[Rcpp::export]]
+CharacterVector set_component_f(CharacterVector urls, int component,
+                                CharacterVector new_value,
+                                std::string comparator){
+  
+  // Output object
+  unsigned int input_size = urls.size();
+  CharacterVector output(input_size);
+  
+  // Comparator checking objects
+  std::string holding;
+  String to_use;
+  unsigned int holding_size;
+  unsigned int comparator_length = comparator.size();
+  
+  // Otherwise, if we've got a single value, iterate
+  if(new_value.size() == 1){
+    if(new_value[0] == NA_STRING){
+      to_use = new_value[0];
+    } else {
+      holding = new_value[0];
+      holding_size = holding.size();
+      if(holding_size < comparator_length){
+        to_use = holding;
+      } else {
+        if(holding.substr(0, comparator_length) == comparator){
+          to_use = holding.substr(comparator_length, (holding_size - comparator_length));
+        } else {
+          to_use = holding;
+        }
+      }
+    }
+    for(unsigned int i = 0; i < input_size; i++){
+      if((i % 10000) == 0){
+        Rcpp::checkUserInterrupt();
+      }
+      
+      output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, to_use, false);
+    }
+    // If we've got multiple values, it's just a rejigging of the same
+  } else if(new_value.size() == input_size){
+    
+    for(unsigned int i = 0; i < input_size; i++){
+      if((i % 10000) == 0){
+        Rcpp::checkUserInterrupt();
+      }
+      
+      if(new_value[i] == NA_STRING){
+        to_use = new_value[i];
+      } else {
+        holding = new_value[i];
+        holding_size = holding.size();
+        if(holding_size < comparator_length){
+          to_use = holding;
+        } else {
+          if(holding.substr(0, comparator_length) == comparator){
+            to_use = holding.substr(comparator_length, (holding_size - comparator_length));
+          } else {
+            to_use = holding;
+          }
+        }
+      }
+      output[i] = parsing::set_component(Rcpp::as<std::string>(urls[i]), component, to_use, false);
+    }
+  } else {
+    Rcpp::stop("The number of new values must either be 1, or match the number of URLs");
+  }
+  
   return output;
 }
 

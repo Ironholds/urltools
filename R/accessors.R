@@ -7,7 +7,8 @@
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's scheme.
+#'@param value a replacement value (or vector of replacement values)
+#'for x's scheme.
 #'
 #'@seealso \code{\link{domain}}, \code{\link{port}}, \code{\link{path}},
 #'\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
@@ -32,10 +33,10 @@ scheme <- function(x){
 #'@rdname scheme
 #'@export
 setGeneric("scheme<-", useAsDefault = function(x, value){
-  if(is.null(value)){
+  if(length(value) == 0 && is.null(value)){
     return(rm_component_(x, 0))
   }
-  return(set_component_(x, 0, value))
+  return(set_component_r(x, 0, value, "://"))
 })
 
 #'@title Get or set a URL's domain
@@ -47,7 +48,8 @@ setGeneric("scheme<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's scheme.
+#'@param value a replacement value (or vector of replacement values)
+#'for x's scheme.
 #'
 #'@seealso \code{\link{scheme}}, \code{\link{port}}, \code{\link{path}},
 #'\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
@@ -67,7 +69,7 @@ domain <- function(x){
 #'@rdname domain
 #'@export
 setGeneric("domain<-", useAsDefault = function(x, value){
-  if(is.null(value)){
+  if(length(value) == 0 && is.null(value)){
     return(rm_component_(x, 1))
   }
   return(set_component_(x, 1, value))
@@ -83,8 +85,8 @@ setGeneric("domain<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's port. If NULL, the port
-#'will be entirely removed.
+#'@param value a replacement value (or vector of replacement values)
+#'for x's port. If NULL, the port will be entirely removed.
 #'
 #'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{path}},
 #'\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
@@ -107,10 +109,10 @@ port <- function(x){
 #'@rdname port
 #'@export
 setGeneric("port<-", useAsDefault = function(x, value){
-  if(is.null(value)){
+  if(length(value) == 0 && is.null(value)){
     return(rm_component_(x, 2))
   }
-  return(set_component_(x, 2, value))
+  return(set_component_f(x, 2, value, ":"))
 })
 
 #'@title Get or set a URL's path
@@ -122,8 +124,8 @@ setGeneric("port<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's path. If NULL, the path
-#'will be removed entirely.
+#'@param value a replacement value (or vector of replacement values)
+#'for x's path. If NULL, the path will be removed entirely.
 #'
 #'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
 #'\code{\link{parameters}} and \code{\link{fragment}} for other accessors.
@@ -146,10 +148,10 @@ path <- function(x){
 #'@rdname path
 #'@export
 setGeneric("path<-", useAsDefault = function(x, value){
-  if(is.null(value)){
+  if(length(value) == 0 && is.null(value)){
     return(rm_component_(x, 3))
   }
-  return(set_component_(x, 3, value))
+  return(set_component_f(x, 3, value, "/"))
 })
 
 #'@title Get or set a URL's parameters
@@ -162,8 +164,8 @@ setGeneric("path<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's parameters. If NULL, the
-#'parameters will be removed entirely.
+#'@param value a replacement value (or vector of replacement values)
+#'for x's parameters. If NULL, the parameters will be removed entirely.
 #'
 #'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
 #'\code{\link{path}} and \code{\link{fragment}} for other accessors.
@@ -186,10 +188,10 @@ parameters <- function(x){
 #'@rdname parameters
 #'@export
 setGeneric("parameters<-", useAsDefault = function(x, value){
-  if(is.null(value)){
+  if(length(value) == 0 && is.null(value)){
     return(rm_component_(x, 4))
   }
-  return(set_component_(x, 4, value))
+  return(set_component_f(x, 4, value, "?"))
 })
 
 #'@title Get or set a URL's fragment
@@ -201,8 +203,8 @@ setGeneric("parameters<-", useAsDefault = function(x, value){
 #'
 #'@param x a URL, or vector of URLs
 #'
-#'@param value a replacement value for x's fragment. If NULL, the
-#'fragment will be removed entirely.
+#'@param value a replacement value (or vector of replacement values)
+#'for x's fragment. If NULL, the fragment will be removed entirely.
 #'
 #'@seealso \code{\link{scheme}}, \code{\link{domain}}, \code{\link{port}},
 #'\code{\link{path}} and \code{\link{parameters}} for other accessors.
@@ -228,8 +230,8 @@ fragment <- function(x){
 #'@rdname fragment
 #'@export
 setGeneric("fragment<-", useAsDefault = function(x, value){
-  if(is.null(value)){
+  if(length(value) == 0 && is.null(value)){
     return(rm_component_(x, 5))
   }
-  return(set_component_(x, 5, value))
+  return(set_component_f(x, 5, value, "#"))
 })

@@ -121,15 +121,43 @@ BEGIN_RCPP
 END_RCPP
 }
 // set_component_
-CharacterVector set_component_(CharacterVector urls, int component, String new_value);
+CharacterVector set_component_(CharacterVector urls, int component, CharacterVector new_value);
 RcppExport SEXP _urltools_set_component_(SEXP urlsSEXP, SEXP componentSEXP, SEXP new_valueSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
     Rcpp::traits::input_parameter< int >::type component(componentSEXP);
-    Rcpp::traits::input_parameter< String >::type new_value(new_valueSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type new_value(new_valueSEXP);
     rcpp_result_gen = Rcpp::wrap(set_component_(urls, component, new_value));
+    return rcpp_result_gen;
+END_RCPP
+}
+// set_component_r
+CharacterVector set_component_r(CharacterVector urls, int component, CharacterVector new_value, std::string comparator);
+RcppExport SEXP _urltools_set_component_r(SEXP urlsSEXP, SEXP componentSEXP, SEXP new_valueSEXP, SEXP comparatorSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< int >::type component(componentSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type new_value(new_valueSEXP);
+    Rcpp::traits::input_parameter< std::string >::type comparator(comparatorSEXP);
+    rcpp_result_gen = Rcpp::wrap(set_component_r(urls, component, new_value, comparator));
+    return rcpp_result_gen;
+END_RCPP
+}
+// set_component_f
+CharacterVector set_component_f(CharacterVector urls, int component, CharacterVector new_value, std::string comparator);
+RcppExport SEXP _urltools_set_component_f(SEXP urlsSEXP, SEXP componentSEXP, SEXP new_valueSEXP, SEXP comparatorSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type urls(urlsSEXP);
+    Rcpp::traits::input_parameter< int >::type component(componentSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type new_value(new_valueSEXP);
+    Rcpp::traits::input_parameter< std::string >::type comparator(comparatorSEXP);
+    rcpp_result_gen = Rcpp::wrap(set_component_f(urls, component, new_value, comparator));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -227,6 +255,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_urltools_url_parse", (DL_FUNC) &_urltools_url_parse, 1},
     {"_urltools_get_component_", (DL_FUNC) &_urltools_get_component_, 2},
     {"_urltools_set_component_", (DL_FUNC) &_urltools_set_component_, 3},
+    {"_urltools_set_component_r", (DL_FUNC) &_urltools_set_component_r, 4},
+    {"_urltools_set_component_f", (DL_FUNC) &_urltools_set_component_f, 4},
     {"_urltools_rm_component_", (DL_FUNC) &_urltools_rm_component_, 2},
     {"_urltools_puny_encode", (DL_FUNC) &_urltools_puny_encode, 1},
     {"_urltools_puny_decode", (DL_FUNC) &_urltools_puny_decode, 1},

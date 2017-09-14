@@ -243,6 +243,14 @@ set_component_ <- function(urls, component, new_value) {
     .Call(`_urltools_set_component_`, urls, component, new_value)
 }
 
+set_component_r <- function(urls, component, new_value, comparator) {
+    .Call(`_urltools_set_component_r`, urls, component, new_value, comparator)
+}
+
+set_component_f <- function(urls, component, new_value, comparator) {
+    .Call(`_urltools_set_component_f`, urls, component, new_value, comparator)
+}
+
 rm_component_ <- function(urls, component) {
     .Call(`_urltools_rm_component_`, urls, component)
 }

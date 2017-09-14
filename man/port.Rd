@@ -12,8 +12,8 @@ port(x) <- value
 \arguments{
 \item{x}{a URL, or vector of URLs}
 
-\item{value}{a replacement value for x's port. If NULL, the port
-will be entirely removed.}
+\item{value}{a replacement value (or vector of replacement values)
+for x's port. If NULL, the port will be entirely removed.}
 }
 \description{
 as in the lubridate package, individual components of a URL
