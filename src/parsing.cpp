@@ -79,7 +79,8 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
     return output;
   }
   
-  // If not, there might be a query parameter associated
+  // If not, there might be a query parameter or fragment
+  // associated
   // with the base URL, which we need to preserve.
   std::size_t param = holding.find("?");
   
@@ -88,6 +89,13 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
     output[output_offset] = holding.substr(0, param);
     url = holding.substr(param);
     return output;
+  } else {
+    std::size_t frag = holding.find("#");
+    if(frag != std::string::npos){
+      output[output_offset] = holding.substr(0, frag);
+      url = holding.substr(frag);
+      return output;
+    }
   }
   
   // Otherwise we're done here

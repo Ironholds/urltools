@@ -7,18 +7,22 @@ from URLs, as appropriate (#64)
 * A small performance improvement to parameter-related functions.
 * The long-deprecated url_parameters has been removed
 * param_get() can retrieve all available parameters.
-* get_param(urls, parameter_names = NULL), scan for all available parameters (#82)
+* get_param(urls, parameter_names = NULL), scans for all available parameters (#82)
 * Cases like get_param("http://foo.bar/?field=value&amp;more", "field") retrieve the whole field (#82)
 * Cases like get_param("http://foo.bar/?field=value#fragment", "field") don't retrieve the fragment (#82)
+* parameters and other URL components can now be removed by assigning NULL to the component. See the vignettes for an example (#79)
+* Setting components with eg path() is now fully vectorised (#76)
 
 BUGS
 * url_parse now handles URLs with user auth/ident information in them, stripping it out (#64)
 * url_parse now handles URLs that are IPv6 addresses (#65)
 * url_parse now handles URLs with @ characters in query fragments
+* url_parse now handles URLs with fragments, but no parameter or path (#83)
 * url_compose now handles URLs with query strings but no paths (#71)
 * param_set() can now handle parameters with overlapping names
 * url_parse now handles URLs with >6 character schemes (#81)
 * param_get() skips the URL fragment and handles values containing "&amp;".
+* It is no longer possible to duplicate separators with function calls like path(url) <- '/path'. (#78)
 
 DEVELOPMENT
 * Internal API simplified.
