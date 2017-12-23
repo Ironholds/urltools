@@ -78,7 +78,7 @@ test_that("IPv6 URLs can be handled", {
   expect_true(url$port[1] == "8333")
 })
 
-test_that("URLs with missing paths and parameters, but with fragments, work"{
+test_that("URLs with missing paths and parameters, but with fragments, work", {
   url <- urltools::url_parse("http://some.website.com#frag")
   expect_true(url$fragment[1] == "frag")
 })
