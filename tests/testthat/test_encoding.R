@@ -16,11 +16,12 @@ test_that("Check decoding can handle NAs", {
   expect_that(url_decode(c("https://foo.org/bar%2f", NA)), equals(c("https://foo.org/bar/", NA)))
 })
 
+# Add comment for windows trickery
 test_that("Check decoding and encoding are equivalent", {
-  
-  url <- "Hinrichtung_auf_dem_Altst%c3%a4dter_Ring.JPG%2f120px-Hinrichtung_auf_dem_Altst%c3%a4dter_Ring.JPG"
-  decoded_url <- "Hinrichtung_auf_dem_Altstädter_Ring.JPG/120px-Hinrichtung_auf_dem_Altstädter_Ring.JPG"
-  expect_that(url_decode(url), equals(decoded_url))
-  expect_that(url_encode(decoded_url), equals(url))
-  
+  if(.Platform$OS.type == "unix"){
+    url <- "Hinrichtung_auf_dem_Altst%c3%a4dter_Ring.JPG%2f120px-Hinrichtung_auf_dem_Altst%c3%a4dter_Ring.JPG"
+    decoded_url <- "Hinrichtung_auf_dem_Altstädter_Ring.JPG/120px-Hinrichtung_auf_dem_Altstädter_Ring.JPG"
+    expect_that((url_decode(url)), equals((decoded_url)))
+    expect_that((url_encode(decoded_url)), equals((url)))
+  }
 })
