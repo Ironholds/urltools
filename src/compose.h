@@ -49,6 +49,6 @@ namespace compose {
    * @return a CharacterVector containing the recomposed URLs
    */
   CharacterVector compose_multiple(DataFrame parsed_urls);
-};
+}
 
 #endif

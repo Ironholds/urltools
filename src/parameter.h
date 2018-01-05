@@ -95,6 +95,6 @@ namespace parameter {
    */
   CharacterVector remove_parameter_vectorised(CharacterVector urls,
                                               CharacterVector params);
-};
+}
 
 #endif

@@ -58,6 +58,6 @@ namespace encoding{
      */
     std::string internal_url_encode(std::string url);
 
-};
+}
 
 #endif

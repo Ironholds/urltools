@@ -133,6 +133,6 @@ namespace parsing {
    * 
    */
   DataFrame parse_to_df(CharacterVector& urls_ptr);
+}
 
-};
 #endif
