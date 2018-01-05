@@ -166,7 +166,7 @@ String parameter::get_parameter_single(std::string url, std::string& component){
   if(first_find == std::string::npos){
     return NA_STRING;
   }
-  if(holding[first_find-1] != '&' & holding[first_find-1] != '?'){
+  if(holding[first_find-1] != '&' && holding[first_find-1] != '?'){
     first_find = holding.find("&" + component);
     component_size = (component.size() + 1);
     if(first_find == std::string::npos){
