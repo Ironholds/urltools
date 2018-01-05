@@ -136,7 +136,7 @@ CharacterVector parameter::get_parameter_names(CharacterVector &urls) {
     }
     std::string str = (std::string) urls[i];
     std::deque < std::string > labels = get_parameter_names_single(str);
-    for (int j = 0; j < labels.size(); j++) {
+    for (unsigned int j = 0; j < labels.size(); j++) {
       names.insert(labels[j]);
     }
   }
@@ -149,7 +149,7 @@ CharacterVector parameter::get_parameter_names(CharacterVector &urls) {
     out[ii] = *i;
   }
   return out;
-};
+}
 
 String parameter::get_parameter_single(std::string url, std::string& component){
   

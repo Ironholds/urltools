@@ -66,7 +66,7 @@ std::string check_result(enum punycode_status& st, std::string& x){
     return "";
   }
   return ret;
-};
+}
 
 String encode_single(std::string x){
   
@@ -175,7 +175,6 @@ String decode_single(std::string x){
     } else {
       
       // Prep for conversion
-      punycode_uint buflen;
       punycode_uint unilen = BUFLENT;
       const char *s = holding.split_url[i].substr(4).c_str();
       const int slen = strlen(s);
@@ -189,7 +188,7 @@ String decode_single(std::string x){
         Rcpp::warning(ret);
         return NA_STRING;
       }
-      buflen = u8_toutf8(buf, BUFLENT, ibuf, unilen);
+      u8_toutf8(buf, BUFLENT, ibuf, unilen);
       output += buf;
       if(i < (holding.split_url.size() - 1)){
         output += ".";
