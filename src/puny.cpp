@@ -176,7 +176,8 @@ String decode_single(std::string x){
       
       // Prep for conversion
       punycode_uint unilen = BUFLENT;
-      const char *s = holding.split_url[i].substr(4).c_str();
+      std::string tmp = holding.split_url[i].substr(4);
+      const char *s = tmp.c_str();
       const int slen = strlen(s);
       
       // Do the conversion
