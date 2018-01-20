@@ -1,4 +1,4 @@
-Version 1.7.0 [WIP]
+Version 1.7.0
 -------------------------------------------------------------------------
 
 FEATURES
@@ -23,6 +23,7 @@ BUGS
 * url_parse now handles URLs with >6 character schemes (#81)
 * param_get() skips the URL fragment and handles values containing "&amp;".
 * It is no longer possible to duplicate separators with function calls like path(url) <- '/path'. (#78)
+* A small bugfix in url decoding to avoid a situation where URLs that (wrongly) had percentage signs in them decoded the characters behind those signs (#87)
 
 DEVELOPMENT
 * Internal API simplified.
