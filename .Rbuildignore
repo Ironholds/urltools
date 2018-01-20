@@ -1,6 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^CONDUCT\.md$
+^.*CONDUCT\.md$
 presentations/*
 .travis.yml
 revdep/*
