@@ -10,7 +10,7 @@ char encoding::from_hex (char x){
   } else if(x <= 'F' && x >= 'A'){
     x -= ('A' - 10);
   } else {
-    x = 0;
+    x = -1;
   }
   return x;
 }
@@ -55,9 +55,13 @@ std::string encoding::internal_url_decode(std::string url){
       //Escaped? Convert from hex and includes
       char holding_1 = encoding::from_hex(url[i+1]);
       char holding_2 = encoding::from_hex(url[i+2]);
-      char holding = (holding_1 << 4) | holding_2;
-      result += holding;
-      i += 2;
+      if (holding_1 >= 0 && holding_2 >= 0) {
+        char holding = (holding_1 << 4) | holding_2;
+        result += holding;
+        i += 2;
+      } else {
+        result += url[i];
+      }
       
     } else { //Permitted? Include.
       result += url[i];
