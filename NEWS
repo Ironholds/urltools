@@ -1,6 +1,12 @@
 Version 1.7.0
 -------------------------------------------------------------------------
 
+DEVELOPMENT
+* Fix a CRAN Makevars issue
+
+Version 1.7.0
+-------------------------------------------------------------------------
+
 FEATURES
 * get_credentials() and strip_credentials() retrieve and remove user authentication info
 from URLs, as appropriate (#64)
