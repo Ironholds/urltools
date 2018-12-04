@@ -23,6 +23,7 @@ std::string parsing::scheme(std::string& url){
   return output;
 }
 
+static std::regex rx("^(\\w+:\\w+@).*");
 std::vector < std::string > parsing::domain_and_port(std::string& url){
   
   std::vector < std::string > output(2);
@@ -32,7 +33,6 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   // Check for auth credentials
   std::size_t f_param = url.find("?");
   std::size_t auth;
-  std::regex rx ("^(\\w+:\\w+@).*");
   std::smatch matches;
   
   if(std::regex_search( url, matches, rx ) == 1){
