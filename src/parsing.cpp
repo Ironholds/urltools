@@ -22,7 +22,7 @@ std::string parsing::scheme(std::string& url){
   return output;
 }
 
-static std::tr1::regex rx("^(\\w+:\\w+@).*");
+static std::regex rx("^(\\w+:\\w+@).*");
 std::vector < std::string > parsing::domain_and_port(std::string& url){
   
   std::vector < std::string > output(2);
