@@ -1,5 +1,4 @@
 #include "parsing.h"
-#include <regex>
 
 std::string parsing::string_tolower(std::string str){
   unsigned int input_size = str.size();
