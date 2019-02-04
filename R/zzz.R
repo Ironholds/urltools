@@ -4,8 +4,8 @@ suffix_load <- function(suffixes = NULL){
   if(is.null(suffixes)){
     suffixes <- urltools::suffix_dataset
   }
-  cleaned_suffixes <- gsub(x = suffixes, pattern = "*.", replacement = "", fixed = TRUE)
-  is_wildcard <- cleaned_suffixes[which(grepl(x = suffixes, pattern = "*.", fixed = TRUE))]
+  cleaned_suffixes <- gsub(x = suffixes$suffixes, pattern = "*.", replacement = "", fixed = TRUE)
+  is_wildcard <- cleaned_suffixes[which(grepl(x = suffixes$suffixes, pattern = "*.", fixed = TRUE))]
   suff_trie <- triebeard::trie(keys = reverse_strings(paste0(".", cleaned_suffixes)),
                                values = cleaned_suffixes)
   return(list(suff_trie = suff_trie,

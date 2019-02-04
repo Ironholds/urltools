@@ -52,7 +52,7 @@ suffix_refresh <- function(){
   
   #Read in and filter
   connection <- url("https://www.publicsuffix.org/list/effective_tld_names.dat", method = "libcurl")
-  results <- readLines(connection)
+  results <- readLines(connection, encoding = "UTF-8")
   close(connection)
   
   # making an assumption that sections are broken by blank lines
@@ -127,8 +127,10 @@ suffix_refresh <- function(){
 #' domain_name <- domain("http://en.wikipedia.org")
 #' suffix_extract(domain_name)
 #'
+#' \dontrun{
 #' #Relying on a fresh version of the suffix dataset
 #' suffix_extract(domain("http://en.wikipedia.org"), suffix_refresh())
+#' }
 #' 
 #' @importFrom triebeard trie longest_match
 #' @export

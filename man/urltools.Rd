@@ -4,7 +4,6 @@
 \name{urltools}
 \alias{urltools}
 \alias{urltools-package}
-\alias{urltools-package}
 \title{Tools for handling URLs}
 \description{
 This package provides functions for URL encoding and decoding,

@@ -43,8 +43,10 @@ suffix_extract(domain_name)
 domain_name <- domain("http://en.wikipedia.org")
 suffix_extract(domain_name)
 
+\dontrun{
 #Relying on a fresh version of the suffix dataset
 suffix_extract(domain("http://en.wikipedia.org"), suffix_refresh())
+}
 
 }
 \seealso{
