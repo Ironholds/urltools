@@ -3,6 +3,7 @@ urltools_env <- new.env(parent = emptyenv())
 suffix_load <- function(suffixes = NULL){
   if(is.null(suffixes)){
     suffixes <- urltools::suffix_dataset
+    suffixes <- suffixes$suffixes
   }
   cleaned_suffixes <- gsub(x = suffixes, pattern = "*.", replacement = "", fixed = TRUE)
   is_wildcard <- cleaned_suffixes[which(grepl(x = suffixes, pattern = "*.", fixed = TRUE))]
