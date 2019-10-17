@@ -139,7 +139,7 @@ suffix_extract <- function(domains, suffixes = NULL){
     # check if suffixes is a data.frame, and stop if column not found
     if(is.data.frame(suffixes)) {
       if ("suffixes" %in% colnames(suffixes)) {
-        suffixes <- suffixes[["suffixes"]]
+        suffixes <- suffixes[["suffixes", exact=FALSE]]
       } else {
         stop("Expected column named \"suffixes\" in suffixes data.frame")
       }
