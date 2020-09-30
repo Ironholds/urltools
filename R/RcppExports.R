@@ -106,7 +106,9 @@ get_credentials <- function(urls) {
 #'@rdname encoder
 #'@export
 url_decode <- function(urls) {
-    .Call(`_urltools_url_decode`, urls)
+    url <- .Call(`_urltools_url_decode`, urls)
+    Encoding(url) <- 'UTF-8'
+    return(url)
 }
 
 #'@rdname encoder
