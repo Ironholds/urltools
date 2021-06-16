@@ -101,7 +101,7 @@ suffix_refresh <- function(){
 #' a vector of domain names, and produces a data.frame containing the
 #' suffix that each domain uses, and the remaining fragment.
 #'
-#' @param domains a vector of damains, from \code{\link{domain}}
+#' @param domains a vector of domains, from \code{\link{domain}}
 #' or \code{\link{url_parse}}. Alternately, full URLs can be provided
 #' and will then be run through \code{\link{domain}} internally.
 #'
