@@ -43,7 +43,7 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   
   // ID IPv6(?)
   if(url.size() && url[0] == '['){
-    std::size_t ipv6_end = url.find("]");
+    std::size_t ipv6_end = url.find(']');
     if(ipv6_end != std::string::npos){
       output[0] = url.substr(1,(ipv6_end-1));
       if(ipv6_end == url.size()-1){
@@ -58,9 +58,9 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   // before that straight into the output, and the remainder
   // into the holding string. If not, the entire
   // url goes into the holding string.
-  std::size_t port = url.find(":");
+  std::size_t port = url.find(':');
   
-  if(port != std::string::npos && url.find("/") >= port){
+  if(port != std::string::npos && url.find('/') >= port){
     output[0] += url.substr(0,port);
     holding = url.substr(port+1);
     output_offset++;
@@ -69,7 +69,7 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   }
   
   // Look for a trailing slash
-  std::size_t trailing_slash = holding.find("/");
+  std::size_t trailing_slash = holding.find('/');
   
   // If there is one, that's when everything ends
   if(trailing_slash != std::string::npos){
@@ -82,7 +82,7 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   // If not, there might be a query parameter or fragment
   // associated
   // with the base URL, which we need to preserve.
-  std::size_t param = holding.find("?");
+  std::size_t param = holding.find('?');
   
   // If there is, handle that
   if(param != std::string::npos){
@@ -90,7 +90,7 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
     url = holding.substr(param);
     return output;
   } else {
-    std::size_t frag = holding.find("#");
+    std::size_t frag = holding.find('#');
     if(frag != std::string::npos){
       output[output_offset] = holding.substr(0, frag);
       url = holding.substr(frag);
@@ -109,9 +109,9 @@ std::string parsing::path(std::string& url){
     return url;
   }
   std::string output;
-  std::size_t path = url.find("?");
+  std::size_t path = url.find('?');
   if(path == std::string::npos){
-    std::size_t fragment = url.find("#");
+    std::size_t fragment = url.find('#');
     if(fragment == std::string::npos){
       output = url;
       url = "";
@@ -133,7 +133,7 @@ std::string parsing::query(std::string& url){
   }
   
   std::string output;
-  std::size_t fragment = url.find("#");
+  std::size_t fragment = url.find('#');
   if(fragment == std::string::npos){
     output = url;
     url = "";
