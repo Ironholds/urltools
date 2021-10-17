@@ -11,7 +11,7 @@ std::string parsing::string_tolower(std::string str){
 std::string parsing::scheme(std::string& url){
   std::string output;
   std::size_t protocol = url.find("://");
-  std::size_t definite_end = url.find(".");
+  std::size_t definite_end = url.find('.');
   if((protocol == std::string::npos) || protocol > definite_end){
     //If that's not present, or isn't present at the /beginning/, unknown
     output = "";
@@ -30,12 +30,12 @@ std::vector < std::string > parsing::domain_and_port(std::string& url){
   
   // Check for the presence of user authentication info. If it exists, dump it.
   // Use a query-check here because some people put @ info in params, baaah
-  std::size_t f_param = url.find("?");
+  std::size_t f_param = url.find('?');
   std::size_t auth;
   if(f_param != std::string::npos){
-    auth = url.substr(0, f_param).find("@");
+    auth = url.substr(0, f_param).find('@');
   } else {
-    auth = url.find("@");
+    auth = url.find('@');
   }
   if(auth != std::string::npos){
     url = url.substr(auth+1);
