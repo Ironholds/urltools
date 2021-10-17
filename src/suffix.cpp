@@ -133,7 +133,7 @@ CharacterVector host_extract_(CharacterVector domains){
       output[i] = NA_STRING;
     } else {
       holding = Rcpp::as<std::string>(domains[i]);
-      fragment_location = holding.find(".");
+      fragment_location = holding.find('.');
       if(fragment_location == std::string::npos){
         output[i] = NA_STRING;
       } else {

@@ -29,7 +29,7 @@ struct url {
 void split_url(std::string x, url& output){
 
   size_t last;
-  size_t loc = x.find(".");
+  size_t loc = x.find('.');
   
   last = x.find("://");
   if(last != std::string::npos){
@@ -43,7 +43,7 @@ void split_url(std::string x, url& output){
   }
 
   last = 0;
-  loc = x.find(".");
+  loc = x.find('.');
   while (loc != std::string::npos) {
     output.split_url.push_back(x.substr(last, loc-last));
     last = ++loc;

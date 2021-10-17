@@ -3,7 +3,7 @@
 std::deque < std::string > parameter::get_query_string(std::string url){
   
   std::deque < std::string > output;
-  size_t query_location = url.find("?");
+  size_t query_location = url.find('?');
   if(query_location == std::string::npos){
     output.push_back(url);
   } else {
