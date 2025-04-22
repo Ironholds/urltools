@@ -1,9 +1,9 @@
 Package: urltools
 Type: Package
 Title: Vectorised Tools for URL Handling and Parsing
-Version: 1.7.3
-Date: 2019-04-14
-Author: Os Keyes [aut, cre], Jay Jacobs [aut, cre], Drew Schmidt [aut],
+Version: 1.7.4
+Date: 2025-04-22
+Author: Os Keyes [aut, cre], Jay Jacobs [aut], Drew Schmidt [aut],
     Mark Greenaway [ctb], Bob Rudis [ctb], Alex Pinto [ctb], Maryam Khezrzadeh [ctb], Peter Meilstrup [ctb],
     Adam M. Costello [cph], Jeff Bezanson [cph], Peter Meilstrup [ctb], Xueyuan Jiang [ctb]
 Maintainer: Os Keyes <ironholds@gmail.com>
@@ -27,6 +27,6 @@ Suggests:
 URL: https://github.com/Ironholds/urltools/
 BugReports: https://github.com/Ironholds/urltools/issues
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 Depends: R (>= 2.10)

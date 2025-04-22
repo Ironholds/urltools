@@ -4,7 +4,9 @@
 \name{tld_dataset}
 \alias{tld_dataset}
 \title{Dataset of top-level domains (TLDs)}
-\format{A vector of 1275 elements.}
+\format{
+A vector of 1275 elements.
+}
 \usage{
 data(tld_dataset)
 }

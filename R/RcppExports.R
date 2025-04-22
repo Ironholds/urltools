@@ -61,7 +61,7 @@ get_credentials <- function(urls) {
 #'@details
 #'URL encoding and decoding is an essential prerequisite to proper web interaction
 #'and data analysis around things like server-side logs. The
-#'\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} mandates the percentage-encoding
+#'\href{https://datatracker.ietf.org/doc/html/rfc3986}{relevant IETF RfC} mandates the percentage-encoding
 #'of non-Latin characters, including things like slashes, unless those are reserved.
 #'
 #'Base R provides \code{\link{URLdecode}} and \code{\link{URLencode}}, which handle
@@ -106,9 +106,7 @@ get_credentials <- function(urls) {
 #'@rdname encoder
 #'@export
 url_decode <- function(urls) {
-    url <- .Call(`_urltools_url_decode`, urls)
-    Encoding(url) <- 'UTF-8'
-    return(url)
+    .Call(`_urltools_url_decode`, urls)
 }
 
 #'@rdname encoder
@@ -223,7 +221,7 @@ param_remove <- function(urls, keys) {
 #'this can be found with \code{\link{get_credentials}}.
 #'
 #'@return a data.frame consisting of the columns scheme, domain, port, path, query
-#'and fragment. See the '\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for
+#'and fragment. See the '\href{https://datatracker.ietf.org/doc/html/rfc3986}{relevant IETF RfC} for
 #'definitions. If an element cannot be identified, it is represented by an empty string.
 #'
 #'@examples

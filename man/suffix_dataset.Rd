@@ -4,7 +4,9 @@
 \name{suffix_dataset}
 \alias{suffix_dataset}
 \title{Dataset of public suffixes}
-\format{A data.frame of 8030 rows and 2 columns}
+\format{
+A data.frame of 8030 rows and 2 columns
+}
 \usage{
 data(suffix_dataset)
 }

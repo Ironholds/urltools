@@ -199,7 +199,7 @@ setGeneric("parameters<-", useAsDefault = function(x, value){
 #'can be both extracted or set using the relevant function call - see the
 #'examples.
 #'@aliases fragment
-#'@rdname fragment
+#'@name fragment
 #'
 #'@param x a URL, or vector of URLs
 #'
@@ -219,13 +219,11 @@ setGeneric("parameters<-", useAsDefault = function(x, value){
 #'
 #'#Remove a component
 #'fragment(example_url) <- NULL
-#'@export
 #'@rdname fragment
 #'@export
 fragment <- function(x){
   return(get_component_(x,5))
 }
-
 "fragment<-" <- function(x, value) standardGeneric("fragment<-")
 #'@rdname fragment
 #'@export

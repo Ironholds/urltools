@@ -59,7 +59,7 @@ Once you've got your nicely decoded (or encoded) URLs, it's time to do something
 you won't actually care about most of the URL. You'll want to look at the scheme, or the domain, or the path,
 but not the entire thing as one string.
 
-The solution is <code>url_parse</code>, which takes a URL and breaks it out into its [RfC 3986](http://www.ietf.org/rfc/rfc3986.txt) components: scheme, domain, port, path, query string and fragment identifier. This is,
+The solution is <code>url_parse</code>, which takes a URL and breaks it out into its [RfC 3986](https://www.ietf.org/rfc/rfc3986.txt) components: scheme, domain, port, path, query string and fragment identifier. This is,
 again, fully vectorised, and can happily be run over hundreds of thousands of URLs, rapidly processing them. The
 results are provided as a data.frame, since most people use data.frames to store data.
 

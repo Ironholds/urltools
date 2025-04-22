@@ -8,6 +8,6 @@
 #' @seealso the \href{https://CRAN.R-project.org/package=urltools/vignettes/urltools.html}{package vignette}.
 #' @useDynLib urltools, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
-#' @docType package
+#' @docType _PACKAGE
 #' @aliases urltools urltools-package
 NULL

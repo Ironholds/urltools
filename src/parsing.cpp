@@ -290,7 +290,7 @@ DataFrame parsing::parse_to_df(CharacterVector& urls_ptr){
 //'this can be found with \code{\link{get_credentials}}.
 //'
 //'@return a data.frame consisting of the columns scheme, domain, port, path, query
-//'and fragment. See the '\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} for
+//'and fragment. See the '\href{https://datatracker.ietf.org/doc/html/rfc3986}{relevant IETF RfC} for
 //'definitions. If an element cannot be identified, it is represented by an empty string.
 //'
 //'@examples

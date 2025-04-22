@@ -104,7 +104,7 @@ std::string encoding::internal_url_encode(std::string url){
 //'@details
 //'URL encoding and decoding is an essential prerequisite to proper web interaction
 //'and data analysis around things like server-side logs. The
-//'\href{http://tools.ietf.org/html/rfc3986}{relevant IETF RfC} mandates the percentage-encoding
+//'\href{https://datatracker.ietf.org/doc/html/rfc3986}{relevant IETF RfC} mandates the percentage-encoding
 //'of non-Latin characters, including things like slashes, unless those are reserved.
 //'
 //'Base R provides \code{\link{URLdecode}} and \code{\link{URLencode}}, which handle
