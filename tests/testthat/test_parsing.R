@@ -78,7 +78,33 @@ test_that("IPv6 URLs can be handled", {
   expect_true(url$port[1] == "8333")
 })
 
-test_that("URLs with missing paths and parameters, but with fragments, work", {
-  url <- urltools::url_parse("http://some.website.com#frag")
-  expect_true(url$fragment[1] == "frag")
+test_that("URLs with @ in path", {
+  out <- urltools::url_parse("https://medium.com:5050/@mkhezr/plastic-fashion-a-data-story-4c65ff6efc36")
+  testthat::expect_identical(out$domain, "medium.com")
+})
+
+test_that("URLs with auth credentials and query params", {
+  data <- urltools::url_parse("https://user:pwd@www.google.com:8500/foo.php?api_params=turnip#abc:def@ending")
+  expect_that(ncol(data), equals(6))
+  expect_that(names(data), equals(c("scheme","domain","port","path","parameter","fragment")))
+  expect_that(data$scheme[1], equals("https"))
+  expect_that(data$domain[1], equals("www.google.com"))
+  expect_false(is.na(data$port[1]))
+  expect_true(data$port[1] == "8500")
+  expect_that(data$path[1], equals("foo.php"))
+  expect_that(data$parameter[1], equals("api_params=turnip"))
+  expect_that(data$fragment[1], equals("abc:def@ending"))
+})
+
+test_that("IPv6 URLs with query params", {
+  data <- url_parse("tcp://[2607:5300:61:44f::]:8333/foo.php?api_params=@turnip#abc:def@ending")
+  expect_that(ncol(data), equals(6))
+  expect_that(names(data), equals(c("scheme","domain","port","path","parameter","fragment")))
+  expect_that(data$scheme[1], equals("tcp"))
+  expect_that(data$domain[1], equals("2607:5300:61:44f::"))
+  expect_false(is.na(data$port[1]))
+  expect_true(data$port[1] == "8333")
+  expect_that(data$path[1], equals("foo.php"))
+  expect_that(data$parameter[1], equals("api_params=@turnip"))
+  expect_that(data$fragment[1], equals("abc:def@ending"))
 })
