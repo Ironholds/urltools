@@ -8,7 +8,7 @@ std::string strip_single(std::string x){
     return x;
   }
   
-  std::size_t cred_loc = x.find("@");
+  std::size_t cred_loc = x.find('@');
   if(cred_loc == std::string::npos){
     return x;
   }
@@ -67,7 +67,7 @@ void get_single(std::string x, CharacterVector& username, CharacterVector& data,
     return;
   }
   
-  std::size_t cred_loc = x.find("@");
+  std::size_t cred_loc = x.find('@');
   if(cred_loc == std::string::npos){
     username[i] = NA_STRING;
     data[i] = NA_STRING;
@@ -79,7 +79,7 @@ void get_single(std::string x, CharacterVector& username, CharacterVector& data,
     return;
   }
   std::string holding = x.substr(scheme_loc+3, (cred_loc - (scheme_loc+3)));
-  std::size_t info = holding.find(":");
+  std::size_t info = holding.find(':');
   if(info == std::string::npos){
     username[i] = holding;
     data[i] = NA_STRING;
