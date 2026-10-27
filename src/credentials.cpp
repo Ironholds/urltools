@@ -40,7 +40,6 @@ std::string strip_single(std::string x){
 //[[Rcpp::export]]
 CharacterVector strip_credentials(CharacterVector urls){
   
-  std::string holding;
   unsigned int input_size = urls.size();
   CharacterVector output(input_size);
   
